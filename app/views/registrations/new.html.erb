@@ -1,0 +1,11 @@
+<% if alert = flash[:alert] %>
+  <%= alert %>
+<% end %>
+
+<h1>Sign up</h1>
+<%= form_with model: @user, url: registrations_url, class: "contents" do |f| %>
+  <%= f.email_field :email_address, required: true, autofocus: true, value: params[:email_address], placeholder: "Enter your email address" %>
+  <%= f.password_field :password, required: true, placeholder: "Enter your password", maxlength: 72 %>
+  <%= f.password_field :password_confirmation, required: true, placeholder: "Confirm your password", maxlength: 72 %>
+  <%= f.submit "Sign up" %>
+<% end %>

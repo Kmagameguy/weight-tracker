@@ -18,6 +18,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_25_130151) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.index ["date"], name: "index_food_entries_on_date"
     t.index ["user_id"], name: "index_food_entries_on_user_id"
   end
 

@@ -8,5 +8,6 @@ class CreateFoodEntries < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
+    add_index :food_entries, :date
   end
 end
