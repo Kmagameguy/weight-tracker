@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_25_124825) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_25_130151) do
+  create_table "food_entries", force: :cascade do |t|
+    t.integer "calories", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.date "date", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_food_entries_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -28,5 +38,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_25_124825) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "food_entries", "users"
   add_foreign_key "sessions", "users"
 end
