@@ -32,11 +32,13 @@
       <p class="text-xs text-slate-400"><%= @date.strftime("%A, %Y") %></p>
     </div>
 
-    <%= link_to day_path_for(next_day),
-          class: "flex items-center gap-1 text-sm text-slate-400
-                  hover:text-slate-700 transition-colors" do %>
-      <span><%= next_day.strftime("%b %-d") %></span>
-      <span>&rarr;</span>
+    <% unless @date == Date.today %>
+      <%= link_to day_path_for(next_day),
+            class: "flex items-center gap-1 text-sm text-slate-400
+                    hover:text-slate-700 transition-colors" do %>
+        <span><%= next_day.strftime("%b %-d") %></span>
+        <span>&rarr;</span>
+      <% end %>
     <% end %>
   </div>
 </header>

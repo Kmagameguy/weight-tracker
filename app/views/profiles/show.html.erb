@@ -15,3 +15,9 @@
     <%= line_chart @user.weight_entries.order(:date).pluck(:date, :weight), title: "Weight Change Over Time (lbs)" %>
   </div>
 </div>
+
+<div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
+  <div class="bg-white shadow-sm border border-slate-100 p-4">
+    <%= column_chart @user.food_entries.order(:date).group(:date).sum(:calories), title: "Calories By Day" %>
+  </div>
+</div>
