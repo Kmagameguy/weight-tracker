@@ -1,11 +1,12 @@
 class DaysController < ApplicationController
   def show
-    @date             = parse_date
-    @food_entries     = Current.user.food_entries.where(date: @date).order(:created_at)
-    @total_calories   = @food_entries.sum(:calories)
-    @weight_entry     = Current.user.weight_entries.find_by(date: @date)
-    @new_food_entry   = Current.user.food_entries.build(date: @date)
-    @new_weight_entry = Current.user.weight_entries.build(date: @date)
+    @date              = parse_date
+    @food_entries      = Current.user.food_entries.where(date: @date).order(:created_at)
+    @total_calories    = @food_entries.sum(:calories)
+    @last_weight_entry = Current.user.weight_entries.max_by(&:date)
+    @weight_entry      = Current.user.weight_entries.find_by(date: @date)
+    @new_food_entry    = Current.user.food_entries.build(date: @date)
+    @new_weight_entry  = Current.user.weight_entries.build(date: @date)
   end
 
   private
