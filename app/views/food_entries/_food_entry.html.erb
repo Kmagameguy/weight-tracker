@@ -1,0 +1,10 @@
+<div id="<%= dom_id(food_entry) %>" class="food-entry">
+  <span class="food-name"><%= food_entry.name %></span>
+  <span class="food-calories"><%= food_entry.calories %> cal</span>
+
+<%= link_to "Edit", edit_food_entry_path(food_entry) %>
+
+<%= button_to "delete", food_entry_path(food_entry),
+    method: :delete,
+    data: { turbo_confirm: "Remove #{food_entry.name}?" } %>
+</div>

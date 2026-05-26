@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   resources :registrations, only: %i[new create]
   resource :session
   resources :passwords, param: :token
+
+  get "/days/:year/:month/:day", to: "days#show", as: :day
+  resources :food_entries, only:   %i[create edit update destroy]
+  resources :weight_entries, only: %i[create edit update destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -13,5 +17,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "home#index"
+  root to: redirect { Date.today.then { |d| "/days/#{d.year}/#{d.month}/#{d.day}" } }
 end

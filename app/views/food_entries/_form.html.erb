@@ -1,0 +1,9 @@
+<%= form_with model: food_entry, class: "food-form" do |f| %>
+  <%= f.hidden_field :date %>
+
+  <div class="food-form-fields">
+    <%= f.text_field :name, placeholder: "e.g. Chicken sandwich", required: true %>
+    <%= f.number_field :calories, placeholder: "Calories", min: 0, required: true %>
+    <%= f.submit "Add" %>
+  </div>
+<% end %>

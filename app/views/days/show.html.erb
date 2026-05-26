@@ -1,0 +1,38 @@
+<% content_for :head do %>
+  <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
+<% end %>
+
+<%
+  prev_day = @date - 1.day
+  next_day = @date + 1.day
+%>
+
+
+<nav class="day-nav">
+  <%= link_to "<- #{prev_day.strftime('%b %-d')}", day_path_for(prev_day) %>
+  <h1><%= @date.strftime("%A, %B %-d, %Y") %></h1>
+  <%= link_to "#{next_day.strftime('%b %-d')} ->", day_path_for(next_day) %>
+</nav>
+
+<% if alert %>
+  <p class="alert"><%= alert %></p>
+<% end %>
+
+<section class="weight-section">
+  <h2>Weight</h2>
+  <% if @weight_entry %>
+    <%= render "weight_entries/weight_entry", weight_entry: @weight_entry %>
+  <% else %>
+    <%= render "weight_entries/form", weight_entry: @new_weight_entry %>
+  <% end %>
+</section>
+
+<section class="food-section">
+  <h2>Food &mdash; <%= @total_calories %> cal today</h2>
+
+  <div id="food_entries">
+    <%= render @food_entries %>
+  </div>
+
+  <%= render "food_entries/form", food_entry: @new_food_entry %>
+</section>

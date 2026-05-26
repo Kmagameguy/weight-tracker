@@ -1,0 +1,5 @@
+<h1>Edit weight for <%= @weight_entry.date.strftime("%B %-d, %Y") %></h1>
+
+<%= render "weight_entries/form", weight_entry: @weight_entry %>
+
+<%= link_to "Cancel", day_path_for(@weight_entry) %>

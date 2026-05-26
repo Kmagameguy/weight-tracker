@@ -1,0 +1,9 @@
+<div id="<%= dom_id(weight_entry) %>" class="weight-entry">
+  <span class="weight-value"><%= weight_entry.weight %> lbs</span>
+
+  <%= link_to "Edit", edit_weight_entry_path(weight_entry) %>
+
+  <%= button_to "Delete", weight_entry_path(weight_entry),
+      method: :delete,
+      data: { turbo_confirm: "Remove weight entry?" } %>
+</div>

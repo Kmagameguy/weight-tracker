@@ -1,0 +1,8 @@
+<%= form_with model: weight_entry, class: "weight-form" do |f| %>
+  <%= f.hidden_field :date %>
+
+  <div class="weight-form-fields">
+    <%= f.number_field :weight, placeholder: "e.g. 182.4", step: 0.1, min: 0, required: true %>
+    <%= f.submit weight_entry.new_record? ? "Log weight" : "Update" %>
+  </div>
+<% end %>

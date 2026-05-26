@@ -1,0 +1,5 @@
+<h1>Edit: <%= @food_entry.name %></h1>
+
+<%= render "food_entries/form", food_entry: @food_entry %>
+
+<%= link_to "Cancel", day_path_for(@food_entry) %>
