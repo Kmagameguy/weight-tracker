@@ -1,20 +1,31 @@
-<div id="<%= dom_id(food_entry) %>" class="flex items-center justify-between py-3 group">
-  <span class="text-sm text-slate-700"><%= food_entry.name %></span>
-  <div class="flex items-center gap-3">
-    <span class="text-sm font-medium text-slate-500">
-      <%= food_entry.calories %> cal
-    </span>
-    <%= link_to "Edit", edit_food_entry_path(food_entry),
-          class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
+<div id="<%= dom_id(food_entry) %>"
+     class="py-3 group"
+     data-controller="food-entry">
+  <div data-food-entry-target="display" class="flex items-center justify-between py-3 group">
+    <span class="text-sm text-slate-700"><%= food_entry.name %></span>
+    <div class="flex items-center gap-3">
+      <span class="text-sm font-medium text-slate-500">
+        <%= food_entry.calories %> cal
+      </span>
+      <button data-action="food-entry#edit"
+              class="opacity-0 group-hover:opacity-100 transition-opacity
+                     text-xs text-slate-400 hover:text-slate-600 cursor-pointer">
+        Edit
+      </button>
 
-    <%= button_to food_entry_path(food_entry),
-        method: :delete,
-        data: { turbo_confirm: "Remove #{food_entry.name}?" },
-        form_class: "flex items-center",
-        class: "opacity-0 group-hover:opacity-100 transition-opacity
-               text-slate-300 hover:text-red-400 text-xs cursor-pointer
-               bg-transparent border-0 p-0" do %>
-      &times;
-    <% end %>
+      <%= button_to food_entry_path(food_entry),
+          method: :delete,
+          data: { turbo_confirm: "Remove #{food_entry.name}?" },
+          form_class: "flex items-center",
+          class: "opacity-0 group-hover:opacity-100 transition-opacity
+                text-slate-300 hover:text-red-400 text-xs cursor-pointer
+                bg-transparent border-0 p-0" do %>
+        &times;
+      <% end %>
+    </div>
+  </div>
+
+  <div data-food-entry-target="form" class="hidden">
+    <%= render "food_entries/form", food_entry: food_entry %>
   </div>
 </div>

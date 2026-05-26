@@ -78,10 +78,12 @@
     <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4">
       Weight
     </h2>
-    <% if @weight_entry %>
-      <%= render "weight_entries/weight_entry", weight_entry: @weight_entry %>
-    <% else %>
-      <%= render "weight_entries/form", weight_entry: @new_weight_entry %>
-    <% end %>
+    <turbo-frame id="weight_entry">
+      <% if @weight_entry %>
+        <%= render "weight_entries/weight_entry", weight_entry: @weight_entry %>
+      <% else %>
+        <%= render "weight_entries/form", weight_entry: @new_weight_entry %>
+      <% end %>
+    </turbo-frame>
   </div>
 </div>
