@@ -6,4 +6,6 @@ class User < ApplicationRecord
   has_many :weight_entries, dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  alias_attribute :email, :email_address
 end
