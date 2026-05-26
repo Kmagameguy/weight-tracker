@@ -14,8 +14,11 @@ class DaysController < ApplicationController
   private
 
   def parse_date
-    Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+    requested_date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+    raise Date::Error if requested_date > Date.today
+
+    requested_date
   rescue Date::Error
-    redirect_to day_path_for(Date.today) and return
+    redirect_to(day_path_for(Date.today), alert: "Invalid day!") and return
   end
 end
