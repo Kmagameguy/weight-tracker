@@ -11,6 +11,60 @@
 </header>
 
 <div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
+  <% if flash[:notice] %>
+    <div class="px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-700
+                text-sm rounded-lg">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <div class="bg-white shadow-sm border border-slate-100 p-4">
+    <h3 class="font-semibold text-slate-800 mb-2">Statistics</h3>
+    <div class="flex justify-between text-sm mb-1">
+      <span class="text-slate-400">Daily goal:</span>
+      <span class="font-medium"><%= number_with_delimiter(@user.daily_calorie_goal) %> cal</span>
+    </div>
+    <div class="flex justify-between text-sm mb-1">
+      <span class="text-slate-400">Days over budget:</span>
+      <span class="font-medium"><%= number_with_delimiter(@days_over_budget) %></span>
+    </div>
+    <div class="flex justify-between text-sm mb-1">
+      <span class="text-slate-400">Calorie <%= @calorie_deficit.positive? ? "deficit" : "surplus" %> since start (based on typical 2,000 calorie diet):</span>
+      <span class="font-medium"><%= number_with_delimiter(@calorie_deficit.to_i.abs) %></span>
+    </div>
+    <div class="flex justify-between text-sm mb-1">
+      <span class="text-slate-400">Last weigh-in</span>
+      <% weight = @user.weight_entries.max_by(&:date)&.weight %>
+      <span class="font-medium"><%= weight.present? ? "#{number_with_precision(weight, precision: 1)} lbs" : "No weigh-ins available" %></span>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
+  <div class="bg-white shadow-sm border border-slate-100 p-4">
+    <h3 class="font-semibold text-slate-800 mb-2">Change Daily Calorie Goal</h3>
+    <div class="text-sm mb-2">
+      <span class=" text-slate-400">Current goal: <%= number_with_delimiter(@user.daily_calorie_goal) %></span>
+    </div>
+    <%= form_with model: @user, url: profile_path, method: :patch do |f| %>
+      <div class="flex gap-2">
+        <%= f.number_field :daily_calorie_goal,
+              placeholder: "Daily calorie goal",
+              min: 1,
+              required: true,
+              class: "w-32 text-sm rounded-lg border border-slate-200
+                      px-3 py-2 text-slate-700 placeholder-slate-300
+                      focus:outline-none focus:ring-2 focus:ring-emerald-400
+                      focus:border-transparent transition" %>
+        <%= f.submit "Update Goal",
+              class: "text-sm font-medium bg-emerald-500 hover:bg-emerald-600
+                      text-white px-4 py-2 rounded-lg transition-colors cursor-pointer" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
   <div class="bg-white shadow-sm border border-slate-100 p-4">
     <%= line_chart @user.weight_entries.order(:date).pluck(:date, :weight), title: "Weight Change Over Time (lbs)" %>
   </div>
@@ -18,6 +72,6 @@
 
 <div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
   <div class="bg-white shadow-sm border border-slate-100 p-4">
-    <%= column_chart @user.food_entries.order(:date).group(:date).sum(:calories), title: "Calories By Day" %>
+    <%= column_chart @user.food_entries.order(:date).group(:date).sum(:calories), title: "Calories Consumption By Day" %>
   </div>
 </div>

@@ -7,5 +7,7 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
+  validates :daily_calorie_goal, presence: true, numericality: { greater_than: 0 }
+
   alias_attribute :email, :email_address
 end
