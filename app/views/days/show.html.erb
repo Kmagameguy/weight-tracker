@@ -2,37 +2,86 @@
   <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
 <% end %>
 
-<%
-  prev_day = @date - 1.day
-  next_day = @date + 1.day
-%>
+<% prev_day = @date - 1.day %>
+<% next_day = @date + 1.day %>
 
-
-<nav class="day-nav">
-  <%= link_to "<- #{prev_day.strftime('%b %-d')}", day_path_for(prev_day) %>
-  <h1><%= @date.strftime("%A, %B %-d, %Y") %></h1>
-  <%= link_to "#{next_day.strftime('%b %-d')} ->", day_path_for(next_day) %>
-</nav>
-
-<% if alert %>
-  <p class="alert"><%= alert %></p>
-<% end %>
-
-<section class="weight-section">
-  <h2>Weight</h2>
-  <% if @weight_entry %>
-    <%= render "weight_entries/weight_entry", weight_entry: @weight_entry %>
-  <% else %>
-    <%= render "weight_entries/form", weight_entry: @new_weight_entry %>
-  <% end %>
-</section>
-
-<section class="food-section">
-  <h2>Food &mdash; <%= @total_calories %> cal today</h2>
-
-  <div id="food_entries">
-    <%= render @food_entries %>
+<header class="sticky top-0 z-10 bg-white border-b border-slate-100 shadow-sm">
+  <div class="max-w-xl mx-auto px-4 pb-0 flex gap-3 items-center justify-end">
+    <span class="text-xs text-slate-400"><%= Current.user.email_address %></span>
+    <%= button_to "Sign out", session_path(Current.session),
+          method: :delete,
+          class: "text-xs text-slate-400 hover:text-red-400 transition-colors
+                  bg-transparent border-0 cursor-pointer p-0" %>
   </div>
 
-  <%= render "food_entries/form", food_entry: @new_food_entry %>
-</section>
+  <div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
+    <%= link_to day_path_for(prev_day),
+          class: "flex items-center gap-1 text-sm text-slate-400
+                  hover:text-slate-700 transition-colors" do %>
+      <span>&larr;</span>
+      <span><%= prev_day.strftime("%b %-d") %></span>
+    <% end %>
+
+    <div class="text-center">
+      <h1 class="text-lg font-semibold text-slate-800">
+        <%= @date.strftime("%B %-d") %>
+      </h1>
+      <p class="text-xs text-slate-400"><%= @date.strftime("%A, %Y") %></p>
+    </div>
+
+    <%= link_to day_path_for(next_day),
+          class: "flex items-center gap-1 text-sm text-slate-400
+                  hover:text-slate-700 transition-colors" do %>
+      <span><%= next_day.strftime("%b %-d") %></span>
+      <span>&rarr;</span>
+    <% end %>
+  </div>
+</header>
+
+<div class="max-w-xl mx-auto px-4 py-6 flex flex-col gap-4">
+
+  <% if alert %>
+    <div class="px-4 py-3 bg-red-50 border border-red-200 text-red-700
+                text-sm rounded-lg">
+      <%= alert %>
+    </div>
+  <% end %>
+
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
+    <div class="flex items-baseline justify-between px-6 pt-6 pb-4
+                border-b border-slate-50">
+      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400">
+        Food
+      </h2>
+      <span class="text-2xl font-semibold text-slate-800">
+        <%= @total_calories %>
+        <span class="text-sm font-normal text-slate-400">cal</span>
+      </span>
+    </div>
+
+    <div class="px-6 py-2">
+      <% if @food_entries.any? %>
+        <div class="divide-y divide-slate-50">
+          <%= render @food_entries %>
+        </div>
+      <% else %>
+        <p class="text-sm text-slate-300 py-4">Nothing logged yet today.</p>
+      <% end %>
+    </div>
+
+    <div class="px-6 pb-6 pt-2 border-t border-slate-50">
+      <%= render "food_entries/form", food_entry: @new_food_entry %>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+    <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4">
+      Weight
+    </h2>
+    <% if @weight_entry %>
+      <%= render "weight_entries/weight_entry", weight_entry: @weight_entry %>
+    <% else %>
+      <%= render "weight_entries/form", weight_entry: @new_weight_entry %>
+    <% end %>
+  </div>
+</div>

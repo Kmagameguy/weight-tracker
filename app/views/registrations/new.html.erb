@@ -1,11 +1,74 @@
-<% if alert = flash[:alert] %>
-  <%= alert %>
-<% end %>
+<div class="min-h-screen bg-slate-50 flex items-center justify-center px-4">
+  <div class="w-full max-w-sm">
 
-<h1>Sign up</h1>
-<%= form_with model: @user, url: registrations_url, class: "contents" do |f| %>
-  <%= f.email_field :email_address, required: true, autofocus: true, value: params[:email_address], placeholder: "Enter your email address" %>
-  <%= f.password_field :password, required: true, placeholder: "Enter your password", maxlength: 72 %>
-  <%= f.password_field :password_confirmation, required: true, placeholder: "Confirm your password", maxlength: 72 %>
-  <%= f.submit "Sign up" %>
-<% end %>
+    <div class="text-center mb-8">
+      <h1 class="text-2xl font-semibold text-slate-800">Create your account</h1>
+      <p class="text-sm text-slate-400 mt-1">Start tracking your progress today</p>
+    </div>
+
+    <% if alert = flash[:alert] %>
+      <div class="mb-4 px-4 py-3 bg-red-50 border border-red-200
+                  text-red-700 text-sm rounded-lg">
+        <%= alert %>
+      </div>
+    <% end %>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
+      <%= form_with model: @user, url: registrations_url do |f| %>
+        <div class="flex flex-col gap-4">
+
+          <div class="flex flex-col gap-1">
+            <%= f.label :email_address, "Email",
+                  class: "text-xs font-semibold uppercase tracking-widest text-slate-400" %>
+            <%= f.email_field :email_address,
+                  required: true,
+                  autofocus: true,
+                  value: params[:email_address],
+                  placeholder: "you@example.com",
+                  class: "text-sm rounded-lg border border-slate-200 px-3 py-2
+                          text-slate-700 placeholder-slate-300
+                          focus:outline-none focus:ring-2 focus:ring-emerald-400
+                          focus:border-transparent transition" %>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <%= f.label :password, "Password",
+                  class: "text-xs font-semibold uppercase tracking-widest text-slate-400" %>
+            <%= f.password_field :password,
+                  required: true,
+                  placeholder: "Enter your password",
+                  maxlength: 72,
+                  class: "text-sm rounded-lg border border-slate-200 px-3 py-2
+                          text-slate-700 placeholder-slate-300
+                          focus:outline-none focus:ring-2 focus:ring-emerald-400
+                          focus:border-transparent transition" %>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <%= f.label :password_confirmation, "Confirm password",
+                  class: "text-xs font-semibold uppercase tracking-widest text-slate-400" %>
+            <%= f.password_field :password_confirmation,
+                  required: true,
+                  placeholder: "Confirm your password",
+                  maxlength: 72,
+                  class: "text-sm rounded-lg border border-slate-200 px-3 py-2
+                          text-slate-700 placeholder-slate-300
+                          focus:outline-none focus:ring-2 focus:ring-emerald-400
+                          focus:border-transparent transition" %>
+          </div>
+
+          <%= f.button "Sign up",
+                class: "w-full text-sm font-medium bg-emerald-500 hover:bg-emerald-600
+                        text-white px-4 py-2.5 rounded-lg transition-colors cursor-pointer mt-2" %>
+        </div>
+      <% end %>
+    </div>
+
+    <p class="text-center text-sm text-slate-400 mt-6">
+      Already have an account?
+      <%= link_to "Sign in", new_session_path,
+            class: "text-emerald-600 hover:text-emerald-700 font-medium transition-colors" %>
+    </p>
+
+  </div>
+</div>

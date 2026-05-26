@@ -1,5 +1,18 @@
-<h1>Edit weight for <%= @weight_entry.date.strftime("%B %-d, %Y") %></h1>
+<div class="min-h-screen bg-slate-50 flex items-start justify-center pt-24 px-4">
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 w-full max-w-sm">
+    <h1 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
+      Edit weight
+    </h1>
 
-<%= render "weight_entries/form", weight_entry: @weight_entry %>
+    <p class="text-sm text-slate-500 mb-6">
+      <%= @weight_entry.date.strftime("%B %-d, %Y") %>
+    </p>
 
-<%= link_to "Cancel", day_path_for(@weight_entry) %>
+    <%= render "weight_entries/form", weight_entry: @weight_entry %>
+
+    <div class="mt-4">
+      <%= link_to "Cancel", day_path_for(@weight_entry),
+            class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
+    </div>
+  </div>
+</div>

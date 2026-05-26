@@ -1,9 +1,18 @@
-<div id="<%= dom_id(weight_entry) %>" class="weight-entry">
-  <span class="weight-value"><%= weight_entry.weight %> lbs</span>
+<div id="<%= dom_id(weight_entry) %>" class="flex items-center justify-between">
+  <span class="text-3xl font-semibold text-slate-800">
+    <%= weight_entry.weight %>
+    <span class="text-base font-normal text-slate-400">lbs</span>
+  </span>
 
-  <%= link_to "Edit", edit_weight_entry_path(weight_entry) %>
+  <div class="flex items-center gap-3">
+    <%= link_to "Edit", edit_weight_entry_path(weight_entry),
+          class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
 
-  <%= button_to "Delete", weight_entry_path(weight_entry),
-      method: :delete,
-      data: { turbo_confirm: "Remove weight entry?" } %>
+    <%= button_to "Remove", weight_entry_path(weight_entry),
+        method: :delete,
+        data: { turbo_confirm: "Remove weight entry?" },
+        form_class: "flex items-center",
+        class: "text-sm text-slate-300 hover:text-red-400 transition-colors
+                bg-transparent border-0 cursor-pointer" %>
+  </div>
 </div>

@@ -1,10 +1,20 @@
-<div id="<%= dom_id(food_entry) %>" class="food-entry">
-  <span class="food-name"><%= food_entry.name %></span>
-  <span class="food-calories"><%= food_entry.calories %> cal</span>
+<div id="<%= dom_id(food_entry) %>" class="flex items-center justify-between py-3 group">
+  <span class="text-sm text-slate-700"><%= food_entry.name %></span>
+  <div class="flex items-center gap-3">
+    <span class="text-sm font-medium text-slate-500">
+      <%= food_entry.calories %> cal
+    </span>
+    <%= link_to "Edit", edit_food_entry_path(food_entry),
+          class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
 
-<%= link_to "Edit", edit_food_entry_path(food_entry) %>
-
-<%= button_to "delete", food_entry_path(food_entry),
-    method: :delete,
-    data: { turbo_confirm: "Remove #{food_entry.name}?" } %>
+    <%= button_to food_entry_path(food_entry),
+        method: :delete,
+        data: { turbo_confirm: "Remove #{food_entry.name}?" },
+        form_class: "flex items-center",
+        class: "opacity-0 group-hover:opacity-100 transition-opacity
+               text-slate-300 hover:text-red-400 text-xs cursor-pointer
+               bg-transparent border-0 p-0" do %>
+      &times;
+    <% end %>
+  </div>
 </div>
