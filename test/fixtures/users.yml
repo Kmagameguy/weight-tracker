@@ -1,9 +1,11 @@
 <% password_digest = BCrypt::Password.create("password") %>
 
 one:
+  daily_calorie_goal: 1500
   email_address: one@example.com
   password_digest: <%= password_digest %>
 
 two:
+  daily_calorie_goal: 2000
   email_address: two@example.com
   password_digest: <%= password_digest %>

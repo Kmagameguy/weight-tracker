@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  DEFAULT_DAILY_CALORIE_GOAL = 2_000
+
   using Refinements::ArrayRefinements
 
   has_secure_password

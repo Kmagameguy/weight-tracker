@@ -68,21 +68,25 @@
   </div>
 </div>
 
-<div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
-  <div class="bg-white shadow-sm border border-slate-100 p-4">
-    <%
-      weights_by_date = @user.weight_entries.order(:date).pluck(:date, :weight).to_h
-      min, max = weights_by_date.values.minmax
-    %>
-    <%= line_chart weights_by_date,
-          title: "Weight Change Over Time (lbs)",
-          min: min - 10,
-          max: max + 10  %>
+<% if @user.weight_entries.exists? %>
+  <div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
+    <div class="bg-white shadow-sm border border-slate-100 p-4">
+      <%
+        weights_by_date = @user.weight_entries.order(:date).pluck(:date, :weight).to_h
+        min, max = weights_by_date.values.minmax.map(&:to_i)
+      %>
+      <%= line_chart weights_by_date,
+            title: "Weight Change Over Time (lbs)",
+            min: min - 10,
+            max: max + 10  %>
+    </div>
   </div>
-</div>
+<% end %>
 
-<div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
-  <div class="bg-white shadow-sm border border-slate-100 p-4">
-    <%= column_chart @user.food_entries.order(:date).group(:date).sum(:calories), title: "Calories Consumption By Day" %>
+<% if @user.food_entries.exists? %>
+  <div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
+    <div class="bg-white shadow-sm border border-slate-100 p-4">
+      <%= column_chart @user.food_entries.order(:date).group(:date).sum(:calories), title: "Calories Consumption By Day" %>
+    </div>
   </div>
-</div>
+<% end %>
