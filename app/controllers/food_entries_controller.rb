@@ -34,6 +34,6 @@ class FoodEntriesController < ApplicationController
   end
 
   def food_entry_params
-    params.expect(food_entry: [:name, :calories, :date])
+    params.expect(food_entry: [ :name, :calories, :date ])
   end
 end
