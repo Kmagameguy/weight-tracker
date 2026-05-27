@@ -70,7 +70,14 @@
 
 <div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
   <div class="bg-white shadow-sm border border-slate-100 p-4">
-    <%= line_chart @user.weight_entries.order(:date).pluck(:date, :weight), title: "Weight Change Over Time (lbs)" %>
+    <%
+      weights_by_date = @user.weight_entries.order(:date).pluck(:date, :weight).to_h
+      min, max = weights_by_date.values.minmax
+    %>
+    <%= line_chart weights_by_date,
+          title: "Weight Change Over Time (lbs)",
+          min: min - 10,
+          max: max + 10  %>
   </div>
 </div>
 
