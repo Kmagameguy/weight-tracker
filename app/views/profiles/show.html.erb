@@ -29,11 +29,15 @@
       <span class="font-medium"><%= number_with_delimiter(@days_over_budget) %></span>
     </div>
     <div class="flex justify-between text-sm mb-1">
+      <span class="text-slate-400">Median calorie intake:</span>
+      <span class="font-medium"><%= number_with_delimiter(@user.median_calories_consumed.round(0)) %> cal</span>
+    </div>
+    <div class="flex justify-between text-sm mb-1">
       <span class="text-slate-400">Calorie <%= @calorie_deficit.positive? ? "deficit" : "surplus" %> since start (based on typical 2,000 calorie diet):</span>
       <span class="font-medium"><%= number_with_delimiter(@calorie_deficit.to_i.abs) %></span>
     </div>
     <div class="flex justify-between text-sm mb-1">
-      <span class="text-slate-400">Last weigh-in</span>
+      <span class="text-slate-400">Last weigh-in:</span>
       <% weight = @user.weight_entries.max_by(&:date)&.weight %>
       <span class="font-medium"><%= weight.present? ? "#{number_with_precision(weight, precision: 1)} lbs" : "No weigh-ins available" %></span>
     </div>
