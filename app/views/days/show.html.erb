@@ -1,10 +1,3 @@
-<% content_for :head do %>
-  <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
-<% end %>
-
-<% prev_day = @date - 1.day %>
-<% next_day = @date + 1.day %>
-
 <header class="sticky top-0 z-10 bg-white border-b border-slate-100 shadow-sm">
   <div class="max-w-xl mx-auto px-4 pb-0 flex gap-3 items-center justify-end">
     <%= link_to Current.user.email_address, profile_path,
@@ -18,25 +11,25 @@
   </div>
 
   <div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
-    <%= link_to day_path_for(prev_day),
+    <%= link_to day_path_for(@day_presenter.prev_day),
           class: "flex items-center gap-1 text-sm text-slate-400
                   hover:text-slate-700 transition-colors" do %>
       <span>&larr;</span>
-      <span><%= prev_day.strftime("%b %-d") %></span>
+      <span><%= @day_presenter.prev_day.strftime("%b %-d") %></span>
     <% end %>
 
     <div class="text-center">
       <h1 class="text-lg font-semibold text-slate-800">
-        <%= @date.strftime("%B %-d") %>
+        <%= @day_presenter.date.strftime("%B %-d") %>
       </h1>
-      <p class="text-xs text-slate-400"><%= @date.strftime("%A, %Y") %></p>
+      <p class="text-xs text-slate-400"><%= @day_presenter.date.strftime("%A, %Y") %></p>
     </div>
 
-    <% unless @date == Date.today %>
-      <%= link_to day_path_for(next_day),
+    <% unless @day_presenter.today? %>
+      <%= link_to day_path_for(@day_presenter.next_day),
             class: "flex items-center gap-1 text-sm text-slate-400
                     hover:text-slate-700 transition-colors" do %>
-        <span><%= next_day.strftime("%b %-d") %></span>
+        <span><%= @day_presenter.next_day.strftime("%b %-d") %></span>
         <span>&rarr;</span>
       <% end %>
     <% end %>
@@ -53,53 +46,33 @@
   <% end %>
 
   <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
-    <div class="flex items-baseline justify-between px-6 pt-6 pb-4
-                border-b border-slate-50">
-      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400">
-        Calories Consumed
-      </h2>
-      <span class="text-2xl font-semibold <%= @calories_remaining.negative? ? 'text-red-500' : 'text-slate-800' %>">
-        <%= number_with_delimiter(@total_calories) %>
-        <span class="text-sm font-normal text-slate-400"> / <%= number_with_delimiter(@daily_calorie_goal) %></span>
-        <span class="text-sm font-normal text-slate-400">cal</span>
-      </span>
-    </div>
-
-    <div class="px-6 pt-4 pb-6 flex items-baseline justify-between border-b border-slate-50">
-      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400">
-        Remaining
-      </h2>
-      <span class="font-semibold <%= @calories_remaining.negative? ? 'text-red-500' : 'text-emerald-600' %>">
-        <%= number_with_delimiter(@calories_remaining) %> cal
-      </span>
-    </div>
-
+    <%= render "days/calories_summary", day_presenter: @day_presenter %>
     <div class="px-6 py-2">
-      <% if @food_entries.any? %>
-        <div class="divide-y divide-slate-50">
-          <%= render @food_entries %>
+      <% if @day_presenter.food_entries.any? %>
+        <div id="food_entries" class="divide-y divide-slate-50">
+          <%= render @day_presenter.food_entries %>
         </div>
       <% else %>
         <p class="text-sm text-slate-300 py-4">Nothing logged yet today.</p>
       <% end %>
     </div>
 
-    <div class="px-6 pb-6 pt-2 border-t border-slate-50">
-      <%= render "food_entries/form", food_entry: @new_food_entry %>
+    <div id="food_entry_form" class="px-6 pb-6 pt-2 border-t border-slate-50">
+      <%= render "food_entries/form", food_entry: @day_presenter.new_food_entry %>
     </div>
   </div>
 
   <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-    <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4">
-      <p>Last weigh-in: <%= @last_weight_entry ? "#{@last_weight_entry.weight} - #{@last_weight_entry.date.strftime("%B %-d")}" : "No weigh-ins yet." %></p>
-      <p>Today's Weigh-in</p>
-    </h2>
-    <turbo-frame id="weight_entry">
-      <% if @weight_entry %>
-        <%= render "weight_entries/weight_entry", weight_entry: @weight_entry %>
+    <%= turbo_frame_tag "weight_entry" do %>
+      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4">
+        <p>Last weigh-in: <%= @day_presenter.last_weight_entry ? "#{@day_presenter.last_weight_entry.weight} - #{@day_presenter.last_weight_entry.date.strftime("%B %-d")}" : "No weigh-ins yet." %></p>
+        <p>Today's Weigh-in</p>
+      </h2>
+      <% if @day_presenter.weight_entry %>
+        <%= render "weight_entries/weight_entry", weight_entry: @day_presenter.weight_entry %>
       <% else %>
-        <%= render "weight_entries/form", weight_entry: @new_weight_entry %>
+        <%= render "weight_entries/form", weight_entry: @day_presenter.new_weight_entry %>
       <% end %>
-    </turbo-frame>
+    <% end %>
   </div>
 </div>

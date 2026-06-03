@@ -1,0 +1,2 @@
+<%= turbo_stream.replace @food_entry, partial: "food_entries/food_entry", locals: { food_entry: @food_entry } %>
+<%= turbo_stream.replace "calories_summary", partial: "days/calories_summary", locals: { day_presenter: @day_presenter } %>
