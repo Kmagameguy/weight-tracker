@@ -1,0 +1,20 @@
+---
+services:
+   web:
+      build: .
+      restart: unless-stopped
+      ports:
+         - "11232:80"
+      env_file:
+         - .env
+      volumes:
+         - rails_storage:/rails/storage
+      healthcheck:
+         test: ["CMD", "curl", "-f", "http://localhost/up"]
+         interval: 30s
+         timeout: 10s
+         retries: 3
+         start_period: 30s
+
+volumes:
+   rails_storage:
