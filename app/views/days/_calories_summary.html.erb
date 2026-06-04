@@ -1,0 +1,22 @@
+<div id="calories_summary">
+  <div class="flex items-baseline justify-between px-6 pt-6 pb-4
+              border-b border-slate-50">
+    <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400">
+      Calories Consumed
+    </h2>
+    <span class="text-2xl font-semibold <%= day_presenter.calories_remaining.negative? ? 'text-red-500' : 'text-slate-800' %>">
+      <%= number_with_delimiter(day_presenter.total_calories) %>
+      <span class="text-sm font-normal text-slate-400"> / <%= number_with_delimiter(day_presenter.daily_calorie_goal) %></span>
+      <span class="text-sm font-normal text-slate-400">cal</span>
+    </span>
+  </div>
+
+  <div class="px-6 pt-4 pb-6 flex items-baseline justify-between border-b border-slate-50">
+    <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400">
+      Remaining
+    </h2>
+    <span class="font-semibold <%= day_presenter.calories_remaining.negative? ? 'text-red-500' : 'text-emerald-600' %>">
+      <%= number_with_delimiter(day_presenter.calories_remaining) %> cal
+    </span>
+  </div>
+</div>

@@ -1,14 +1,3 @@
-<div class="min-h-screen bg-slate-50 flex items-start justify-center pt-24 px-4">
-  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 w-full max-w-md">
-    <h1 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
-      Editing: <%= @food_entry.name %>
-    </h1>
-
-    <%= render "food_entries/form", food_entry: @food_entry %>
-
-    <div class="mt-4">
-      <%= link_to "Cancel", day_path_for(@food_entry),
-            class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
-    </div>
-  </div>
-</div>
+<%= turbo_frame_tag @food_entry do %>
+  <%= render "food_entries/form", food_entry: @food_entry %>
+<% end %>

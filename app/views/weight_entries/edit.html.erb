@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-slate-50 flex items-start justify-center pt-24 px-4">
   <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 w-full max-w-sm">
-    <turbo-frame id="weight_entry">
+    <%= turbo_frame_tag "weight_entry" do %>
       <h1 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
         Edit weight
       </h1>
@@ -15,6 +15,6 @@
         <%= link_to "Cancel", day_path_for(@weight_entry),
               class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
       </div>
-    </turbo-frame>
+    <% end %>
   </div>
 </div>
