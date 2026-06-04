@@ -65,7 +65,7 @@
   <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
     <%= turbo_frame_tag "weight_entry" do %>
       <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4">
-        <p>Last weigh-in: <%= @day_presenter.last_weight_entry ? "#{@day_presenter.last_weight_entry.weight} - #{@day_presenter.last_weight_entry.date.strftime("%B %-d")}" : "No weigh-ins yet." %></p>
+        <%= last_weigh_in(@day_presenter) %>
         <p>Today's Weigh-in</p>
       </h2>
       <% if @day_presenter.weight_entry %>
