@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+echo "== Running Tests =="
+bin/rails db:test:prepare test:all
