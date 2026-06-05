@@ -12,6 +12,7 @@
 
   <div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
     <%= link_to day_path_for(@day_presenter.prev_day),
+          id: "prev-day-nav",
           class: "flex items-center gap-1 text-sm text-slate-400
                   hover:text-slate-700 transition-colors" do %>
       <span>&larr;</span>
@@ -27,6 +28,7 @@
 
     <% unless @day_presenter.today? %>
       <%= link_to day_path_for(@day_presenter.next_day),
+            id: "next-day-nav",
             class: "flex items-center gap-1 text-sm text-slate-400
                     hover:text-slate-700 transition-colors" do %>
         <span><%= @day_presenter.next_day.strftime("%b %-d") %></span>

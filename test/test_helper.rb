@@ -21,3 +21,12 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+# Mock RSpec-style context blocks
+class ::Minitest::Test
+  extend Minitest::Spec::DSL
+
+  class << self
+    alias context describe
+  end
+end
