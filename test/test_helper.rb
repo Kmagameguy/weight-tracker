@@ -1,7 +1,14 @@
 ENV["RAILS_ENV"] ||= "test"
+# Consider setting MT_NO_EXPECTATIONS to not add expectations to Object.
+# ENV["MT_NO_EXPECTATIONS"] = "true"
 require_relative "../config/environment"
-require "rails/test_help"
 require_relative "test_helpers/session_test_helper"
+require "rails/test_help"
+require "minitest/autorun"
+require "minitest/focus"
+require "minitest/rails"
+require "mocha/minitest"
+
 
 module ActiveSupport
   class TestCase
