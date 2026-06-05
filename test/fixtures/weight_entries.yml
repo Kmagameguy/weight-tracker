@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  weight: 9.99
+  weight: 245.5
   date: 2026-05-25
   user: one
 
 two:
-  weight: 9.99
-  date: 2026-05-25
+  weight: 122.3
+  date: 2026-05-24
   user: two
