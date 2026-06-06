@@ -1,3 +1,4 @@
 <%= turbo_stream.append "food_entries", partial: "food_entries/food_entry", locals: { food_entry: @food_entry } %>
 <%= turbo_stream.replace "calories_summary", partial: "days/calories_summary", locals: { day_presenter: @day_presenter } %>
 <%= turbo_stream.update "food_entry_form", partial: "food_entries/form", locals: { food_entry: @day_presenter.new_food_entry } %>
+<%= turbo_stream.remove "food_entries_empty" %>
