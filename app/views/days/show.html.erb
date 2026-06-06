@@ -12,6 +12,7 @@
 
   <div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
     <%= link_to day_path_for(@day_presenter.prev_day),
+          id: "prev-day-nav",
           class: "flex items-center gap-1 text-sm text-slate-400
                   hover:text-slate-700 transition-colors" do %>
       <span>&larr;</span>
@@ -27,6 +28,7 @@
 
     <% unless @day_presenter.today? %>
       <%= link_to day_path_for(@day_presenter.next_day),
+            id: "next-day-nav",
             class: "flex items-center gap-1 text-sm text-slate-400
                     hover:text-slate-700 transition-colors" do %>
         <span><%= @day_presenter.next_day.strftime("%b %-d") %></span>
@@ -48,13 +50,12 @@
   <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
     <%= render "days/calories_summary", day_presenter: @day_presenter %>
     <div class="px-6 py-2">
-      <% if @day_presenter.food_entries.any? %>
-        <div id="food_entries" class="divide-y divide-slate-50">
-          <%= render @day_presenter.food_entries %>
-        </div>
-      <% else %>
-        <p class="text-sm text-slate-300 py-4">Nothing logged yet today.</p>
-      <% end %>
+      <div id="food_entries" class="divide-y divide-slate-50">
+        <%= render @day_presenter.food_entries %>
+        <% unless @day_presenter.food_entries.any? %>
+          <%= render "food_entries/empty" %>
+        <% end %>
+      </div>
     </div>
 
     <div id="food_entry_form" class="px-6 pb-6 pt-2 border-t border-slate-50">

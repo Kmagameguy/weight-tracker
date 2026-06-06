@@ -1,2 +1,5 @@
 <%= turbo_stream.remove @food_entry %>
 <%= turbo_stream.replace "calories_summary", partial: "days/calories_summary", locals: { day_presenter: @day_presenter } %>
+<% unless @day_presenter.food_entries.any? %>
+  <%= turbo_stream.append "food_entries", partial: "food_entries/empty" %>
+<% end %>

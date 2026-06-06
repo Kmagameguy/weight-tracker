@@ -1,7 +1,14 @@
 ENV["RAILS_ENV"] ||= "test"
+# Consider setting MT_NO_EXPECTATIONS to not add expectations to Object.
+# ENV["MT_NO_EXPECTATIONS"] = "true"
 require_relative "../config/environment"
-require "rails/test_help"
 require_relative "test_helpers/session_test_helper"
+require "rails/test_help"
+require "minitest/autorun"
+require "minitest/focus"
+require "minitest/rails"
+require "mocha/minitest"
+
 
 module ActiveSupport
   class TestCase
@@ -12,5 +19,14 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+  end
+end
+
+# Mock RSpec-style context blocks
+class ::Minitest::Test
+  extend Minitest::Spec::DSL
+
+  class << self
+    alias context describe
   end
 end

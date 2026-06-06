@@ -34,6 +34,6 @@ class WeightEntriesController < ApplicationController
   end
 
   def weight_entry_params
-    params.expect(weight_entry: [ :weight, :date, :user_id ])
+    params.expect(weight_entry: [ :weight, :date ])
   end
 end

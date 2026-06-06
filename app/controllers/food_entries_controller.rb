@@ -31,7 +31,7 @@ class FoodEntriesController < ApplicationController
   def destroy
     @date = @food_entry.date
     @food_entry.destroy!
-    @day_presenter = DayPresenter.new(user: Current.user, date: @food_entry.date)
+    @day_presenter = DayPresenter.new(user: Current.user, date: @date)
 
     respond_to do |format|
       format.turbo_stream
