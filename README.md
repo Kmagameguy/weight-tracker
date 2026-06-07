@@ -24,6 +24,9 @@ This software is a personal data collection tool ONLY. It is not a medical or he
 - [TailwindCSS][tailwind] for styling
 - [Sqlite][sqlite] as a simple database engine
 
+## App Screenshots
+<img src="docs/assets/app_example.png" alt="main app view" width="600">
+
 ## Setup & Installation
 ### Prerequisites for a Docker-Based Deployment (Recommended)
 - [Git][git]
