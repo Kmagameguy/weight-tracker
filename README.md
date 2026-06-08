@@ -36,6 +36,8 @@ This software is a personal data collection tool ONLY. It is not a medical or he
 ### Installation Steps
 1. `git clone git@github.com:Kmagameguy/weight-tracker.git`
 1. `cd weight-tracker`
+1. `cp .env.example .env`
+1. Update the values in `.env` as needed. The `SECRET_KEY_BASE` can be any random value, such as what's generated from `bin/rails secret`
 1. `docker compose up -d`
 
 This will build a new docker image, set up the database, and automatically run the puma webserver in production mode.
