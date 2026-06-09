@@ -1,0 +1,10 @@
+<div
+  data-calendar-target="popover"
+  style="display:none; position:absolute; left:0; top:100%; margin-top:0.5rem; z-index:50;"
+  class="bg-white rounded-2xl shadow-lg border border-slate-100 p-4 w-64 select-none"
+>
+  <%= turbo_frame_tag "calendar_frame",
+        src: calendar_path(year: date.year, month: date.month, day: date.day) do %>
+    <%= render "calendars/calendar_grid", date: date %>
+  <% end %>
+</div>
