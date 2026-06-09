@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_26_212538) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_09_005627) do
   create_table "food_entries", force: :cascade do |t|
     t.integer "calories", default: 0, null: false
     t.datetime "created_at", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_26_212538) do
     t.integer "daily_calorie_goal"
     t.string "email_address", null: false
     t.string "password_digest", null: false
+    t.string "timezone", default: "Etc/UTC", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end

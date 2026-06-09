@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   DEFAULT_DAILY_CALORIE_GOAL = 2_000
+  VALID_TIMEZONES = ActiveSupport::TimeZone.all.map(&:tzinfo).map(&:name).freeze
 
   using Refinements::ArrayRefinements
 
@@ -12,6 +13,7 @@ class User < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   validates :daily_calorie_goal, presence: true, numericality: { greater_than: 0 }
+  validates :timezone, presence: true, inclusion: { in: VALID_TIMEZONES }
 
   alias_attribute :email, :email_address
 
