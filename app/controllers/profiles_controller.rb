@@ -29,6 +29,6 @@ class ProfilesController < ApplicationController
   end
 
   def user_params
-    params.expect(user: [ :daily_calorie_goal ])
+    params.expect(user: [ :daily_calorie_goal, :timezone ])
   end
 end
