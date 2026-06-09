@@ -13,7 +13,7 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
     context "page routing" do
       it "redirects unauthenticated users" do
         sign_out
-        get day_path_for(Date.today)
+        get day_path_for(Date.current)
         assert_redirected_to new_session_path
       end
 
@@ -32,7 +32,7 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
       end
 
       it "redirects to today when a future date is requested" do
-        today = Date.today
+        today = Date.current
         future_day = today + 1.week
         get day_path_for(future_day)
         assert_redirected_to day_path_for(today)
@@ -42,7 +42,7 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
 
       it "redirects to today when a non-real date is requested" do
         get "/days/2026/06/44"
-        assert_redirected_to day_path_for(Date.today)
+        assert_redirected_to day_path_for(Date.current)
         follow_redirect!
         assert_select ".bg-red-50", text: /Invalid day!/
       end
@@ -50,7 +50,7 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
 
     context "page structure" do
       it "renders the previous day link" do
-        today = Date.today
+        today = Date.current
         get day_path_for(today)
         assert_select "a#prev-day-nav", text: /#{(today - 1.day).strftime("%b %-d")}/
       end
@@ -62,7 +62,7 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
       end
 
       it "does not render the next day link when viewing today's date" do
-        today = Date.today
+        today = Date.current
         get day_path_for(today)
         assert_select "a#next-day-nav", count: 0
       end
@@ -93,13 +93,13 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
 
       it "renders weight entry form when no weigh-in exists for the day" do
         WeightEntry.all.destroy_all
-        get day_path_for(Date.today)
+        get day_path_for(Date.current)
         assert_select "turbo-frame#weight_entry form"
       end
 
       it "renders existing weight entry when one exists" do
         WeightEntry.all.destroy_all
-        today = Date.today
+        today = Date.current
         weight_entry = @user.weight_entries.create!(date: today, weight: 245.2)
         get day_path_for(today)
         assert_select "#weight_entry_weight", count: 0

@@ -14,7 +14,7 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
 
     it "redirects unauthenticated users away from the create action" do
       assert_no_difference("FoodEntry.count") do
-        post food_entries_path, params: { name: "Burrito", calories: 125, date: Date.today }
+        post food_entries_path, params: { name: "Burrito", calories: 125, date: Date.current }
       end
       assert_redirected_to new_session_path
     end
@@ -36,14 +36,14 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
     context "with valid params" do
       before do
         post food_entries_path,
-          params:  { food_entry: { name: "Banana", calories: 105, date: Date.today } },
+          params:  { food_entry: { name: "Banana", calories: 105, date: Date.current } },
           as: :turbo_stream
       end
 
       it "creates a new food entry" do
         assert_difference("FoodEntry.count", 1) do
           post food_entries_path, params: {
-            food_entry: { name: "Soup", calories: 300, date: Date.today }
+            food_entry: { name: "Soup", calories: 300, date: Date.current }
           }
         end
       end
@@ -63,7 +63,7 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
       end
 
       it "redirects to the day page for html requests" do
-        date = Date.today - 1.day
+        date = Date.current - 1.day
         post food_entries_path, params: {
           food_entry: { name: "Soup", calories: 300, date: date }
         }
@@ -76,17 +76,17 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
       it "does not create a food entry" do
         assert_no_difference("FoodEntry.count") do
           post food_entries_path, params: {
-            food_entry: { name: "", calories: nil, date: Date.today }
+            food_entry: { name: "", calories: nil, date: Date.current }
           }
         end
       end
 
       it "redirects back to the day page with an alert" do
         post food_entries_path, params: {
-          food_entry: { name: "", calories: nil, date: Date.today }
+          food_entry: { name: "", calories: nil, date: Date.current }
         }
 
-        assert_redirected_to day_path_for(Date.today)
+        assert_redirected_to day_path_for(Date.current)
         follow_redirect!
         assert_select ".bg-red-50", text: /Name can\'t be blank/
       end

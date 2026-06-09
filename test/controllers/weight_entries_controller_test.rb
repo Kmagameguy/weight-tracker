@@ -14,7 +14,7 @@ class WeightEntriesControllerTest < ActionDispatch::IntegrationTest
 
     it "redirects unauthenticated users away from create action" do
       assert_no_difference("WeightEntry.count") do
-        post weight_entries_path, params: { weight: 182.4, date: Date.today }
+        post weight_entries_path, params: { weight: 182.4, date: Date.current }
       end
       assert_redirected_to new_session_path
     end
@@ -36,7 +36,7 @@ class WeightEntriesControllerTest < ActionDispatch::IntegrationTest
     context "with valid params" do
       it "creates a new weight entry" do
         @user.weight_entries.destroy_all
-        date = Date.today
+        date = Date.current
         assert_difference("WeightEntry.count", 1) do
           post weight_entries_path, params: { weight_entry: { weight: 184.2, date: date } }
         end
@@ -45,7 +45,7 @@ class WeightEntriesControllerTest < ActionDispatch::IntegrationTest
 
       it "redirects to the day page after creation" do
         @user.weight_entries.destroy_all
-        date = Date.today
+        date = Date.current
         post weight_entries_path, params: { weight_entry: { weight: 185.1, date: date } }
         new_weight_entry = WeightEntry.order(:created_at).last
         assert_redirected_to day_path_for(new_weight_entry)
@@ -53,7 +53,7 @@ class WeightEntriesControllerTest < ActionDispatch::IntegrationTest
 
       it "scopes the weight entry to the logged-in user" do
         @user.weight_entries.destroy_all
-        date = Date.today
+        date = Date.current
         post weight_entries_path, params: { weight_entry: { weight: 111.5, date: date } }
         new_weight_entry = WeightEntry.order(:created_at).last
         assert_equal @user.id, new_weight_entry.user_id
@@ -63,13 +63,13 @@ class WeightEntriesControllerTest < ActionDispatch::IntegrationTest
     context "with invalid params" do
       it "does not create a weight entry" do
         assert_no_difference("WeightEntry.count") do
-          post weight_entries_path, params: { weight_entry: { weight: nil, date: Date.today } }
+          post weight_entries_path, params: { weight_entry: { weight: nil, date: Date.current } }
         end
       end
 
       it "redirects back to the day page with an alert" do
-        post weight_entries_path, params: { weight_entry: { weight: nil, date: Date.today } }
-        assert_redirected_to day_path_for(Date.today)
+        post weight_entries_path, params: { weight_entry: { weight: nil, date: Date.current } }
+        assert_redirected_to day_path_for(Date.current)
         follow_redirect!
         assert_select ".bg-red-50", text: /Weight is not a number/
       end

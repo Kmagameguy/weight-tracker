@@ -15,7 +15,7 @@ class DayPresenter
   end
 
   def today?
-    date == Date.today
+    date == Date.current
   end
 
   def total_calories
