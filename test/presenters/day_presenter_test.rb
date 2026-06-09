@@ -23,12 +23,12 @@ class DayPresenterTest < ActiveSupport::TestCase
 
   describe "#today?" do
     it "is true if the presenter's date matches today" do
-      Date.stubs(:today).returns(@date)
+      Date.stubs(:current).returns(@date)
       assert_predicate @presenter, :today?
     end
 
     it "is false if the presenter's date does not match today" do
-      Date.stubs(:today).returns(@date + 1.day)
+      Date.stubs(:current).returns(@date + 1.day)
       assert_not_predicate @presenter, :today?
     end
   end
