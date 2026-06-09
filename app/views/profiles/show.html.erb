@@ -39,6 +39,17 @@
       <span class=" text-slate-400">Current goal: <%= number_with_delimiter(@user.daily_calorie_goal) %></span>
     </div>
     <%= form_with model: @user, url: profile_path, method: :patch do |f| %>
+      <div class="mb-4">
+        <%= f.label :timezone, class: "block text-sm font-medium text-slate-700 mb-1" %>
+        <%= f.select(
+               :timezone,
+               ActiveSupport::TimeZone.all.map { |tz| [tz.to_s, tz.tzinfo.name] },
+               {},
+               class: "w-full text-sm rounded-lg border border-slate-200
+                       px-3 py-2 bg-white text-slate-700
+                       focus:outline-none focus:ring-2 focus:ring-emerald-400"
+            ) %>
+      </div>
       <div class="flex gap-2">
         <%= f.number_field :daily_calorie_goal,
               placeholder: "Daily calorie goal",
@@ -48,7 +59,7 @@
                       px-3 py-2 text-slate-700 placeholder-slate-300
                       focus:outline-none focus:ring-2 focus:ring-emerald-400
                       focus:border-transparent transition" %>
-        <%= f.submit "Update Goal",
+        <%= f.submit "Update Settings",
               class: "text-sm font-medium bg-emerald-500 hover:bg-emerald-600
                       text-white px-4 py-2 rounded-lg transition-colors cursor-pointer" %>
       </div>

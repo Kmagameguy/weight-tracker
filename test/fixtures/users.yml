@@ -1,11 +1,13 @@
 <% password_digest = BCrypt::Password.create("password") %>
 
 one:
+  timezone: America/New_York
   daily_calorie_goal: 1500
   email_address: one@example.com
   password_digest: <%= password_digest %>
 
 two:
+  timezone: Pacific/Auckland
   daily_calorie_goal: 2000
   email_address: two@example.com
   password_digest: <%= password_digest %>

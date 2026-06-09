@@ -14,8 +14,12 @@ class DayPresenter
     date + 1.day
   end
 
+  def today
+    Time.use_zone(user.timezone) { Date.current }
+  end
+
   def today?
-    date == Date.today
+    date == today
   end
 
   def total_calories

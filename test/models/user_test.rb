@@ -66,13 +66,13 @@ class UserTest < ActiveSupport::TestCase
     it "returns the single value when there is exactly one food entry" do
       user = users(:one)
       user.food_entries.destroy_all
-      user.food_entries.create!(date: Date.today, name: "PB & J", calories: 1_800)
+      user.food_entries.create!(date: Date.current, name: "PB & J", calories: 1_800)
       assert_equal 1_800, user.median_calories_consumed
     end
 
     it "returns the median value for many food entries" do
       user = users(:one)
-      today = Date.today
+      today = Date.current
       yesterday = today - 1.day
       user.food_entries.destroy_all
       # Yesterday: 600 + 700 = 1_300

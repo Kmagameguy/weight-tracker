@@ -18,5 +18,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root to: redirect { Date.today.then { |d| "/days/#{d.year}/#{d.month}/#{d.day}" } }
+  root to: redirect { Date.current.then { |d| "/days/#{d.year}/#{d.month}/#{d.day}" } }
 end
