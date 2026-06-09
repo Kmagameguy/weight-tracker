@@ -49,19 +49,22 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
     end
 
     context "page structure" do
-      it "renders the sticky header with date navigation" do
+      it "renders the previous day link" do
         today = Date.today
         get day_path_for(today)
-        assert_select "header" do
-          assert_select "a#prev-day-nav", text: /#{(today - 1.day).strftime("%b %-d")}/
-          assert_select "a#next-day-nav", count: 0
-        end
+        assert_select "a#prev-day-nav", text: /#{(today - 1.day).strftime("%b %-d")}/
       end
 
       it "renders the next day link when viewing a past date" do
         prev_date = @date - 1.week
         get day_path_for(prev_date)
         assert_select "a#next-day-nav", text: /#{(prev_date + 1.day).strftime("%b %-d")}/
+      end
+
+      it "does not render the next day link when viewing today's date" do
+        today = Date.today
+        get day_path_for(today)
+        assert_select "a#next-day-nav", count: 0
       end
 
       it "renders the food entry form" do

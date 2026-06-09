@@ -1,0 +1,16 @@
+<header class="sticky top-0 z-10 bg-white border-b border-slate-100 shadow-sm">
+  <div class="max-w-xl mx-auto px-4 py-4 flex gap-3 items-center justify-end">
+    <% if show_today_link %>
+      <%= link_to "Today", root_path,
+            class: "text-xs text-slate-400 hover:text-red-400 transition-colors" %>
+    <% end %>
+
+    <%= link_to Current.user.email_address, profile_path,
+          class: "text-xs text-slate-400 hover:text-red-400 transition-colors cursor-pointer p-0" %>
+    <%= button_to "Sign out", session_path(Current.session),
+          method: :delete,
+          form_class: "flex items-center",
+          class: "text-xs text-slate-400 hover:text-red-400 transition-colors
+                  bg-transparent border-0 cursor-pointer p-0" %>
+  </div>
+</header>

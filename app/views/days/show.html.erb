@@ -1,42 +1,29 @@
-<header class="sticky top-0 z-10 bg-white border-b border-slate-100 shadow-sm">
-  <div class="max-w-xl mx-auto px-4 pb-0 flex gap-3 items-center justify-end">
-    <%= link_to Current.user.email_address, profile_path,
-          class: "text-xs text-slate-400 hover:text-red-400 transition-colors
-                  cursor-pointer p-0" %>
+<div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
+  <%= link_to day_path_for(@day_presenter.prev_day),
+        id: "prev-day-nav",
+        class: "flex items-center gap-1 text-sm text-slate-400
+                hover:text-slate-700 transition-colors" do %>
+    <span>&larr;</span>
+    <span><%= @day_presenter.prev_day.strftime("%b %-d") %></span>
+  <% end %>
 
-    <%= button_to "Sign out", session_path(Current.session),
-          method: :delete,
-          class: "text-xs text-slate-400 hover:text-red-400 transition-colors
-                  bg-transparent border-0 cursor-pointer p-0" %>
+  <div class="text-center">
+    <h1 class="text-lg font-semibold text-slate-800">
+      <%= @day_presenter.date.strftime("%B %-d") %>
+    </h1>
+    <p class="text-xs text-slate-400"><%= @day_presenter.date.strftime("%A, %Y") %></p>
   </div>
 
-  <div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
-    <%= link_to day_path_for(@day_presenter.prev_day),
-          id: "prev-day-nav",
+  <% unless @day_presenter.today? %>
+    <%= link_to day_path_for(@day_presenter.next_day),
+          id: "next-day-nav",
           class: "flex items-center gap-1 text-sm text-slate-400
                   hover:text-slate-700 transition-colors" do %>
-      <span>&larr;</span>
-      <span><%= @day_presenter.prev_day.strftime("%b %-d") %></span>
+      <span><%= @day_presenter.next_day.strftime("%b %-d") %></span>
+      <span>&rarr;</span>
     <% end %>
-
-    <div class="text-center">
-      <h1 class="text-lg font-semibold text-slate-800">
-        <%= @day_presenter.date.strftime("%B %-d") %>
-      </h1>
-      <p class="text-xs text-slate-400"><%= @day_presenter.date.strftime("%A, %Y") %></p>
-    </div>
-
-    <% unless @day_presenter.today? %>
-      <%= link_to day_path_for(@day_presenter.next_day),
-            id: "next-day-nav",
-            class: "flex items-center gap-1 text-sm text-slate-400
-                    hover:text-slate-700 transition-colors" do %>
-        <span><%= @day_presenter.next_day.strftime("%b %-d") %></span>
-        <span>&rarr;</span>
-      <% end %>
-    <% end %>
-  </div>
-</header>
+  <% end %>
+</div>
 
 <div class="max-w-xl mx-auto px-4 py-6 flex flex-col gap-4">
 

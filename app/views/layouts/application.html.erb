@@ -24,6 +24,9 @@
   </head>
 
   <body class="h-full bg-slate-50 antialiased">
+    <% if authenticated? %>
+      <%= render "shared/header", show_today_link: @day_presenter.nil? || !@day_presenter.today? %>
+    <% end %>
     <%= yield %>
   </body>
 </html>
