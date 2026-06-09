@@ -78,7 +78,7 @@ The app is organized around a few simple resources:
 
 ## Roadmap
 Items below represent desired features. They are listed in no specific order, and without specific promises towards their development.
-- [ ] Pre-built docker image via ghcr
+- [x] Pre-built docker image via ghcr
 - [ ] Improve bare-metal production deployment configuration
 - [ ] Configurable `weight` units (currently only Imperial pounds [lbs] supported)
 - [ ] Additional chart & trend visualizations for weight & calories over time
