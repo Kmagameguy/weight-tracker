@@ -6,7 +6,7 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params.merge(daily_calorie_goal: 2_000))
+    @user = User.new(user_params)
     if @user.save
       start_new_session_for @user
       redirect_to root_path, notice: "You account has been created."
@@ -19,6 +19,6 @@ class RegistrationsController < ApplicationController
   private
 
   def user_params
-    params.expect(user: [ :email_address, :password, :password_confirmation, :daily_calorie_goal ])
+    params.expect(user: [ :email_address, :password, :password_confirmation, :daily_calorie_goal, :timezone ])
   end
 end
