@@ -16,4 +16,8 @@ class ApplicationController < ActionController::Base
     zone = Current.user&.timezone.presence || Rails.application.config.time_zone
     Time.use_zone(zone, &block)
   end
+
+  def redirect_if_authenticated
+    redirect_to root_path if authenticated?
+  end
 end
