@@ -1,36 +1,28 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["popover"]
+  static targets = ["tray"]
 
   connect() {
-    this.handleOutsideClick = this.handleOutsideClick.bind(this)
-    this.popoverTarget.style.display = "none"
+    this.isOpen = false
   }
 
   toggle(event) {
     event.stopPropagation()
-    const popover = this.popoverTarget
-    if (popover.style.display === "none") {
-      popover.style.display = "block"
-      document.addEventListener("click", this.handleOutsideClick)
-    } else {
-      this.close()
-    }
+    this.isOpen ? this.close() : this.open()
+  }
+
+  open() {
+    this.trayTarget.style.gridTemplateRows = "1fr"
+    this.trayTarget.style.opacity = "1"
+    this.trayTarget.style.transform = "translateY(0)"
+    this.isOpen = true
   }
 
   close() {
-    this.popoverTarget.style.display = "none"
-    document.removeEventListener("click", this.handleOutsideClick)
-  }
-
-  handleOutsideClick(event) {
-    if (!this.element.contains(event.target)) {
-      this.close()
-    }
-  }
-
-  disconnect() {
-    document.removeEventListener("click", this.handleOutsideClick)
+    this.trayTarget.style.gridTemplateRows = "0fr"
+    this.trayTarget.style.opacity = "0"
+    this.trayTarget.style.transform = "translateY(-8px)"
+    this.isOpen = false
   }
 }
