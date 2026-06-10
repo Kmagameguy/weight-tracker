@@ -1,10 +1,10 @@
-<header class="sticky top-0 z-10 bg-white border-b border-slate-100 shadow-sm">
-  <div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
+<header class="sticky top-0 z-10 bg-white py-4 border-b border-slate-100 shadow-sm">
+  <div class="max-w-xl mx-auto px-4 flex items-center justify-between">
     <div class="flex-1 flex items-center">
       <% if local_assigns[:date] %>
         <button
           data-action="click->calendar#toggle"
-          class="flex items-center justify-center w-8 h-8 rounded-full text-slate-400
+          class="flex items-center justify-center w-8 rounded-full text-slate-400
                  hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
           aria-label="Open calendar"
         >
