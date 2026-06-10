@@ -25,4 +25,17 @@ export default class extends Controller {
     this.trayTarget.style.transform = "translateY(-8px)"
     this.isOpen = false
   }
+
+  navigateToDay(event) {
+    if (!this.isOpen) return
+
+    event.preventDefault()
+
+    const url = event.currentTarget.href
+    this.close()
+
+    setTimeout(() => {
+      Turbo.visit(url)
+    }, 350)
+  }
 }
