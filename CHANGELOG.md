@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-06-10.3
+- Fix: Fix a regression introduced by the last update. Editing a food entry now correctly populates its calories field with
+the saved calorie value.
+
 ## 2026-06-10.2
 - Fix: Make calorie input value a true placeholder instead of a real, default value of 0
 
