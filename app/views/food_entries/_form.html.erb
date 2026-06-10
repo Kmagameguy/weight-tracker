@@ -11,7 +11,7 @@
                   focus:border-transparent transition" %>
 
     <%= f.number_field :calories,
-          value: nil,
+          value: food_entry.new_record? ? nil : food_entry.calories,
           placeholder: "0",
           min: 0,
           required: true,
