@@ -18,11 +18,6 @@
     </div>
 
     <div class="flex items-center gap-4">
-      <% if show_today_link %>
-        <%= link_to "Today", root_path,
-              class: "text-xs text-slate-400 hover:text-red-400 transition-colors" %>
-      <% end %>
-
       <%= link_to Current.user.email_address, profile_path,
             class: "text-xs text-slate-400 hover:text-red-400 transition-colors cursor-pointer p-0" %>
 
