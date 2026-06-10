@@ -8,6 +8,7 @@ date in the month.
 - Improve styling of `passwords#new` and `passwords#edit` pages for consistency.
 - Prevent authenticated users from accessing the Sign-up and Sign-in forms.
 - Add a link to the reset password form to user's profile page.
+- Fix inconsistency in header height between /day/* and /profile views.
 
 ## 2026-06-09 - Initial Release
 Changes up to this point constitute the initial stable (ish), public release of the weight-tracker code.  All basic features are expected to be working, based on my own personal use during alpha-development for the past week or so.
