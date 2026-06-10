@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:notice] = "Daily calorie goal updated successfully."
+      flash[:notice] = "Profile updated successfully."
       redirect_to profile_path
     else
       render :show, status: :unprocessable_entity
