@@ -2,6 +2,7 @@
 
 ## Unreleased Changes
 - Fix: Specify read-only permissions for test & lint CI/CD jobs
+- Enhancement: Improve confirmation dialogs styling
 
 ## 2026-06-10.3
 - Fix: Fix a regression introduced by the last update. Editing a food entry now correctly populates its calories field with
