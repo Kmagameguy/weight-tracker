@@ -7,6 +7,16 @@
   <% end %>
 
   <div class="bg-white shadow-sm border border-slate-100 p-4">
+    <h3 class="font-semibold text-slate-800 mb-2">Account Management</h3>
+    <div class="text-sm mb-2">
+      <%= link_to "Reset Password", new_password_path,
+            class: "text-emerald-600 hover:text-emerald-700 font-medium transition-colors" %>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
+  <div class="bg-white shadow-sm border border-slate-100 p-4">
     <h3 class="font-semibold text-slate-800 mb-2">Statistics</h3>
     <div class="flex justify-between text-sm mb-1">
       <span class="text-slate-400">Daily goal:</span>

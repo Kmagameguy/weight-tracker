@@ -54,9 +54,15 @@
     </div>
 
     <div class="mt-6 text-center text-sm text-slate-400">
-      <%= link_to "Back to sign in",
-            new_session_path,
-            class: "hover:text-slate-600 transition-colors" %>
+      <% if authenticated? %>
+        <%= link_to "Back to profile",
+              profile_path,
+              class: "hover:text-slate-600 transition-colors" %>
+      <% else %>
+        <%= link_to "Back to sign in",
+              new_session_path,
+              class: "hover:text-slate-600 transition-colors" %>
+      <% end %>
     </div>
   </div>
 </div>
