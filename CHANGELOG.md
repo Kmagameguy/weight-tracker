@@ -4,6 +4,7 @@
 - Properly highlight selected day when it occurs in the current month and is not the current day. Previously when
 accessing the calendar for the current month, the current date was always highlighted even if the selected day was an earlier
 date in the month.
+- Close the calendar tray before navigating page to the selected date.
 
 ## 2026-06-09 - Initial Release
 Changes up to this point constitute the initial stable (ish), public release of the weight-tracker code.  All basic features are expected to be working, based on my own personal use during alpha-development for the past week or so.
