@@ -15,7 +15,7 @@ class CalendarsController < ApplicationController
   def validate_date
     day = params[:day].presence || 1
     @date = Date.new(params[:year].to_i, params[:month].to_i, day.to_i)
-    raise Date::Error if @date > user_today.beginning_of_month
+    raise Date::Error if @date > user_today
   rescue Date::Error, ArgumentError
     @date = user_today
   end

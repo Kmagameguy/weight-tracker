@@ -17,9 +17,23 @@ class CalendarsControllerTest < ActionDispatch::IntegrationTest
       assert_select "#calendar_grid"
     end
 
+    it "clamps to today when a future day within the month is requested" do
+      Date.stubs(:current).returns(Date.new(2026, 6, 9))
+      future = Date.current + 1.day
+      get calendar_path(year: future.year, month: future.month, day: future.day)
+      assert_select "span", text: Date.current.strftime("%B %Y")
+    end
+
     it "clamps to today when a future month is requested" do
       future = Date.current + 2.months
       get calendar_path(year: future.year, month: future.month, day: 1)
+      assert_select "span", text: Date.current.strftime("%B %Y")
+    end
+
+    it "clamps to today when a future year is requested" do
+      Date.stubs(:current).returns(Date.new(2026, 6, 9))
+      future = Date.current + 2.years
+      get calendar_path(year: future.year, month: future.month, day: future.day)
       assert_select "span", text: Date.current.strftime("%B %Y")
     end
 
