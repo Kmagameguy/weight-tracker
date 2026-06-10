@@ -6,16 +6,15 @@
         <span class="text-sm font-medium text-slate-500">
           <%= number_with_delimiter(food_entry.calories) %> cal
         </span>
-        <%= link_to "Edit", edit_food_entry_path(food_entry), class: "opacity-0 group-hover:opacity-100 transition-opacity
-                      text-xs text-slate-400 hover:text-slate-600 cursor-pointer" %>
+        <%= link_to "Edit", edit_food_entry_path(food_entry),
+              class: "text-xs text-slate-400 hover:text-slate-600 cursor-pointer" %>
 
         <%= button_to food_entry_path(food_entry),
             method: :delete,
             data: { turbo_confirm: "Remove #{food_entry.name}?" },
             form_class: "flex items-center",
-            class: "opacity-0 group-hover:opacity-100 transition-opacity
-                  text-slate-300 hover:text-red-400 text-xs cursor-pointer
-                  bg-transparent border-0 p-0" do %>
+            class: "text-slate-300 hover:text-red-400 text-xs cursor-pointer
+                    bg-transparent border-0 p-0" do %>
           &times;
         <% end %>
       </div>
