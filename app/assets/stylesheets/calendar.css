@@ -1,0 +1,54 @@
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.calendar-control {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: grid-template-rows 0.35s ease-out, opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.calendar-container {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  z-index: 50;
+}
+
+.calendar-grid-headers {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 0.125rem;
+}
+
+.calendar-day-selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  margin: 0 auto;
+}
+
+.calendar-day-future {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  margin: 0 auto;
+  color:#cbd5e1;
+}
