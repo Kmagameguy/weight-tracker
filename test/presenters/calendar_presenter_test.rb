@@ -6,6 +6,18 @@ class CalendarPresenterTest < ActiveSupport::TestCase
     Date.stubs(:current).returns(@today)
   end
 
+  describe "constants" do
+    describe "WEEK_DAY_HEADERS" do
+      it "contains the correct abbreviated day names starting from Monday" do
+        assert_equal %w[Mo Tu We Th Fr Sa Su], CalendarPresenter::WEEK_DAY_HEADERS
+      end
+
+      it "is frozen" do
+        assert_predicate CalendarPresenter::WEEK_DAY_HEADERS, :frozen?
+      end
+    end
+  end
+
   describe "#initialize" do
     it "sets date and today" do
       presenter = CalendarPresenter.new(date: @today)
@@ -108,35 +120,6 @@ class CalendarPresenterTest < ActiveSupport::TestCase
     end
   end
 
-  describe "#first_day" do
-    it "returns the first day of the month" do
-      presenter = CalendarPresenter.new(date: Date.new(2026, 6, 15))
-      assert_equal Date.new(2026, 6, 1), presenter.first_day
-    end
-  end
-
-  describe "#last_day" do
-    it "returns the last day of the month" do
-      presenter = CalendarPresenter.new(date: Date.new(2026, 6, 15))
-      assert_equal Date.new(2026, 6, 30), presenter.last_day
-    end
-
-    it "handles months with 31 days" do
-      presenter = CalendarPresenter.new(date: Date.new(2026, 7, 1))
-      assert_equal Date.new(2026, 7, 31), presenter.last_day
-    end
-
-    it "handles February in a leap year" do
-      presenter = CalendarPresenter.new(date: Date.new(2024, 2, 1))
-      assert_equal Date.new(2024, 2, 29), presenter.last_day
-    end
-
-    it "handles February in a non-leap year" do
-      presenter = CalendarPresenter.new(date: Date.new(2025, 2, 1))
-      assert_equal Date.new(2025, 2, 28), presenter.last_day
-    end
-  end
-
   describe "#day_status" do
     it "returns :future for a day after today" do
       presenter = CalendarPresenter.new(date: @today)
@@ -164,13 +147,32 @@ class CalendarPresenterTest < ActiveSupport::TestCase
     end
   end
 
-  describe "WEEK_DAY_HEADERS" do
-    it "contains the correct abbreviated day names starting from Monday" do
-      assert_equal %w[Mo Tu We Th Fr Sa Su], CalendarPresenter::WEEK_DAY_HEADERS
+  describe "#first_day" do
+    it "returns the first day of the month" do
+      presenter = CalendarPresenter.new(date: Date.new(2026, 6, 15))
+      assert_equal Date.new(2026, 6, 1), presenter.first_day
+    end
+  end
+
+  describe "#last_day" do
+    it "returns the last day of the month" do
+      presenter = CalendarPresenter.new(date: Date.new(2026, 6, 15))
+      assert_equal Date.new(2026, 6, 30), presenter.last_day
     end
 
-    it "is frozen" do
-      assert_predicate CalendarPresenter::WEEK_DAY_HEADERS, :frozen?
+    it "handles months with 31 days" do
+      presenter = CalendarPresenter.new(date: Date.new(2026, 7, 1))
+      assert_equal Date.new(2026, 7, 31), presenter.last_day
+    end
+
+    it "handles February in a leap year" do
+      presenter = CalendarPresenter.new(date: Date.new(2024, 2, 1))
+      assert_equal Date.new(2024, 2, 29), presenter.last_day
+    end
+
+    it "handles February in a non-leap year" do
+      presenter = CalendarPresenter.new(date: Date.new(2025, 2, 1))
+      assert_equal Date.new(2025, 2, 28), presenter.last_day
     end
   end
 end
