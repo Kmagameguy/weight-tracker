@@ -2,6 +2,9 @@
 
 ## Unreleased Changes
 
+## 2026-06-10.2
+- Fix: Make calorie input value a true placeholder instead of a real, default value of 0
+
 ## 2026-06-10
 - Fix: Properly highlight selected day when it occurs in the current month and is not the current day. Previously when
 accessing the calendar for the current month, the current date was always highlighted even if the selected day was an earlier
