@@ -23,7 +23,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="h-full bg-slate-50 antialiased">
+  <body class="h-full bg-slate-50 antialiased" data-controller="confirm">
+    <%= render "shared/confirm_dialog" %>
+
     <% if authenticated? %>
       <div data-controller="calendar">
         <%= render "shared/header", date: @day_presenter&.date %>
@@ -45,7 +47,6 @@
         <% end %>
       </div>
     <% end %>
-
     <%= yield %>
   </body>
 </html>
