@@ -30,15 +30,14 @@
 
         <% if @day_presenter %>
           <div data-calendar-target="tray"
-              class="bg-white border-b border-slate-100"
-              style="display:grid; grid-template-rows:0fr; opacity:0; transform:translateY(-8px); transition: grid-template-rows 0.35s ease-out, opacity 0.35s ease-out, transform 0.35s ease-out;">
-            <div style="overflow:hidden;">
+              class="calendar-control bg-white border-b border-slate-100">
+            <div class="overflow-hidden">
               <div class="max-w-xl mx-auto px-4 pt-4 pb-6">
                 <%= turbo_frame_tag "calendar_frame",
                       src: calendar_path(year: @day_presenter.date.year,
                                         month: @day_presenter.date.month,
                                         day: @day_presenter.date.day) do %>
-                  <%= render "calendars/calendar_grid", date: @day_presenter.date %>
+                  <%= render "calendars/calendar_grid", calendar: CalendarPresenter.new(date: @day_presenter.date) %>
                 <% end %>
               </div>
             </div>

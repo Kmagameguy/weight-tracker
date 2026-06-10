@@ -1,7 +1,9 @@
 class CalendarsController < ApplicationController
   before_action :validate_date
 
-  def show; end
+  def show
+    @calendar = CalendarPresenter.new(date: @date)
+  end
 
   private
 
