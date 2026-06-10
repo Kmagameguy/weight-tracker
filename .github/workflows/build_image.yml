@@ -2,8 +2,8 @@
 name: Build and push image to ghcr
 
 on:
-  push:
-    branches: ['main']
+  release:
+    types: [published]
 
 env:
   REGISTRY: ghcr.io
@@ -32,8 +32,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=sha,prefix=sha-
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=tag
+            type=raw,value=latest
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v7
