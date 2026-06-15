@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :food_entries,   only:   %i[ create edit update destroy ]
   resources :weight_entries, only: %i[ create edit update destroy ]
   resource :profile,         only: %i[ show update ]
-  resource :calendar,        only: %i[ show]
+  resource :calendar,        only: %i[ show ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
