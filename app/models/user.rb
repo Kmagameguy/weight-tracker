@@ -17,7 +17,31 @@ class User < ApplicationRecord
 
   alias_attribute :email, :email_address
 
+  def days_over_budget
+    food_entries
+      .group(:date)
+      .sum(:calories)
+      .select { |date, total_calories| total_calories > daily_calorie_goal }
+      .count
+  end
+
+  def lifetime_calorie_deficit
+    (food_entries.pluck(:date).uniq.count * DEFAULT_DAILY_CALORIE_GOAL) - food_entries.sum(:calories)
+  end
+
   def median_calories_consumed
     food_entries.group(:date).sum(:calories).values.median
+  end
+
+  def min_recorded_weight
+    weight_entries.min_by(&:weight)&.weight
+  end
+
+  def max_recorded_weight
+    weight_entries.max_by(&:weight)&.weight
+  end
+
+  def current_weight
+    weight_entries.max_by(&:date)&.weight
   end
 end
