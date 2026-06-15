@@ -1,0 +1,15 @@
+<% if flash[:notice] %>
+  <div class="max-w-xl mx-auto px-2 py-4 flex flex-col gap-5">
+    <div class="px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-lg">
+      <%= flash[:notice] %>
+    </div>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="max-w-xl mx-auto px-2 py-4 flex flex-col gap-5">
+    <div class="px-4 py-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+      <%= flash[:alert] %>
+    </div>
+  </div>
+<% end %>
