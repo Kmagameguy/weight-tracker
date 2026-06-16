@@ -1,26 +1,26 @@
 <div class="max-w-xl mx-auto px-4 py-4 flex items-center justify-between">
   <%= link_to day_path_for(@day_presenter.prev_day),
         id: "prev-day-nav",
-        class: "flex items-center gap-1 text-sm text-slate-400
-                hover:text-slate-700 transition-colors" do %>
-    <span>&larr;</span>
-    <span><%= @day_presenter.prev_day.strftime("%b %-d") %></span>
+        class: "flex items-center gap-1 select-none text-sm
+                text-slate-400 hover:text-slate-700 transition-colors" do %>
+    <span class="select-none">&larr;</span>
+    <span class="select-none"><%= @day_presenter.prev_day.strftime("%b %-d") %></span>
   <% end %>
 
   <div class="text-center">
-    <h1 class="text-lg font-semibold text-slate-800">
+    <h1 class="text-lg select-none font-semibold text-slate-800">
       <%= @day_presenter.date.strftime("%B %-d") %>
     </h1>
-    <p class="text-xs text-slate-400"><%= @day_presenter.date.strftime("%A, %Y") %></p>
+    <p class="text-xs text-slate-400 select-none"><%= @day_presenter.date.strftime("%A, %Y") %></p>
   </div>
 
   <% unless @day_presenter.today? %>
     <%= link_to day_path_for(@day_presenter.next_day),
           id: "next-day-nav",
-          class: "flex items-center gap-1 text-sm text-slate-400
-                  hover:text-slate-700 transition-colors" do %>
-      <span><%= @day_presenter.next_day.strftime("%b %-d") %></span>
-      <span>&rarr;</span>
+          class: "flex items-center gap-1 text-sm select-none
+                  text-slate-400 hover:text-slate-700 transition-colors" do %>
+      <span class="select-none"><%= @day_presenter.next_day.strftime("%b %-d") %></span>
+      <span class="select-none">&rarr;</span>
     <% end %>
   <% end %>
 </div>
@@ -52,7 +52,7 @@
 
   <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
     <%= turbo_frame_tag "weight_entry" do %>
-      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4">
+      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4 select-none">
         <%= last_weigh_in(@day_presenter) %>
         <p>Today's Weigh-in</p>
       </h2>
@@ -66,7 +66,7 @@
 
   <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
     <%= turbo_frame_tag "blood_pressure_reading" do %>
-      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4">
+      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4 select-none">
         <%= last_blood_pressure_reading(@day_presenter) %>
         <p>Today's BP Reading</p>
       </h2>
