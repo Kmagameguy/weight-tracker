@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Unreleased Changes
+
+## 2026-06-15
 - Fix: Specify read-only permissions for test & lint CI/CD jobs
 - Enhancement: Improve confirmation dialogs styling
 - Maintenance: Refactor `profiles/show.html.erb`
