@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Unreleased Changes
+- Enhancement: Add a basic footer to the application views
 
 ## 2026-06-16
 - Enhacement: Mark some elements as non-selectable to make mobile navigation a bit cleaner.  Helps avoid annoyances like
