@@ -14,7 +14,10 @@ class User < ApplicationRecord
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   validates :daily_calorie_goal, presence: true, numericality: { greater_than: 0 }
-  validates :timezone, presence: true, inclusion: { in: VALID_TIMEZONES }
+  validates :timezone,           presence: true, inclusion: { in: VALID_TIMEZONES }
+  validates :calorie_tracking_enabled,           inclusion: { in: [ true, false ], message: "value must be true or false" }
+  validates :weight_tracking_enabled,            inclusion: { in: [ true, false ], message: "value must be true or false" }
+  validates :blood_pressure_tracking_enabled,    inclusion: { in: [ true, false ], message: "value must be true or false" }
 
   alias_attribute :email, :email_address
 
@@ -44,5 +47,23 @@ class User < ApplicationRecord
 
   def current_weight
     weight_entries.max_by(&:date)&.weight
+  end
+
+  def calorie_tracking_disabled?
+    !calorie_tracking_enabled?
+  end
+
+  def weight_tracking_disabled?
+    !weight_tracking_enabled?
+  end
+
+  def blood_pressure_tracking_disabled?
+    !blood_pressure_tracking_enabled?
+  end
+
+  def all_features_disabled?
+    calorie_tracking_disabled? &&
+      weight_tracking_disabled? &&
+        blood_pressure_tracking_disabled?
   end
 end
