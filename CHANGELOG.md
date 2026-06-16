@@ -2,6 +2,11 @@
 
 ## Unreleased Changes
 
+## 2026-06-16
+- Enhacement: Mark some elements as non-selectable to make mobile navigation a bit cleaner.  Helps avoid annoyances like
+double-tappimng by accident on day navigation controls.
+- Fix: Show date when most recent blood pressure reading was taken (matching behavior of the weight entries field in the day view)
+
 ## 2026-06-15
 - Fix: Specify read-only permissions for test & lint CI/CD jobs
 - Enhancement: Improve confirmation dialogs styling
