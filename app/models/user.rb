@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :sessions,       dependent: :destroy
   has_many :food_entries,   dependent: :destroy
   has_many :weight_entries, dependent: :destroy
+  has_many :blood_pressure_readings, dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 

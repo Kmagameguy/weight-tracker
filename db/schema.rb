@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_09_005627) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_15_233509) do
+  create_table "blood_pressure_readings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date", null: false
+    t.integer "diastolic", null: false
+    t.integer "systolic", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id", "date"], name: "index_blood_pressure_readings_on_user_id_and_date", unique: true
+    t.index ["user_id"], name: "index_blood_pressure_readings_on_user_id"
+  end
+
   create_table "food_entries", force: :cascade do |t|
     t.integer "calories", default: 0, null: false
     t.datetime "created_at", null: false
@@ -51,6 +62,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_005627) do
     t.index ["user_id"], name: "index_weight_entries_on_user_id"
   end
 
+  add_foreign_key "blood_pressure_readings", "users"
   add_foreign_key "food_entries", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "weight_entries", "users"
