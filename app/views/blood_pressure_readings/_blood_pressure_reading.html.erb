@@ -1,0 +1,17 @@
+<div class="flex items-center justify-between">
+  <span class="text-3xl font-semibold <%= blood_pressure_label_color(blood_pressure_reading) %>">
+    <%= blood_pressure_reading.label %>
+  </span>
+
+  <div class="flex items-center gap-3">
+    <%= link_to "Edit", edit_blood_pressure_reading_path(blood_pressure_reading),
+          class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
+
+    <%= button_to "Remove", blood_pressure_reading_path(blood_pressure_reading),
+          method: :delete,
+          data: { turbo_confirm: "Remove blood pressure reading?" },
+          form_class: "flex items-center",
+          class: "text-sm text-slate-300 hover:text-red-400 transition-colors
+                  bg-transparent border-0 cursor-pointer" %>
+  </div>
+</div>

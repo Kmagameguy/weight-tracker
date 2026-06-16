@@ -1,0 +1,20 @@
+<div class="min-h-screen bg-slate-50 flex items-start justify-center pt-24 px-4">
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 w-full max-w-sm">
+    <%= turbo_frame_tag "blood_pressure_reading" do %>
+      <h1 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-1">
+        Edit Blood Pressure reading
+      </h1>
+
+      <p class="text-sm text-slate-500 mb-6">
+        <%= @blood_pressure_reading.date.strftime("%B %-d, %Y") %>
+      </p>
+
+      <%= render "blood_pressure_readings/form", blood_pressure_reading: @blood_pressure_reading %>
+
+      <div class="mt-4">
+        <%= link_to "Cacnel", day_path_for(@blood_pressure_reading),
+              class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
+      </div>
+    <% end %>
+  </div>
+</div>

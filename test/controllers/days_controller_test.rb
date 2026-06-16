@@ -105,6 +105,22 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
         assert_select "#weight_entry_weight", count: 0
         assert_select "turbo-frame#weight_entry", text: /#{weight_entry.weight}/
       end
+
+      it "renders the blood pressure entry form when no blood pressure reading exists for the day" do
+        BloodPressureReading.all.destroy_all
+        get day_path_for(Date.current)
+        assert_select "turbo-frame#blood_pressure_reading form"
+      end
+
+      it "renders existing blood pressure reading when one exists" do
+        BloodPressureReading.all.destroy_all
+        today = Date.current
+        blood_pressure_reading = @user.blood_pressure_readings.create!(date: today, systolic: 120, diastolic: 80)
+        get day_path_for(today)
+        assert_select "#blood_pressure_reading_systolic",   count: 0
+        assert_select "#blood_pressure_reading_diastolic",  count: 0
+        assert_select "turbo-frame#blood_pressure_reading", text: /#{blood_pressure_reading.label}/
+      end
     end
 
     context "turbo frame requests" do

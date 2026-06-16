@@ -48,3 +48,8 @@ stage_2_both:
   user: one
   date: 2025-06-22
 
+pressure_for_user_two:
+  systolic: 121
+  diastolic: 78
+  user: two
+  date: 2025-06-21
