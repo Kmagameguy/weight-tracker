@@ -1,49 +1,55 @@
 <div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
   <div class="bg-white shadow-sm border border-slate-100 p-4">
     <h3 class="font-semibold text-slate-800 mb-2">Statistics</h3>
-    <div class="flex justify-between text-sm mb-1">
-      <span class="text-slate-400">Daily goal:</span>
-      <span class="font-medium">
-        <%= number_with_delimiter(user.daily_calorie_goal) %> cal
-      </span>
-    </div>
-    <div class="flex justify-between text-sm mb-1">
-      <span class="text-slate-400">Days over budget:</span>
-      <span class="font-medium">
-        <%= number_with_delimiter(user.days_over_budget) %>
-      </span>
-    </div>
-    <div class="flex justify-between text-sm mb-1">
-      <span class="text-slate-400">Median calorie intake:</span>
-      <span class="font-medium">
-        <%= number_with_delimiter(user.median_calories_consumed.round(0)) %> cal
-      </span>
-    </div>
-    <div class="flex justify-between text-sm mb-1">
-      <span class="text-slate-400">
-        Calorie <%= user.lifetime_calorie_deficit.positive? ? "deficit" : "surplus" %> since start (based on typical <%= number_with_delimiter(User::DEFAULT_DAILY_CALORIE_GOAL) %> calorie diet):
-      </span>
-      <span class="font-medium">
-        <%= number_with_delimiter(user.lifetime_calorie_deficit.to_i.abs) %>
-      </span>
-    </div>
-    <div class="flex justify-between text-sm mb-1">
-      <span class="text-slate-400">Max Recorded Weight</span>
-      <span class="font-medium">
-        <%= user.max_recorded_weight.present? ? "#{number_with_precision(user.max_recorded_weight, precision: 1)} lbs" : "No weigh-ins available" %>
-      </span>
-    </div>
-    <div class="flex justify-between text-sm mb-1">
-      <span class="text-slate-400">Min Recorded Weight</span>
-      <span class="font-medium">
-        <%= user.min_recorded_weight.present? ? "#{number_with_precision(user.min_recorded_weight, precision: 1)} lbs" : "No weigh-ins available" %>
-      </span>
-    </div>
-    <div class="flex justify-between text-sm mb-1">
-      <span class="text-slate-400">Last weigh-in:</span>
-      <span class="font-medium">
-        <%= user.current_weight.present? ? "#{number_with_precision(user.current_weight, precision: 1)} lbs" : "No weigh-ins available" %>
-      </span>
-    </div>
+
+    <% if user.calorie_tracking_enabled? %>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-400">Daily goal:</span>
+        <span class="font-medium">
+          <%= number_with_delimiter(user.daily_calorie_goal) %> cal
+        </span>
+      </div>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-400">Days over budget:</span>
+        <span class="font-medium">
+          <%= number_with_delimiter(user.days_over_budget) %>
+        </span>
+      </div>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-400">Median calorie intake:</span>
+        <span class="font-medium">
+          <%= number_with_delimiter(user.median_calories_consumed.round(0)) %> cal
+        </span>
+      </div>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-400">
+          Calorie <%= user.lifetime_calorie_deficit.positive? ? "deficit" : "surplus" %> since start (based on typical <%= number_with_delimiter(User::DEFAULT_DAILY_CALORIE_GOAL) %> calorie diet):
+        </span>
+        <span class="font-medium">
+          <%= number_with_delimiter(user.lifetime_calorie_deficit.to_i.abs) %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if user.weight_tracking_enabled? %>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-400">Max Recorded Weight</span>
+        <span class="font-medium">
+          <%= user.max_recorded_weight.present? ? "#{number_with_precision(user.max_recorded_weight, precision: 1)} lbs" : "No weigh-ins available" %>
+        </span>
+      </div>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-400">Min Recorded Weight</span>
+        <span class="font-medium">
+          <%= user.min_recorded_weight.present? ? "#{number_with_precision(user.min_recorded_weight, precision: 1)} lbs" : "No weigh-ins available" %>
+        </span>
+      </div>
+      <div class="flex justify-between text-sm mb-1">
+        <span class="text-slate-400">Last weigh-in:</span>
+        <span class="font-medium">
+          <%= user.current_weight.present? ? "#{number_with_precision(user.current_weight, precision: 1)} lbs" : "No weigh-ins available" %>
+        </span>
+      </div>
+    <% end %>
   </div>
 </div>
