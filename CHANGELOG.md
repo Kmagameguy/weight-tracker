@@ -2,6 +2,7 @@
 
 ## Unreleased Changes
 - Enhancement: Add a basic footer to the application views
+- Enhancement: Allow users to opt-in to the various tracking features. Now you can either track everything or just one thing.  You choose.
 
 ## 2026-06-16
 - Enhacement: Mark some elements as non-selectable to make mobile navigation a bit cleaner.  Helps avoid annoyances like

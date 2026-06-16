@@ -45,6 +45,36 @@ class UserTest < ActiveSupport::TestCase
       assert_not_predicate @user, :valid?
       assert_includes @user.errors[:timezone], "is not included in the list"
     end
+
+    it "is invalid if calorie_tracking_enabled is not a boolean value" do
+      @user.calorie_tracking_enabled = nil
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:calorie_tracking_enabled], "value must be true or false"
+    end
+
+    it "is invalid if weight_tracking_enabled is not a boolean value" do
+      @user.weight_tracking_enabled = nil
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:weight_tracking_enabled], "value must be true or false"
+    end
+
+    it "is invalid if blood_pressure_tracking_enabled is not a boolean value" do
+      @user.blood_pressure_tracking_enabled = nil
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:blood_pressure_tracking_enabled], "value must be true or false"
+    end
+
+    it "defaults calorie_tracking_enabled to true" do
+      assert User.new.calorie_tracking_enabled
+    end
+
+    it "defaults weight_tracking_enabled to true" do
+      assert User.new.weight_tracking_enabled
+    end
+
+    it "defaults blood_pressure_tracking_enabled to true" do
+      assert User.new.blood_pressure_tracking_enabled
+    end
   end
 
   describe "associations" do

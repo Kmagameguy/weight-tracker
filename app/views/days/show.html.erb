@@ -34,47 +34,66 @@
     </div>
   <% end %>
 
-  <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
-    <%= render "days/calories_summary", day_presenter: @day_presenter %>
-    <div class="px-6 py-2">
-      <div id="food_entries" class="divide-y divide-slate-50">
-        <%= render @day_presenter.food_entries %>
-        <% unless @day_presenter.food_entries.any? %>
-          <%= render "food_entries/empty" %>
-        <% end %>
+  <% if @day_presenter.user.all_features_disabled? %>
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
+      <div class="flex flex-col p-6 border-b border-slate-50">
+        <h2 class="font-semibold uppercase mb-2 tracking-widest text-slate-700 select-none">
+          Oops! All features are disabled!
+        </h2>
+        <span class="text-sm font-normal text-slate-500">
+          Visit your <%= link_to "Profile", profile_path, class: "text-emerald-500 hover:text-red-400 transition-colors" %> to enable application features.
+        </span>
       </div>
     </div>
+  <% end %>
 
-    <div id="food_entry_form" class="px-6 pb-6 pt-2 border-t border-slate-50">
-      <%= render "food_entries/form", food_entry: @day_presenter.new_food_entry %>
+  <% if @day_presenter.user.calorie_tracking_enabled? %>
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
+      <%= render "days/calories_summary", day_presenter: @day_presenter %>
+      <div class="px-6 py-2">
+        <div id="food_entries" class="divide-y divide-slate-50">
+          <%= render @day_presenter.food_entries %>
+          <% unless @day_presenter.food_entries.any? %>
+            <%= render "food_entries/empty" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div id="food_entry_form" class="px-6 pb-6 pt-2 border-t border-slate-50">
+        <%= render "food_entries/form", food_entry: @day_presenter.new_food_entry %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
-  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-    <%= turbo_frame_tag "weight_entry" do %>
-      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4 select-none">
-        <%= last_weigh_in(@day_presenter) %>
-        <p>Today's Weigh-in</p>
-      </h2>
-      <% if @day_presenter.weight_entry %>
-        <%= render "weight_entries/weight_entry", weight_entry: @day_presenter.weight_entry %>
-      <% else %>
-        <%= render "weight_entries/form", weight_entry: @day_presenter.new_weight_entry %>
+  <% if @day_presenter.user.weight_tracking_enabled? %>
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+      <%= turbo_frame_tag "weight_entry" do %>
+        <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4 select-none">
+          <%= last_weigh_in(@day_presenter) %>
+          <p>Today's Weigh-in</p>
+        </h2>
+        <% if @day_presenter.weight_entry %>
+          <%= render "weight_entries/weight_entry", weight_entry: @day_presenter.weight_entry %>
+        <% else %>
+          <%= render "weight_entries/form", weight_entry: @day_presenter.new_weight_entry %>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
-  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-    <%= turbo_frame_tag "blood_pressure_reading" do %>
-      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4 select-none">
-        <%= last_blood_pressure_reading(@day_presenter) %>
-        <p>Today's BP Reading</p>
-      </h2>
-      <% if @day_presenter.blood_pressure_reading %>
-        <%= render "blood_pressure_readings/blood_pressure_reading", blood_pressure_reading: @day_presenter.blood_pressure_reading %>
-      <% else %>
-        <%= render "blood_pressure_readings/form", blood_pressure_reading: @day_presenter.new_blood_pressure_reading %>
+  <% if @day_presenter.user.blood_pressure_tracking_enabled? %>
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+      <%= turbo_frame_tag "blood_pressure_reading" do %>
+        <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4 select-none">
+          <%= last_blood_pressure_reading(@day_presenter) %>
+          <p>Today's BP Reading</p>
+        </h2>
+        <% if @day_presenter.blood_pressure_reading %>
+          <%= render "blood_pressure_readings/blood_pressure_reading", blood_pressure_reading: @day_presenter.blood_pressure_reading %>
+        <% else %>
+          <%= render "blood_pressure_readings/form", blood_pressure_reading: @day_presenter.new_blood_pressure_reading %>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

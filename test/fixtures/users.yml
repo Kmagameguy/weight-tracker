@@ -5,9 +5,15 @@ one:
   daily_calorie_goal: 1500
   email_address: one@example.com
   password_digest: <%= password_digest %>
+  calorie_tracking_enabled: true
+  weight_tracking_enabled: true
+  blood_pressure_tracking_enabled: true
 
 two:
   timezone: Pacific/Auckland
   daily_calorie_goal: 2000
   email_address: two@example.com
   password_digest: <%= password_digest %>
+  calorie_tracking_enabled: true
+  weight_tracking_enabled: false
+  blood_pressure_tracking_enabled: false
