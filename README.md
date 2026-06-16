@@ -1,5 +1,5 @@
 # Weight Tracker
-A personal tracking app for logging daily calorie intake and weight.
+A personal tracking app for logging daily calorie intake, weight, and blood pressure.
 The app intends to:
 - First, and foremost, be a _personal_ project. I use this app myself and intend for its featureset to serve my wants/desires _above all else_.
 - Easily track calorie intake and weight changes over time
@@ -15,6 +15,7 @@ This software is a personal data collection tool ONLY. It is not a medical or he
 - **Daily Food Entry:** Log meals by name and calorie count, and easily browse by day
 - **Calorie Tracking:** See calories consumed vs. your configurable daily goal 
 - **Weight Tracking:** Record your weigh-ins on whatever schedule you like, and track progress over time
+- **Blood Pressure Tracking:** Record your blood pressure on whatever schedule you like, and track changes over time
 - **Data Visualizations\*:** View personalized data based on your daily inputs
   - *Note: This feature is currently quite simple. I plan to expand upon it in future updates
 
@@ -26,6 +27,7 @@ This software is a personal data collection tool ONLY. It is not a medical or he
 
 ## App Screenshots
 <img src="docs/assets/app_example.png" alt="main app view" width="600">
+<img src="docs/assets/app_example2.png" alt="profile app view" width="600">
 
 ## Setup & Installation
 ### Prerequisites for a Docker-Based Deployment (Recommended)
@@ -74,6 +76,7 @@ The app is organized around a few simple resources:
 - **DaysController:** This is the primary view, which renders a full day's food and weight data via a `DayPresenter` object
 - **FoodEntriesController:** CRUD for food entries, responds with Turbo Streams to manage inline updates
 - **WeightEntriesController:** CRUD for weight entries on the Day page
+- **BloodPressureReadingsController:** CRUD for blood pressure readings on the Day page
 - **PofilesController:** Personal dashboard/stats page for the signed-in user
 
 ## Roadmap
