@@ -42,6 +42,10 @@ class DayPresenter
     @new_weight_entry ||= user.weight_entries.build(date: date)
   end
 
+  def new_blood_pressure_reading
+    @new_blood_pressure_reading ||= user.blood_pressure_readings.build(date: date)
+  end
+
   def last_weight_entry
     weight_entries.max_by(&:date)
   end
@@ -50,11 +54,23 @@ class DayPresenter
     weight_entries.find_by(date: date)
   end
 
+  def last_blood_pressure_reading
+    blood_pressure_readings.max_by(&:date)
+  end
+
+  def blood_pressure_reading
+    blood_pressure_readings.find_by(date: date)
+  end
+
   def food_entries
     @food_entries ||= user.food_entries.where(date: date).order(:created_at)
   end
 
   def weight_entries
     @weight_entries ||= user.weight_entries
+  end
+
+  def blood_pressure_readings
+    @blood_pressure_readings ||= user.blood_pressure_readings
   end
 end

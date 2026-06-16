@@ -12,4 +12,18 @@ module DayHelper
       "No weigh-ins yet."
     end
   end
+
+  def last_blood_pressure_reading(day_presenter)
+    content_tag(:p,
+      "Most recent BP reading: #{blood_pressure_reading_text(day_presenter.last_blood_pressure_reading)}"
+    )
+  end
+
+  def blood_pressure_reading_text(blood_pressure_reading)
+    if blood_pressure_reading
+      blood_pressure_reading.label
+    else
+      "No BP readings yet."
+    end
+  end
 end

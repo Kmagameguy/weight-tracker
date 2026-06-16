@@ -1,0 +1,33 @@
+<%= form_with model: blood_pressure_reading do |f| %>
+  <%= f.hidden_field :date %>
+
+  <div class="flex flex-col gap-2">
+    <%= f.label :systolic, "Systolic Value",
+          class: "text-xs font-semibold uppercase tracking-widest text-slate-400" %>
+
+    <%= f.number_field :systolic,
+          placeholder: "e.g. 120",
+          step: 1, min: 0,
+          required: true,
+          class: "flex-1 text-sm rounded-lg border border-slate-200
+                  px-3 py-2 text-slate-700 placeholder-slate-300
+                  focus:outline-none focus:ring-2 focus:ring-emerald-400
+                  focus:border-transparent transition" %>
+
+    <%= f.label :diastolic, "Diastolic Value",
+          class: "text-xs font-semibold uppercase tracking-widest text-slate-400" %>
+
+    <%= f.number_field :diastolic,
+          placeholder: "e.g. 80",
+          step: 1, min: 0,
+          required: true,
+          class: "flex-1 text-sm rounded-lg border border-slate-200
+                  px-3 py-2 text-slate-700 placeholder-slate-300
+                  focus:outline-none focus:ring-2 focus:ring-emerald-400
+                  focus:border-transparent transition" %>
+
+    <%= f.submit blood_pressure_reading.new_record? ? "Log Blood Pressure" : "Update",
+          class: "text-sm font-medium bg-emerald-500 hover:bg-emerald-600
+                  text-white px-4 py-2 rounded-lg transition-colors cursor-pointer" %>
+  </div>
+<% end %>

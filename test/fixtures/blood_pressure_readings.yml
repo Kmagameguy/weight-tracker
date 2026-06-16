@@ -1,0 +1,55 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+normal:
+  systolic: 119
+  diastolic: 79
+  user: one
+  date: 2025-06-15
+
+elevated:
+  systolic: 129
+  diastolic: 79
+  user: one
+  date: 2025-06-16
+
+stage_1_systolic:
+  systolic: 130
+  diastolic: 79
+  user: one
+  date: 2025-06-17
+
+stage_1_diastolic:
+  systolic: 129
+  diastolic: 80
+  user: one
+  date: 2025-06-18
+
+stage_1_both:
+  systolic: 130
+  diastolic: 80
+  user: one
+  date: 2025-06-19
+
+stage_2_systolic:
+  systolic: 140
+  diastolic: 79
+  user: one
+  date: 2025-06-20
+
+stage_2_diastolic:
+  systolic: 119
+  diastolic: 90
+  user: one
+  date: 2025-06-21
+
+stage_2_both:
+  systolic: 140
+  diastolic: 90
+  user: one
+  date: 2025-06-22
+
+pressure_for_user_two:
+  systolic: 121
+  diastolic: 78
+  user: two
+  date: 2025-06-21

@@ -91,10 +91,19 @@ class DayPresenterTest < ActiveSupport::TestCase
     end
   end
 
+  describe "#new_blood_pressure_reading" do
+    it "prepares a new blood pressure reading for the presenter's user and date" do
+      new_blood_pressure_reading = @presenter.new_blood_pressure_reading
+      assert_not_predicate new_blood_pressure_reading, :persisted?
+      assert_equal @user, new_blood_pressure_reading.user
+      assert_equal @date, new_blood_pressure_reading.date
+    end
+  end
+
   describe "#last_weight_entry" do
     it "returns the most recently logged weight entry" do
       [ { date: @date + 1.week, weight: 310 }, { date: @date, weight: 110.4 } ].each do |weight|
-        @user.weight_entries.create!(weight: weight[:weight], date: weight[:date], user: @user)
+        @user.weight_entries.create!(weight: weight[:weight], date: weight[:date])
       end
 
       assert_operator @presenter.user.weight_entries.count, ">", 0
@@ -115,6 +124,39 @@ class DayPresenterTest < ActiveSupport::TestCase
       @user.weight_entries.destroy_all
 
       assert_nil @presenter.weight_entry
+    end
+  end
+
+  describe "#last_blood_pressure_reading" do
+    it "returns the most recently logged blood pressure reading" do
+      [ { date: @date + 1.week, systolic: 120, diastolic: 80 }, { date: @date, systolic: 126, diastolic: 88 } ].each do |blood_pressure_reading|
+        @user.blood_pressure_readings.create!(systolic: blood_pressure_reading[:systolic], diastolic: blood_pressure_reading[:diastolic], date: blood_pressure_reading[:date])
+      end
+
+      assert_operator @presenter.user.blood_pressure_readings.count, ">", 0
+      assert_equal "120/80", @presenter.last_blood_pressure_reading.combined_value
+    end
+  end
+
+  describe "#blood_pressure_reading" do
+    it "finds the blood pressure reading for the presenter's user and given date" do
+      @user.blood_pressure_readings.first.update!(date: @date)
+      @user.blood_pressure_readings.create!(date: @date - 1.day, systolic: 121, diastolic: 82)
+      expected_blood_pressure_reading = @user.blood_pressure_readings.find_by(date: @date)
+
+      assert_equal expected_blood_pressure_reading, @presenter.blood_pressure_reading
+    end
+  end
+
+  describe "#blood_pressure_readings" do
+    it "returns all blood pressure readings for the given user & day" do
+      total_blood_pressure_readings = BloodPressureReading.all.count
+      total_user_blood_pressure_readings = @user.blood_pressure_readings.count
+
+      assert_not_empty @presenter.blood_pressure_readings
+      assert_operator total_blood_pressure_readings, ">", @presenter.blood_pressure_readings.count
+      assert_equal total_user_blood_pressure_readings, @presenter.blood_pressure_readings.count
+      assert @presenter.blood_pressure_readings.all? { |bpr| bpr.user == @user }
     end
   end
 
