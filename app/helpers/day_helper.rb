@@ -21,7 +21,7 @@ module DayHelper
 
   def blood_pressure_reading_text(blood_pressure_reading)
     if blood_pressure_reading
-      blood_pressure_reading.label
+      "#{blood_pressure_reading.label} - #{blood_pressure_reading.date.strftime("%B %-d") }"
     else
       "No BP readings yet."
     end
