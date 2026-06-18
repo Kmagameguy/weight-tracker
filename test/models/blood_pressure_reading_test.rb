@@ -167,6 +167,23 @@ class BloodPressureReadingTest < ActiveSupport::TestCase
     end
   end
 
+  describe "#map_score" do
+    it "uses the standard formula to calculate a mean arterial score from the systolic and diastolic values" do
+      bp_reading = BloodPressureReading.new(date: Date.current, systolic: 120, diastolic: 80)
+
+      assert_equal 93, bp_reading.map_score.to_i
+    end
+  end
+
+  describe "#<=>" do
+    it "compares blood pressure readings based on their map scores" do
+      new_bp_reading = BloodPressureReading.new(date: Date.current, systolic: 120, diastolic: 80)
+      old_bp_reading = BloodPressureReading.new(date: Date.current - 1.week, systolic: 100, diastolic: 80)
+
+      assert new_bp_reading > old_bp_reading
+    end
+  end
+
   describe "#normal?" do
     before { @reading = blood_pressure_readings(:normal) }
 

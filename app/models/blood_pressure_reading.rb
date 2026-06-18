@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class BloodPressureReading < ApplicationRecord
+  include Comparable
+
   SYSTOLIC_NORMAL_RANGE     = (..119)
   SYSTOLIC_ELEVATED_RANGE   = (120..129)
   SYSTOLIC_STAGE_ONE_RANGE  = (130..139)
@@ -39,6 +41,15 @@ class BloodPressureReading < ApplicationRecord
 
   def combined_value
     "#{systolic}/#{diastolic}"
+  end
+
+  # Mean Arterial Pressure Score
+  def map_score
+    diastolic + (systolic - diastolic) / 3.0
+  end
+
+  def <=>(other)
+    map_score <=> other.map_score
   end
 
   def normal?
