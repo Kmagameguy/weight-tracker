@@ -218,4 +218,124 @@ class WeeklyHealthSummaryPresenterTest < ActiveSupport::TestCase
       assert_equal 3, WeeklyHealthSummaryPresenter.new(@user).days_logged
     end
   end
+
+  describe "#weekly_tips" do
+    it "includes perfectly_logged_week_tip when all days have a record" do
+      presenter = WeeklyHealthSummaryPresenter.new(@user)
+      presenter.stubs(:days_logged).returns(7)
+      expected_message = "Perfect week! All 7 days logged. Consistent data entry makes trends much more reliable."
+
+      assert_includes presenter.weekly_tips, expected_message
+    end
+
+    it "excludes perfectly_logged_week_tip if not all days have a record" do
+      presenter = WeeklyHealthSummaryPresenter.new(@user)
+      presenter.stubs(:days_logged).returns(6)
+      assert_not_includes presenter.weekly_tips, "Perfect week! All 7 days logged. Consistent data entry makes trends much more reliable."
+    end
+
+    it "includes bp_elevation_tip when bp is above the normal range" do
+      klass = BloodPressureReading
+      today = Date.current
+      [
+        klass.new(user: @user, date: today, systolic: klass::SYSTOLIC_ELEVATED_RANGE.last, diastolic: klass::DIASTOLIC_NORMAL_RANGE.last),
+        klass.new(user: @user, date: today, systolic: klass::SYSTOLIC_STAGE_ONE_RANGE.first, diastolic: klass::DIASTOLIC_STAGE_ONE_RANGE.first),
+        klass.new(user: @user, date: today, systolic: klass::SYSTOLIC_STAGE_TWO_RANGE.first, diastolic: klass::DIASTOLIC_STAGE_TWO_RANGE.first)
+      ].each do |bp_category|
+        presenter = WeeklyHealthSummaryPresenter.new(@user)
+        presenter.stubs(:avg_blood_pressure).returns(bp_category)
+
+        assert_includes presenter.weekly_tips, "Your average blood pressure this week (#{bp_category.combined_value}) is in the #{bp_category.category} range. Worth discussing with your doctor if this persists."
+      end
+    end
+
+    it "excludes bp_elevation_tip when user has opted out of blood pressure tracking" do
+      @user.blood_pressure_tracking_enabled = false
+      assert WeeklyHealthSummaryPresenter.new(@user).weekly_tips.none? { |tip| tip.include?("Your average blood pressure this week") }
+    end
+
+    it "excludes bp_elevation_tip when user has no blood pressure readings" do
+      @user.blood_pressure_readings.destroy_all
+      assert WeeklyHealthSummaryPresenter.new(@user).weekly_tips.none? { |tip| tip.include?("Your average blood pressure this week") }
+    end
+
+    it "excludes bp_elevation_tip when blood pressure average is in the normal range" do
+      klass = BloodPressureReading
+      today = Date.current
+      normal_reading = klass.new(user: @user, date: today, systolic: klass::SYSTOLIC_NORMAL_RANGE.last, diastolic: klass::DIASTOLIC_NORMAL_RANGE.last)
+
+      presenter = WeeklyHealthSummaryPresenter.new(@user)
+      presenter.stubs(:avg_blood_pressure).returns(normal_reading)
+
+      assert presenter.weekly_tips.none? { |tip| tip.include?("Your average blood pressure this week") }
+    end
+
+    it "includes calorie_variance_tip when food entries are present" do
+      monday    = Date.current.beginning_of_week
+      tuesday   = monday + 1.day
+      wednesday = tuesday + 1.day
+      thursday  = wednesday + 1.day
+
+      @user.food_entries.destroy_all
+      [
+        { name: "Banana", calories: 100, date: monday },
+        { name: "Watermelon", calories: 45, date: tuesday },
+        { name: "Tacos", calories: 580, date: wednesday },
+        { name: "Pizza", calories: 3_000, date: thursday }
+      ].each do |entry|
+        @user.food_entries.create!(name: entry[:name], calories: entry[:calories], date: entry[:date])
+      end
+
+      presenter = WeeklyHealthSummaryPresenter.new(@user)
+      assert presenter.weekly_tips.any? { |tip| tip.include?("Your daily calories varied quite a bit this week") }
+    end
+
+    it "excludes calorie_variance_tip when user has opted out of calorie tracking" do
+      @user.calorie_tracking_enabled = false
+      assert WeeklyHealthSummaryPresenter.new(@user).weekly_tips.none? { |tip| tip.include?("Your daily calories varied quite a bit this week") }
+    end
+
+    it "excludes calorie_variance_tip when user has less than 4 food entries" do
+      @user.food_entries.destroy_all
+      @user.food_entries.create!(date: Date.current, name: "Banana", calories: 100)
+
+      assert WeeklyHealthSummaryPresenter.new(@user).weekly_tips.none? { |tip| tip.include?("Your daily calories varied quite a bit this week") }
+    end
+
+    it "excludes calorie_variance_tip when the standard deviation of a user's daily calorie intake is less than 400" do
+            monday    = Date.current.beginning_of_week
+      tuesday   = monday + 1.day
+      wednesday = tuesday + 1.day
+      thursday  = wednesday + 1.day
+
+      @user.food_entries.destroy_all
+      [
+        { name: "Banana", calories: 100, date: monday },
+        { name: "Watermelon", calories: 200, date: tuesday },
+        { name: "Tacos", calories: 300, date: wednesday },
+        { name: "Pizza", calories: 200, date: thursday }
+      ].each do |entry|
+        @user.food_entries.create!(name: entry[:name], calories: entry[:calories], date: entry[:date])
+      end
+
+      presenter = WeeklyHealthSummaryPresenter.new(@user)
+      assert presenter.weekly_tips.none? { |tip| tip.include?("Your daily calories varied quite a bit this week") }
+    end
+
+    it "includes the logging_streak_improved_tip when the number of logged days this week is greater than the number of logged days last week" do
+      presenter = WeeklyHealthSummaryPresenter.new(@user)
+      presenter.stubs(:days_logged).returns(2)
+      presenter.previous_week.stubs(:days_logged).returns(1)
+
+      assert presenter.weekly_tips.any? { |tip| tip.include?("You logged more days than last week") }
+    end
+
+    it "excludes the logging_streak_improved_tip when the number of days logged this week are less than the number of days logged last week" do
+      presenter = WeeklyHealthSummaryPresenter.new(@user)
+      presenter.stubs(:days_logged).returns(1)
+      presenter.previous_week.stubs(:days_logged).returns(2)
+
+      assert presenter.weekly_tips.none? { |tip| tip.include?("You logged more days than last week") }
+    end
+  end
 end

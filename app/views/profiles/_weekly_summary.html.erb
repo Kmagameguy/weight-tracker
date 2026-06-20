@@ -30,11 +30,7 @@
     </div>
 
     <p class="text-xs text-slate-500 pt-4 border-t border-slate-100">
-      <% if summary.days_logged == 7 %>
-        Perfect logging week — all 7 days tracked across food, weight, and BP.
-      <% else %>
-        You logged <%= number_to_sequence(summary.days_logged) %> in 7 days. Consistent logging gives you more accurate insights.
-      <% end %>
+      <%= summary.weekly_tips.sample.presence || summary.fallback_tip %>
     </p>
 
   </div>

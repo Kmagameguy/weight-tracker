@@ -1,17 +1,4 @@
 module ProfileHelper
-  def number_to_sequence(number)
-    return "" if number.blank? || !number.respond_to?(:to_i)
-
-    case number.to_i
-    when 1
-      "once"
-    when 2
-      "twice"
-    else
-      "#{number.to_i} times"
-    end
-  end
-
   def avg_daily_calories_label(avg_daily_calories)
     return blank_entry if avg_daily_calories.blank?
 

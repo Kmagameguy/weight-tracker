@@ -3,36 +3,6 @@ require "test_helper"
 class ProfileHelperTest < ActionView::TestCase
   helper ProfileHelper
 
-  describe "#number_to_sequence" do
-    it "returns 'once' when 1" do
-      assert_equal "once", number_to_sequence(1)
-    end
-
-    it "returns 'twice' when 2" do
-      assert_equal "twice", number_to_sequence(2)
-    end
-
-    it "returns 'x times' for values 3 and above" do
-      [ 3, 4, 5, 27, 120 ].each do |val|
-        assert_equal "#{val} times", number_to_sequence(val)
-      end
-    end
-
-    it "returns '0 times' when 0" do
-      assert_equal "0 times", number_to_sequence(0)
-    end
-
-    it "returns an empty string when the value is empty" do
-      [ nil, [], {}, "" ].each do |val|
-        assert_equal("", number_to_sequence(val))
-      end
-    end
-
-    it "returns an empty string when the value cannot be cast to an integer" do
-      assert_equal("", number_to_sequence(Date::Infinity))
-    end
-  end
-
   describe "#avg_daily_calories_label" do
     it "returns a blank entry template when value is blank" do
       assert_equal blank_entry, avg_daily_calories_label(nil)
