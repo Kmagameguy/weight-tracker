@@ -10,4 +10,8 @@
   <% if @user&.calorie_tracking_enabled? %>
     <%= render "profiles/calorie_consumption_over_time", food_entries: @user&.food_entries %>
   <% end %>
+
+  <% if @user&.blood_pressure_tracking_enabled? %>
+    <%= render "profiles/blood_pressure_over_time", blood_pressure_readings: @user&.blood_pressure_readings %>
+  <% end %>
 <% end %>
