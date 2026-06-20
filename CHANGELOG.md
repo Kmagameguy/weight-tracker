@@ -2,6 +2,9 @@
 
 ## Unreleased Changes
 
+## 2026-06-19.3
+- Fix: Increment Release Version
+
 ## 2026-06-19.2
 - Fix: Fix duplicate "vs last week" messaging in weekly summary
 
