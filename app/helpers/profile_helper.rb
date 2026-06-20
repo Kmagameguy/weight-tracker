@@ -14,7 +14,7 @@ module ProfileHelper
 
     prefix  = diff.positive? ? "+" : ""
     content = "no change"
-    content = "#{prefix}#{number_with_delimiter(diff)} vs last week" unless diff.zero?
+    content = "#{prefix}#{number_with_delimiter(diff)}" unless diff.zero?
     content += (" " + "vs last week")
 
 
