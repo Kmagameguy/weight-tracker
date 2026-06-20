@@ -1,6 +1,6 @@
 <% if food_entries.exists? %>
   <div class="max-w-xl mx-auto px-2 py-3 flex flex-col gap-4">
-    <div class="bg-white shadow-sm border border-slate-100 p-4">
+    <div class="bg-white shadow-sm border border-slate-100 rounded-lg p-4">
       <%= column_chart food_entries.where(FoodEntry.arel_table[:date].gteq(30.days.ago)).order(:date).group(:date).sum(:calories),
             title: "Calorie Consumption By Day (Last 30 Days)" %>
     </div>
