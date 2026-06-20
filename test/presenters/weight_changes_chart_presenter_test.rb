@@ -1,6 +1,6 @@
 require "test_helper"
 
-class WeightChangesChartPresenterTeset < ActiveSupport::TestCase
+class WeightChangesChartPresenterTest < ActiveSupport::TestCase
   setup { @user = users(:one) }
 
   describe "constants" do
