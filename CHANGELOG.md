@@ -2,6 +2,11 @@
 
 ## Unreleased Changes
 
+## 2026-06-19
+- Enhancement: Replace profile page's "Statistics" section with a "Weekly Summary"
+- Enhancement: Add a Blood Pressure Readings Over Time chart to the profile page
+- Maintenance: Update Gemfile dependencies
+
 ## 2026-06-16.2
 - Enhancement: Add a basic footer to the application views
 - Enhancement: Allow users to opt-in to the various tracking features. Now you can either track everything or just one thing.  You choose
