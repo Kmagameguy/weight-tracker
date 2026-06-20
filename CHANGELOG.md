@@ -2,6 +2,9 @@
 
 ## Unreleased Changes
 
+## 2026-06-19.2
+- Fix: Fix duplicate "vs last week" messaging in weekly summary
+
 ## 2026-06-19
 - Enhancement: Replace profile page's "Statistics" section with a "Weekly Summary"
 - Enhancement: Add a Blood Pressure Readings Over Time chart to the profile page
