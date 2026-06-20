@@ -1,11 +1,17 @@
 <%= render "shared/flash_messages" %>
 <%= render "profiles/account_management", user: @user %>
-<% unless @user&.all_features_disabled? || (@user&.calorie_tracking_disabled? && @user&.weight_tracking_disabled?) %>
-  <%= render "profiles/statistics", user: @user %>
+<% unless @user&.all_features_disabled? %>
+  <%= render "profiles/weekly_summary", user: @user %>
+
   <% if @user&.weight_tracking_enabled? %>
     <%= render "profiles/weight_entries_over_time", presenter: WeightChangesChartPresenter.new(user: @user) %>
   <% end %>
+
   <% if @user&.calorie_tracking_enabled? %>
     <%= render "profiles/calorie_consumption_over_time", food_entries: @user&.food_entries %>
+  <% end %>
+
+  <% if @user&.blood_pressure_tracking_enabled? %>
+    <%= render "profiles/blood_pressure_over_time", blood_pressure_readings: @user&.blood_pressure_readings %>
   <% end %>
 <% end %>
