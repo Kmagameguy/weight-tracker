@@ -304,7 +304,7 @@ class WeeklyHealthSummaryPresenterTest < ActiveSupport::TestCase
     end
 
     it "excludes calorie_variance_tip when the standard deviation of a user's daily calorie intake is less than 400" do
-            monday    = Date.current.beginning_of_week
+      monday    = Date.current.beginning_of_week
       tuesday   = monday + 1.day
       wednesday = tuesday + 1.day
       thursday  = wednesday + 1.day
