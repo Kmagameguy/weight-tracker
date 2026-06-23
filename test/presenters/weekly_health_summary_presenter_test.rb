@@ -35,7 +35,8 @@ class WeeklyHealthSummaryPresenterTest < ActiveSupport::TestCase
     end
 
     it "returns an average daily calorie sum" do
-      today = Date.current
+      beginning_of_week = Date.current.beginning_of_week
+      today = beginning_of_week + 2.days
       yesterday = today - 1.day
       last_week = today - 1.week
 
@@ -303,7 +304,7 @@ class WeeklyHealthSummaryPresenterTest < ActiveSupport::TestCase
     end
 
     it "excludes calorie_variance_tip when the standard deviation of a user's daily calorie intake is less than 400" do
-            monday    = Date.current.beginning_of_week
+      monday    = Date.current.beginning_of_week
       tuesday   = monday + 1.day
       wednesday = tuesday + 1.day
       thursday  = wednesday + 1.day

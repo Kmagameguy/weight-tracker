@@ -2,6 +2,11 @@
 
 ## Unreleased Changes
 
+## 2026-06.22
+- Enhancement: Add a typeahead search feature to food entry form fields.
+A user's past food entries will now be pickable from a popover list during entry.
+- Enhancement: Add a "Cancel" option to the food entry editor.
+
 ## 2026-06-19.3
 - Fix: Increment Release Version
 

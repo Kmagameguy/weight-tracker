@@ -2,6 +2,7 @@ require "test_helper"
 
 class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
   include RoutingHelper
+  include ActionView::Helpers::NumberHelper
 
   setup do
     @user = users(:one)
@@ -11,6 +12,16 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
 
   describe "authentication" do
     before { sign_out }
+
+    it "redirects unauthenticated users away from the index action" do
+      get food_entries_path(query: "taco")
+      assert_redirected_to new_session_path
+    end
+
+    it "redirects unauthenticated users away from the show action" do
+      get food_entry_path(@food_entry)
+      assert_redirected_to new_session_path
+    end
 
     it "redirects unauthenticated users away from the create action" do
       assert_no_difference("FoodEntry.count") do
@@ -29,6 +40,95 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
         delete food_entry_path @food_entry
       end
       assert_redirected_to new_session_path
+    end
+  end
+
+  describe "#index" do
+    before do
+      today = Date.current
+      @user.food_entries.destroy_all
+      @user.food_entries.create!(name: "Taco Salad", calories: 450, date: today)
+      @user.food_entries.create!(name: "Tacos", calories: 600, date: today - 1.day)
+      users(:two).food_entries.create!(name: "Tacos", calories: 999, date: today)
+    end
+
+    it "returns matching food entries scoped to the current user" do
+      get food_entries_path(query: "taco")
+      assert_response :success
+      assert_select "button[data-name=?]", "Taco Salad"
+      assert_select "button[data-name=?]", "Tacos"
+    end
+
+    it "does not include another user's food entries" do
+      get food_entries_path(query: "taco")
+      assert_select "button[data-calories=?]", "999", count: 0
+    end
+
+    it "returns no results for a query with no matches" do
+      get food_entries_path(query: "query-with-no-matching-values")
+      assert_select "button", count: 0
+    end
+
+    describe "limit param" do
+      before do
+        today = Date.current
+        @user.food_entries.destroy_all
+        60.times { |n| @user.food_entries.create!(name: "Taco #{n}", calories: 100 + n, date: today - n.days) }
+      end
+
+      it "defaults to DEFAULT_LIMIT results when no limit is given" do
+        get food_entries_path(query: "taco")
+        assert_select "button", count: FoodEntriesController::DEFAULT_LIMIT
+      end
+
+      it "respects a custom limit within bounds" do
+        get food_entries_path(query: "taco", limit: 3)
+        assert_select "button", count: 3
+      end
+
+      it "does not set a flash alert when limit is within bounds" do
+        get food_entries_path(query: "taco", limit: 3)
+        assert_nil flash[:alert]
+      end
+
+      it "caps results at LIMIT_MAX when limit exceeds it" do
+        get food_entries_path(query: "taco", limit: FoodEntriesController::LIMIT_MAX + 1)
+        assert_select "button", count: FoodEntriesController::LIMIT_MAX
+      end
+
+      it "sets a flash alert when limit exceeds LIMIT_MAX" do
+        oversized_limit = FoodEntriesController::LIMIT_MAX + 1
+        get food_entries_path(query: "taco", limit: oversized_limit)
+        assert_match((/too large/), flash[:alert])
+        assert_match((/#{oversized_limit}/), flash[:alert])
+        assert_match((/#{FoodEntriesController::LIMIT_MAX}/), flash[:alert])
+      end
+
+      it "still runs the query and returns even when limit exceeds LIMIT_MAX" do
+        get food_entries_path(query: "taco", limit: FoodEntriesController::LIMIT_MAX + 1)
+        assert_response :success
+        assert_select "button", count: FoodEntriesController::LIMIT_MAX
+      end
+    end
+  end
+
+  describe "#show" do
+    it "renders the food entry partial" do
+      get food_entry_path(@food_entry)
+      assert_response :success
+      assert_select "#food_entry_#{@food_entry.id}"
+    end
+
+    it "displays the food entry's name and calories" do
+      get food_entry_path(@food_entry)
+      assert_select "span", text: @food_entry.name
+      assert_select "span", text: "#{number_with_delimiter(@food_entry.calories)} cal"
+    end
+
+    it "cannot show another user's food entry" do
+      other_entry = users(:two).food_entries.first
+      get food_entry_path(other_entry)
+      assert_response :not_found
     end
   end
 
