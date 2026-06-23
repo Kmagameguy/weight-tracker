@@ -1,20 +1,31 @@
-<%= form_with model: food_entry do |f| %>
+<%= form_with model: food_entry,
+      data: { controller: "food-entry-typeahead",
+              "food-entry-typeahead-url-value": food_entries_path } do |f| %>
   <%= f.hidden_field :date %>
 
-  <div class="flex gap-2">
-    <%= f.text_field :name,
-          placeholder: "e.g. Chicken sandwich",
-          required: true,
-          class: "flex-1 text-sm rounded-lg border border-slate-200
-                  px-3 py-2 text-slate-700 placeholder-slate-300
-                  focus:outline-none focus:ring-2 focus:ring-emerald-400
-                  focus:border-transparent transition" %>
+  <div class="flex gap-2 items-center">
+    <div class="relative flex-1">
+      <%= f.text_field :name,
+            placeholder: "e.g. Chicken sandwich",
+            required: true,
+            autocomplete: "off",
+            data: {
+              food_entry_typeahead_target: "name",
+              action: "input->food-entry-typeahead#search blur->food-entry-typeahead#blurClear"
+            },
+            class: "w-full text-sm rounded-lg border border-slate-200
+                    px-3 py-2 text-slate-700 placeholder-slate-300
+                    focus:outline-none focus:ring-2 focus:ring-emerald-400
+                    focus:border-transparent transition" %>
+      <div data-food-entry-typeahead-target="results" class="absolute z-10 w-full"></div>
+    </div>
 
     <%= f.number_field :calories,
           value: food_entry.new_record? ? nil : food_entry.calories,
           placeholder: "0",
           min: 0,
           required: true,
+          data: { food_entry_typeahead_target: "calories" },
           class: "w-20 text-sm rounded-lg border border-slate-200
                   px-3 py-2 text-slate-700 placeholder-slate-300
                   focus:outline-none focus:ring-2 focus:ring-emerald-400
@@ -23,5 +34,10 @@
     <%= f.submit food_entry.new_record? ? "Add" : "Update",
           class: "text-sm font-medium bg-emerald-500 hover:bg-emerald-600
                   text-white px-4 py-2 rounded-lg transition-colors cursor-pointer" %>
+    <% unless food_entry.new_record? %>
+      <%= link_to "Cancel",
+                  food_entry,
+                  class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
+    <% end %>
   </div>
 <% end %>

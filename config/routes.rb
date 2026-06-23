@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   get "/days/:year/:month/:day", to: "days#show", as: :day
-  resources :food_entries,   only:   %i[ create edit update destroy ]
+  resources :food_entries,   only:   %i[ index show create edit update destroy ]
   resources :weight_entries, only: %i[ create edit update destroy ]
   resources :blood_pressure_readings, only: %i[ create edit update destroy ]
   resource :profile,         only: %i[ show update ]

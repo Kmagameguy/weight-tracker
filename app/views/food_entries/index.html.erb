@@ -1,0 +1,18 @@
+<ul class="absolute w-full mt-1 bg-white border border-slate-200 rounded-lg
+           shadow-lg divide-y divide-slate-50 max-h-60 overflow-y-auto">
+  <% @food_entries.each do |fe| %>
+    <li>
+      <button type="button"
+              data-action="click->food-entry-typeahead#select"
+              data-name="<%= fe.name %>"
+              data-calories="<%= fe.calories %>"
+              class="w-full text-left px-3 py-2 text-sm text-slate-700
+                     hover:bg-emerald-50 cursor-pointer">
+        <%= fe.name %>
+        <span class="text-slate-400">
+          - <%= number_with_delimiter(fe.calories) %> cal
+        </span>
+      </button>
+    </li>
+  <% end %>
+</ul>
