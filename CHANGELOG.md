@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Unreleased Changes
+- Maintenance: Update gems
+- Maintenance: Use actions/checkoutv7 and actions/cachev6 in CI/CD pipelines
 
 ## 2026-06.22
 - Enhancement: Add a typeahead search feature to food entry form fields.
