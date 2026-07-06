@@ -31,10 +31,11 @@ class CalendarsControllerTest < ActionDispatch::IntegrationTest
     end
 
     it "clamps to today when a future year is requested" do
-      Date.stubs(:current).returns(Date.new(2026, 6, 9))
-      future = Date.current + 2.years
-      get calendar_path(year: future.year, month: future.month, day: future.day)
-      assert_select "span", text: Date.current.strftime("%B %Y")
+      travel_to Date.new(2026, 6, 9) do
+        future = Date.current + 2.years
+        get calendar_path(year: future.year, month: future.month, day: future.day)
+        assert_select "span", text: Date.current.strftime("%B %Y")
+      end
     end
 
     it "allows nvaigating to past years" do
