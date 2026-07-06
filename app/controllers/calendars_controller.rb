@@ -9,7 +9,7 @@ class CalendarsController < ApplicationController
 
   def user_today
     tz = Current.user&.timezone || Time.zone.name
-    Time.now.in_time_zone(tz).to_date
+    Time.current.in_time_zone(tz).to_date
   end
 
   def validate_date

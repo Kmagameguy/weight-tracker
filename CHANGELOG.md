@@ -1,10 +1,14 @@
 # CHANGELOG
 
 ## Unreleased Changes
+
+## 2026-07-06
 - Maintenance: Update gems
 - Maintenance: Use actions/checkoutv7 and actions/cachev6 in CI/CD pipelines
+- Fix: Address a flaky test in CalendarsControllerTest
+- Fix: Replace `Time.now` invocations with Rails' timezone-aware `Time.current`
 
-## 2026-06.22
+## 2026-06-22
 - Enhancement: Add a typeahead search feature to food entry form fields.
 A user's past food entries will now be pickable from a popover list during entry.
 - Enhancement: Add a "Cancel" option to the food entry editor.
