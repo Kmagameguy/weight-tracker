@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-07-14
+- Maintenance: Update to latest ruby (4.0.6)
+- Maintenance: Update gem dependencies
+
 ## 2026-07-06
 - Maintenance: Update gems
 - Maintenance: Use actions/checkoutv7 and actions/cachev6 in CI/CD pipelines
