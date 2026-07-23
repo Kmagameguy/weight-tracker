@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Unreleased Changes
+- Maintenance: Remove unused rails-generated default files
+- Maintenance: Remove unused dependencies
 
 ## 2026-07-22
 - Maintenance: Update gem dependencies to resolve several low/medium severity security advisories
