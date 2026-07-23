@@ -18,6 +18,31 @@ class UserTest < ActiveSupport::TestCase
   end
 
   describe "validations" do
+    it "is invalid without an email address" do
+      @user.email_address = nil
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:email_address], "can't be blank"
+    end
+
+    it "is invalid with a duplicate email address" do
+      duplicate = @user.dup
+      assert_not_predicate duplicate, :valid?
+      assert_includes duplicate.errors[:email_address], "has already been taken"
+    end
+
+    it "is invalid when the password is shorter than 8 characters" do
+      @user.password = "1234567"
+      @user.password_confirmation = "1234567"
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:password], "is too short (minimum is 8 characters)"
+    end
+
+    it "is valid when the password is exactly 8 characters" do
+      @user.password = "12345678"
+      @user.password_confirmation = "12345678"
+      assert_predicate @user, :valid?
+    end
+
     it "is invalid without a daily_calorie_goal" do
       @user.daily_calorie_goal = nil
       assert_not_predicate @user, :valid?
