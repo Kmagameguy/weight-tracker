@@ -2,6 +2,9 @@
 
 ## Unreleased Changes
 
+## 2026-07-22
+- Maintenance: Update gem dependencies to resolve several low/medium severity security advisories
+
 ## 2026-07-14
 - Maintenance: Update to latest ruby (4.0.6)
 - Maintenance: Update gem dependencies
