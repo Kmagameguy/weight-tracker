@@ -1,4 +1,11 @@
 class ProfilesController < ApplicationController
+  # Workaround for issues w/the global CSP directives/nonces and
+  # chartkick's inline style/scripts applied to each rendered chart.
+  content_security_policy only: :show do |policy|
+    policy.script_src_elem :self, :unsafe_inline
+    policy.style_src_attr  :self, :unsafe_inline
+  end
+
   before_action :set_user, only: %i[show update]
 
   def show; end
