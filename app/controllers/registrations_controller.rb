@@ -14,7 +14,7 @@ class RegistrationsController < ApplicationController
       redirect_to root_path, notice: "You account has been created."
     else
       flash[:alert] = @user.errors.full_messages.join("\n")
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
