@@ -1,9 +1,6 @@
 # CHANGELOG
 
 ## Unreleased Changes
-- Maintenance: Remove unused rails-generated default files
-- Maintenance: Remove unused dependencies
-- Enhancement: Define an application-wide content security policy
 
 ## 2026-07-23
 - Enhancement: Define an application-wide content-security policy
@@ -12,6 +9,7 @@
 - Fix: Apply rate limiting to registrations
 - Maintenance: Remove unused, rails-generated, default files
 - Maintenance: Remove unused gems
+- Maintenance: Update gems
 - Maintenance: Improve code coverage
 - Maintenance: Small refactor of some shared controller code
 
