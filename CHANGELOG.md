@@ -3,6 +3,17 @@
 ## Unreleased Changes
 - Maintenance: Remove unused rails-generated default files
 - Maintenance: Remove unused dependencies
+- Enhancement: Define an application-wide content security policy
+
+## 2026-07-23
+- Enhancement: Define an application-wide content-security policy
+- Fix: Prevent duplicate user accounts for the same email address
+- Fix: Prevent passwords less than 8 characters
+- Fix: Apply rate limiting to registrations
+- Maintenance: Remove unused, rails-generated, default files
+- Maintenance: Remove unused gems
+- Maintenance: Improve code coverage
+- Maintenance: Small refactor of some shared controller code
 
 ## 2026-07-22
 - Maintenance: Update gem dependencies to resolve several low/medium severity security advisories
