@@ -1,5 +1,5 @@
 class CalendarsController < ApplicationController
-  before_action :validate_date
+  include DateValidatable
 
   def show
     @calendar = CalendarPresenter.new(date: @date)
@@ -7,16 +7,7 @@ class CalendarsController < ApplicationController
 
   private
 
-  def user_today
-    tz = Current.user&.timezone || Time.zone.name
-    Time.current.in_time_zone(tz).to_date
-  end
-
   def validate_date
-    day = params[:day].presence || 1
-    @date = Date.new(params[:year].to_i, params[:month].to_i, day.to_i)
-    raise Date::Error if @date > user_today
-  rescue Date::Error, ArgumentError
-    @date = user_today
+    @date = date_from_params(default_day: 1) || user_today
   end
 end

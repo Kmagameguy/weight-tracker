@@ -48,7 +48,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   describe "#update" do
     it "updates the user's password when valid" do
       assert_changes -> { @user.reload.password_digest } do
-        put password_path(@user.password_reset_token), params: { password: "new", password_confirmation: "new" }
+        put password_path(@user.password_reset_token), params: { password: "newpassword", password_confirmation: "newpassword" }
         assert_redirected_to new_session_path
       end
 
@@ -59,7 +59,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     it "shows an error if password fields don't match" do
       token = @user.password_reset_token
       assert_no_changes -> { @user.reload.password_digest } do
-        put password_path(token), params: { password: "no", password_confirmation: "match" }
+        put password_path(token), params: { password: "noidontwantapassword", password_confirmation: "matchthisplease" }
         assert_redirected_to edit_password_path(token)
       end
 

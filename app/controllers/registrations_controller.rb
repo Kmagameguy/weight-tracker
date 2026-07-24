@@ -1,5 +1,9 @@
 class RegistrationsController < ApplicationController
   allow_unauthenticated_access
+  rate_limit to: 10,
+             within: 3.minutes,
+             only: :create,
+             with: -> { redirect_to new_registration_path, alert: "Try again later" }
 
   before_action :redirect_if_authenticated
 
@@ -14,7 +18,7 @@ class RegistrationsController < ApplicationController
       redirect_to root_path, notice: "You account has been created."
     else
       flash[:alert] = @user.errors.full_messages.join("\n")
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

@@ -13,6 +13,10 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
+  validates :email_address, presence: true, uniqueness: true
+  # allow_nil is a bit awkward; just adding that here so that we still delegate to
+  # has_secure_password's own presence check(s)
+  validates :password, length: { minimum: 8 }, allow_nil: true
   validates :daily_calorie_goal, presence: true, numericality: { greater_than: 0 }
   validates :timezone,           presence: true, inclusion: { in: VALID_TIMEZONES }
   validates :calorie_tracking_enabled,           inclusion: { in: [ true, false ], message: "value must be true or false" }
