@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-07-30
+- Maintenance: Update Bundler to 4.0.17
+- Maintenance: Update to Rails 8.1.3.1
+
 ## 2026-07-23
 - Enhancement: Define an application-wide content-security policy
 - Fix: Prevent duplicate user accounts for the same email address
