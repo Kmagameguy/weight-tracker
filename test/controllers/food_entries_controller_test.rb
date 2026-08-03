@@ -69,6 +69,24 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
       assert_select "button", count: 0
     end
 
+    it "skips entries that are not unique" do
+      today = Date.current
+      @user.food_entries.create!(name: "Banana Split", calories: 620, date: today)
+      @user.food_entries.create!(name: "Banana Split", calories: 620, date: today)
+      get food_entries_path(query: "Banana")
+      assert_response :success
+      assert_select "button[data-name=?]", "Banana Split", count: 1
+    end
+
+    it "includes entries of the same name with different calorie counts" do
+      today = Date.current
+      @user.food_entries.create!(name: "Banana Split", calories: 620, date: today)
+      @user.food_entries.create!(name: "Banana Split", calories: 300, date: today)
+      get food_entries_path(query: "Banana")
+      assert_response :success
+      assert_select "button[data-name=?]", "Banana Split", count: 2
+    end
+
     describe "limit param" do
       before do
         today = Date.current
