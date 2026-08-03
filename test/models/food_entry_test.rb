@@ -42,4 +42,13 @@ class FoodEntryTest < ActiveSupport::TestCase
       assert_predicate food_entry, :valid?
     end
   end
+
+  describe "callbacks" do
+    it "removes extraneous whitespace when saving a record" do
+      food_entry = FoodEntry.new(date: Time.current, name: "  Tuna   Sandwich    \n", calories: 310, user: users(:one))
+      food_entry.save!
+
+      assert_equal "Tuna Sandwich", food_entry.reload.name
+    end
+  end
 end
