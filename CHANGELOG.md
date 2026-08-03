@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-08-02
+- Enhancement: Run String#squish! against food entry names before save
+- Enhancement: Include Rake task to trim whitespace from existing food entry names
+
 ## 2026-07-30
 - Maintenance: Update Bundler to 4.0.17
 - Maintenance: Update to Rails 8.1.3.1
