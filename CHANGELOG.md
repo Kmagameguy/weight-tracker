@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-08-03
+- Maintenance: Update gem dependencies
+- Fix: De-duplicate food entries by the combination of their name AND calorie count in the typeahead search.  Resolves an issue wherein some legitimate entries could get hidden from the typeahead search.  E.g. "Hot Dogs - 400" and "Hot Dogs - 600" (where maybe one represents a plain hot dog and the other represents a hot dog with extra fixings).
+
 ## 2026-08-02
 - Enhancement: Run String#squish! against food entry names before save
 - Enhancement: Include Rake task to trim whitespace from existing food entry names
