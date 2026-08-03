@@ -12,7 +12,7 @@ class FoodEntriesController < ApplicationController
           .select(:name, :calories)
           .order(date: :desc)
           .limit(LIMIT_MAX)
-          .uniq { |entry| entry.name.downcase }
+          .uniq { |entry| [ entry.name.downcase, entry.calories ] }
           .first(search_limit)
       else
         FoodEntry.none
