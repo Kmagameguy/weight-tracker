@@ -6,4 +6,12 @@ class FoodEntry < ApplicationRecord
   validates :date,     presence: true
 
   alias_attribute :consumed_on, :date
+
+  before_save :trim_name
+
+  private
+
+  def trim_name
+    name.squish!
+  end
 end
