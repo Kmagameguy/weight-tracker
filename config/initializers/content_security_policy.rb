@@ -12,6 +12,8 @@ Rails.application.configure do
     policy.object_src      :none
     policy.script_src      :self
     policy.style_src       :self
+    policy.script_src_elem :self, :unsafe_inline
+    policy.style_src_attr  :self, :unsafe_inline
     policy.frame_ancestors :none
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"

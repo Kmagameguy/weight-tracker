@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-08-04
+- Fix: Relax content-security-policy globally to fix chart rendering on profile page when navigation is turbo-driven vs a direct navigation.
+- Maintenance: Add dotenv Gem to development & test groups to more easily manage ENV vars during development.
+
 ## 2026-08-03
 - Maintenance: Update gem dependencies
 - Fix: De-duplicate food entries by the combination of their name AND calorie count in the typeahead search.  Resolves an issue wherein some legitimate entries could get hidden from the typeahead search.  E.g. "Hot Dogs - 400" and "Hot Dogs - 600" (where maybe one represents a plain hot dog and the other represents a hot dog with extra fixings).
