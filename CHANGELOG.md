@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-08-11
+- Enhancement: Make Sundays the beginning of the week instead of Mondays
+- Maintenance: Update gem dependencies
+
 ## 2026-08-04
 - Fix: Relax content-security-policy globally to fix chart rendering on profile page when navigation is turbo-driven vs a direct navigation.
 - Maintenance: Add dotenv Gem to development & test groups to more easily manage ENV vars during development.
