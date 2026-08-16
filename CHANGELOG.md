@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## Unreleased Changes
+- Maintenance: Update to Bundler 4.0.18
+- Maintenance: Update dependencies
 
 ## 2026-08-11
 - Enhancement: Make Sundays the beginning of the week instead of Mondays
