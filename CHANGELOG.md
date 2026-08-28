@@ -1,7 +1,9 @@
 # CHANGELOG
 
 ## Unreleased Changes
-- Maintenance: Update to Bundler 4.0.18
+
+## 2026-08-28
+- Maintenance: Update to Bundler 4.0.19
 - Maintenance: Update dependencies
 
 ## 2026-08-11
