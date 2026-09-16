@@ -22,6 +22,10 @@ gem "bcrypt"
 
 gem "chartkick"
 
+# Pin this to v2.0 for now. Json ruby gem introduced horrible
+# breaking changes in v3.0+ that the Rails team haven't released a fix for, yet.
+gem "json", "~> 2.0"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
