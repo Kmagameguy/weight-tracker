@@ -5,7 +5,7 @@
 ## 2026-09-15
 - Maintenance: Update to Ruby 4.0.7
 - Maintenance: Update to Bundler 4.0.20
-
+- Maintenance: Update gems; pin Json to v2.x until Rails team releases compatibility fix for json v3.0+
 
 ## 2026-08-28
 - Maintenance: Update to Bundler 4.0.19
