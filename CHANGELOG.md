@@ -2,6 +2,11 @@
 
 ## Unreleased Changes
 
+## 2026-09-27
+- Maintenance: Update to Rails 8.1.4
+- Maintenance: Update to Bundler 4.0.21
+- Maintenance: Unpin and Update JSON Gem
+
 ## 2026-09-15
 - Maintenance: Update to Ruby 4.0.7
 - Maintenance: Update to Bundler 4.0.20
