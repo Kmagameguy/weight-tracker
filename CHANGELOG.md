@@ -2,6 +2,11 @@
 
 ## Unreleased Changes
 
+## 2026-10-26
+- Maintenance: Update to ruby 4.0.9
+- Maintenance: Update to Bundler 4.0.23
+- Maintenance: Update gems
+
 ## 2026-09-27
 - Maintenance: Update to Rails 8.1.4
 - Maintenance: Update to Bundler 4.0.21
