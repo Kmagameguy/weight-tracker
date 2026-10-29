@@ -242,4 +242,27 @@ class DayPresenterTest < ActiveSupport::TestCase
       assert @presenter.weight_entries.all? { |we| we.user == @user }
     end
   end
+
+  describe "#tags" do
+    it "returns the user's tags ordered by name" do
+      @user.tags.create!(name: "Allergies")
+
+      assert_equal %w[ Allergies Headache ], @presenter.tags.map(&:name)
+    end
+
+    it "excludes other users' tags" do
+      assert_not_includes @presenter.tags, users(:two).tags.first
+    end
+  end
+
+  describe "#day_tag_for" do
+    it "returns the day tag when the tag is ON for the presenter's date" do
+      assert_equal day_tags(:headache_on_june_fifth), @presenter.day_tag_for(tags(:headache))
+    end
+
+    it "returns nil when the tag is off for the presenter's date" do
+      presenter = DayPresenter.new(user: @user, date: @date + 1.day)
+      assert_nil presenter.day_tag_for(tags(:headache))
+    end
+  end
 end

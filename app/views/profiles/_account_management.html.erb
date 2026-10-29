@@ -29,7 +29,7 @@
       <div class="mb-6">
         <h3 class="text-sm font-medium text-slate-700 mb-2">Enable & Disable Features</h3>
         <p class="text-xs text-slate-400 mb-3">
-          Saved calorie counts, weight entries, and blood pressure readings will still exist when disabling a feature.
+          Saved calorie counts, weight entries, blood pressure readings, and tags will still exist when disabling a feature.
         </p>
 
         <div class="flex flex-col gap-1">
@@ -37,6 +37,7 @@
             [:calorie_tracking_enabled,        "Calorie Tracking"],
             [:weight_tracking_enabled,         "Weight Tracking"],
             [:blood_pressure_tracking_enabled, "Blood Pressure Tracking"],
+            [:tagging_enabled,                 "Tags"]
           ].each do |attr, label_text| %>
             <%= f.label attr,
                   class: "flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer

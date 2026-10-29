@@ -1,0 +1,25 @@
+<div id="day_tags">
+  <% if day_presenter.tags.any? %>
+    <div class="flex flex-wrap gap-2">
+      <% day_presenter.tags.each do |tag| %>
+        <% day_tag = day_presenter.day_tag_for(tag) %>
+        <%= button_to tag.name,
+              day_tag ? day_tag_path(day_tag) : day_tags_path,
+              method: day_tag ? :delete : :post,
+              params: (day_tag ? {} : { day_tag: { tag_id: tag.id, date: day_presenter.date } }),
+              form_class: "flex",
+              aria: { pressed: day_tag.present? },
+              class: "text-xs font-medium px-3 py-1.5 rounded-full border transition-colors cursor-pointer " +
+                (day_tag ? "bg-emerald-500 border-emerald-500 text-white hover:bg-emerald-600"
+                         : "bg-white border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700") %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-sm text-slate-300">
+      No tags yet.
+      <%= link_to "Create one for your profile",
+            profile_path,
+            class: "text-emerald-500 hover:text-red-400 transition-colors" %>.
+    </p>
+  <% end %>
+</div>

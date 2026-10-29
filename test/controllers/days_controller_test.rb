@@ -143,6 +143,23 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
         assert_select "#blood_pressure_reading_diastolic",  count: 0
         assert_select "turbo-frame#blood_pressure_reading", text: /#{blood_pressure_reading.label}/
       end
+
+      it "renders tag chips and marks applied ones as pressed" do
+        get day_path_for(Date.parse("2026-06-05"))
+        assert_select "#day_tags button[aria-pressed=true]", text: "Headache"
+      end
+
+      it "renders an unpressed chip when the tag isn't applied that day" do
+        get day_path_for(Date.parse("2026-06-04"))
+        assert_select "#day_tags button[aria-pressed=false]", text: "Headache"
+      end
+
+      it "does not render the chips when the user has disabled tagging" do
+        @user.update!(tagging_enabled: false)
+        get day_path_for(@date)
+
+        assert_select "#day_tags", count: 0
+      end
     end
 
     context "turbo frame requests" do

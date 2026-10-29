@@ -1,0 +1,11 @@
+<%= turbo_frame_tag tag, class: "inline-block max-w-full align-top" do %>
+  <%= link_to edit_tag_path(tag),
+        class: "inline-flex items-center gap-2 rounded-full bg-slate-100
+                px-8 py-4 text-sm font-medium text-slate-600
+                hover:bg-emerald-50 hover:text-emerald-700
+                focus:outline-none focus:ring-2 focus:ring-emerald-400
+                transition-colors" do %>
+    <%= tag.name %>
+    <span aria-hidden="true" class="text-2xl text-slate-400 rotate-45">&#9999;</span>
+  <% end %>
+<% end %>

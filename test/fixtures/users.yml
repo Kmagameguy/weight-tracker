@@ -8,6 +8,7 @@ one:
   calorie_tracking_enabled: true
   weight_tracking_enabled: true
   blood_pressure_tracking_enabled: true
+  tagging_enabled: true
 
 two:
   timezone: Pacific/Auckland
@@ -17,3 +18,4 @@ two:
   calorie_tracking_enabled: true
   weight_tracking_enabled: false
   blood_pressure_tracking_enabled: false
+  tagging_enabled: true

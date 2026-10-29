@@ -1,0 +1,5 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+headache_on_june_fifth:
+  tag: headache
+  date: 2026-06-05

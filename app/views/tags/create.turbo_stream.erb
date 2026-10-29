@@ -1,0 +1,7 @@
+<%= turbo_stream.append "user_tags", @tag %>
+
+<%= turbo_stream.replace "new_tag_form" do %>
+  <div id="new_tag_form">
+    <%= render "form", tag: Tag.new, url: tags_path %>
+  </div>
+<% end %>

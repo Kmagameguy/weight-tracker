@@ -100,6 +100,17 @@ class UserTest < ActiveSupport::TestCase
     it "defaults blood_pressure_tracking_enabled to true" do
       assert User.new.blood_pressure_tracking_enabled
     end
+
+    it "is invalid if tagging_enabled is not a boolean value" do
+      @user.tagging_enabled = nil
+
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:tagging_enabled], "value must be true or false"
+    end
+
+    it "defaults tagging_enabled to true" do
+      assert User.new.tagging_enabled
+    end
   end
 
   describe "associations" do
@@ -114,6 +125,18 @@ class UserTest < ActiveSupport::TestCase
 
     it "destroys dependent weight_entries when the user is destroyed" do
       assert_difference("WeightEntry.count", -@user.weight_entries.count) { @user.destroy }
+    end
+
+    it "destroys dependent blood_pressure_readings when the user is destroyed" do
+      assert_difference("BloodPressureReading.count", -@user.blood_pressure_readings.count) { @user.destroy }
+    end
+
+    it "destroys dependent tags when the user is destroyed" do
+      assert_difference("Tag.count", -@user.tags.count) { @user.destroy }
+    end
+
+    it "destroys dependent day_tags through tags when the user is destroyed" do
+      assert_difference("DayTag.count", -@user.day_tags.count) { @user.destroy }
     end
   end
 

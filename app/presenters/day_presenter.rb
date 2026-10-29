@@ -85,4 +85,16 @@ class DayPresenter
   def blood_pressure_readings
     @blood_pressure_readings ||= user.blood_pressure_readings
   end
+
+  def tags
+    @tags ||= user.tags.order(:name)
+  end
+
+  def day_tag_for(tag)
+    day_tags_by_tag_id[tag.id]
+  end
+
+  def day_tags_by_tag_id
+    @day_tags_by_tag_id ||= user.day_tags.where(date: date).index_by(&:tag_id)
+  end
 end

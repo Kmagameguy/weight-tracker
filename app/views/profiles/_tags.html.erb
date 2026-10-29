@@ -1,0 +1,17 @@
+<div class="max-w-xl mx-auto px-2 py-4 flex flex-col gap-5">
+  <div class="bg-white shadow-sm border border-slate-200 rounded-lg p-4">
+    <h2 class="font-semibold text-slate-800 mb-1">Tags</h2>
+
+    <p class="text-xs text-slate-400 mb-4">
+      Create tags (e.g. "Headache") and toggle them on for any day.
+    </p>
+
+    <div id="user_tags" class="flex flex-wrap items-start gap-2 mb-4">
+      <%= render user.tags.order(:name) %>
+    </div>
+
+    <div id="new_tag_form">
+      <%= render "tags/form", tag: Tag.new, url: tags_path %>
+    </div>
+  </div>
+</div>

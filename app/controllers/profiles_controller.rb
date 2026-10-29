@@ -25,6 +25,7 @@ class ProfilesController < ApplicationController
       calorie_tracking_enabled
       weight_tracking_enabled
       blood_pressure_tracking_enabled
+      tagging_enabled
     ])
   end
 end
