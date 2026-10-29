@@ -1,0 +1,17 @@
+<details class="group">
+  <summary class="flex items-center justify-between py-6 cursor-pointer list-none select-none">
+    <span class="text-sm text-slate-700">
+      <%= group[:name] %> (<%= group[:count] %>)
+    </span>
+    <span class="flex items-center gap-2 text-sm font-medium text-slate-500">
+      <%= number_with_delimiter(group[:calories]) %> cal
+      <span class="text-xs text-slate-300 transition-transform group-open:rotate-90">&#9656;</span>
+    </span>
+  </summary>
+
+  <div class="pl-4 mb-2 border-l border-slate-100 divide-y divide-slate-50">
+    <% group[:entries].each do |entry| %>
+      <%= render "food_entries/food_entry", food_entry: entry %>
+    <% end %>
+  </div>
+</details>

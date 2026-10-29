@@ -160,6 +160,41 @@ class DayPresenterTest < ActiveSupport::TestCase
     end
   end
 
+  describe "#grouped_food_entries" do
+    it "returns an empty array when there are no food entries for the day" do
+      assert_empty @presenter.grouped_food_entries
+    end
+
+    it "groups entries that share a name" do
+      first_entry  = { name: "Cold Brew", calories: 15, date: @date }
+      second_entry = { name: "  COLD     BREW  ", calories: 5,  date: @date }
+      [ first_entry, second_entry ].each { @user.food_entries.create!(it) }
+
+      groups = @presenter.grouped_food_entries
+
+      assert_equal 1, groups.size
+      assert_equal "Cold Brew", groups.first[:name]
+      assert_equal 2, groups.first[:count]
+      assert_equal 20, groups.first[:calories]
+      assert_equal 2, groups.first[:entries].size
+    end
+
+    it "keeps entries with different names separate" do
+      first_entry  = { name: "Cold Brew", calories: 15,  date: @date }
+      second_entry = { name: "pizza",     calories: 280, date: @date }
+      [ first_entry, second_entry ].each { @user.food_entries.create!(it) }
+
+      assert_equal [ first_entry[:name], second_entry[:name] ], @presenter.grouped_food_entries.map { it[:name] }
+    end
+
+    it "returns a group's entries as the underlying records" do
+      new_entry = { name: "Cold Brew", calories: 15, date: @date }
+      entry = @user.food_entries.create!(new_entry)
+
+      assert_equal [ entry ], @presenter.grouped_food_entries.first[:entries]
+    end
+  end
+
   describe "#food_entries" do
     it "returns all food entries for the given user & day" do
       @user.food_entries.each { |food_entry| food_entry.update!(date: @date) }
