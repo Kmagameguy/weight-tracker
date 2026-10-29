@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-10-28
+- Enhancement: Group entries with the same name. Two entries that share a name are now "grouped" inside an expand. The expand itself displays the count of shared entries and the sum of their calories. Expanding the dropdown will let you edit or remove the individual entries.
+- Maintenance: Update gems
+
 ## 2026-10-26
 - Maintenance: Update to ruby 4.0.9
 - Maintenance: Update to Bundler 4.0.23
