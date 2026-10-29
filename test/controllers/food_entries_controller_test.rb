@@ -166,10 +166,10 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
         end
       end
 
-      it "appends the new entry to #food_entries" do
+      it "replaces the #food_entries list" do
         assert_response :success
         assert_equal "text/vnd.turbo-stream.html", response.media_type
-        assert_select "turbo-stream[action=append][target=food_entries]"
+        assert_select "turbo-stream[action=replace][target=food_entries]"
       end
 
       it "replaces the calories summary" do
@@ -187,6 +187,21 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
         }
 
         assert_redirected_to day_path_for(date)
+      end
+
+      context "when the entry duplicates an existing one" do
+        it "rolls the entries up into a single group" do
+          @user.food_entries.destroy_all
+
+          2.times do
+            post food_entries_path,
+              params: { food_entry: { name: "Cold Brew", calories: 5, date: Date.current } },
+              as: :turbo_stream
+          end
+
+          assert_select "turbo-stream[action=replace][target=food_entries]"
+          assert_match(/Cold Brew\s*\(2\)/, response.body)
+        end
       end
     end
 
@@ -243,9 +258,10 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
         assert_not_equal original_calories, @food_entry.calories
       end
 
-      it "replaces the food entry in the list" do
+      it "replaces the food entries list" do
         assert_equal "text/vnd.turbo-stream.html", response.media_type
-        assert_select "turbo-stream[action=replace][target=food_entry_#{@food_entry.id}]"
+        assert_select "turbo-stream[action=replace][target=food_entries]"
+        assert_includes response.body, "Updated Soup"
       end
 
       it "replaces the calories summary" do
@@ -258,6 +274,20 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
         }
 
         assert_redirected_to day_path_for(@food_entry.reload.date)
+      end
+
+      context "when the edit makes an entry match another" do
+        it "regroups the duplicates as a list" do
+          @user.food_entries.destroy_all
+          @user.food_entries.create!(name: "Cold Brew", calories: 5, date: Date.current)
+          other = @user.food_entries.create!(name: "Iced Coffee", calories: 15, date: Date.current)
+
+          patch food_entry_path(other),
+            params: { food_entry: { name: "Cold Brew" } },
+            as: :turbo_stream
+
+          assert_match(/Cold Brew\s*\(2\)/, response.body)
+        end
       end
     end
 
@@ -295,12 +325,13 @@ class FoodEntriesControllerTest < ActionDispatch::IntegrationTest
         end
       end
 
-      it "removes the food entry from the list" do
+      it "replaces the food entries list with the food entry removed" do
         delete food_entry_path(@food_entry), as: :turbo_stream
 
         assert_response :success
         assert_equal "text/vnd.turbo-stream.html", response.media_type
-        assert_select "turbo-stream[action=remove][target=food_entry_#{@food_entry.id}]"
+        assert_select "turbo-stream[action=replace][target=food_entries]"
+        assert_not_includes response.body, "food_entry_#{@food_entry.id}"
       end
 
       it "replaces the calories summary" do

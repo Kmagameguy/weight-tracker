@@ -62,6 +62,18 @@ class DayPresenter
     blood_pressure_readings.find_by(date: date)
   end
 
+  def grouped_food_entries
+    food_entries.group_by { it.name.to_s.squish.downcase }
+                .map do |_, group|
+                  {
+                    entries: group,
+                    name: group.first.name,
+                    count: group.size,
+                    calories: group.sum { it.calories }
+                  }
+                end
+  end
+
   def food_entries
     @food_entries ||= user.food_entries.where(date: date).order(:created_at)
   end

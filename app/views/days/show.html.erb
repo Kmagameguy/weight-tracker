@@ -51,12 +51,7 @@
     <div class="bg-white rounded-2xl shadow-sm border border-slate-100">
       <%= render "days/calories_summary", day_presenter: @day_presenter %>
       <div class="px-6 py-2">
-        <div id="food_entries" class="divide-y divide-slate-50">
-          <%= render @day_presenter.food_entries %>
-          <% unless @day_presenter.food_entries.any? %>
-            <%= render "food_entries/empty" %>
-          <% end %>
-        </div>
+        <%= render "food_entries/list", day_presenter: @day_presenter %>
       </div>
 
       <div id="food_entry_form" class="px-6 pb-6 pt-2 border-t border-slate-50">

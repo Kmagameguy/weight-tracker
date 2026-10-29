@@ -86,6 +86,28 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
         assert_select "#food_entry_#{food_entry.id}"
       end
 
+      it "renders duplicate food entries as an expandable group" do
+        @user.food_entries.destroy_all
+        [ 15, 5 ].each { @user.food_entries.create! name: "Cold Brew", calories: it, date: @date }
+
+        get day_path_for(@date)
+
+        assert_select "#food_entries details", count: 1
+        assert_select "#food_entries details summary", text: /Cold Brew\s*\(2\)/
+        assert_select "#food_entries details summary", text: /20 cal/
+        assert_select "#food_entries details turbo-frame", count: 2
+      end
+
+      it "renders a single food entry as a normal row" do
+        @user.food_entries.destroy_all
+        @user.food_entries.create!(name: "Cold Brew", calories: 15, date: @date)
+
+        get day_path_for(@date)
+
+        assert_select "#food_entries details", count: 0
+        assert_select "#food_entries turbo-frame", count: 1
+      end
+
       it "renders the weight entry turbo frame" do
         get day_path_for(@date)
         assert_select "turbo-frame#weight_entry"

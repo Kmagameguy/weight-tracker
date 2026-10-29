@@ -1,0 +1,11 @@
+<div id="food_entries" class="divide-y divide-slate-50">
+  <% groups = day_presenter.grouped_food_entries %>
+  <% groups.each do |group| %>
+    <% if group[:count] == 1 %>
+      <%= render "food_entries/food_entry", food_entry: group[:entries].first %>
+    <% else %>
+      <%= render "food_entries/food_entry_group", group: group %>
+    <% end %>
+  <% end %>
+  <%= render "food_entries/empty" if groups.empty? %>
+</div>
