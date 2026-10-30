@@ -100,6 +100,28 @@ class UserTest < ActiveSupport::TestCase
     it "defaults blood_pressure_tracking_enabled to true" do
       assert User.new.blood_pressure_tracking_enabled
     end
+
+    it "is invalid if journaling_enabled is not a boolean value" do
+      @user.journaling_enabled = nil
+
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:journaling_enabled], "value must be true or false"
+    end
+
+    it "defaults journaling_enabled to true" do
+      assert User.new.journaling_enabled
+    end
+
+    it "is invalid if tagging_enabled is not a boolean value" do
+      @user.tagging_enabled = nil
+
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:tagging_enabled], "value must be true or false"
+    end
+
+    it "defaults tagging_enabled to true" do
+      assert User.new.tagging_enabled
+    end
   end
 
   describe "associations" do
@@ -114,6 +136,22 @@ class UserTest < ActiveSupport::TestCase
 
     it "destroys dependent weight_entries when the user is destroyed" do
       assert_difference("WeightEntry.count", -@user.weight_entries.count) { @user.destroy }
+    end
+
+    it "destroys dependent blood_pressure_readings when the user is destroyed" do
+      assert_difference("BloodPressureReading.count", -@user.blood_pressure_readings.count) { @user.destroy }
+    end
+
+    it "destroys dependent journal_entries when the user is destroyed" do
+      assert_difference("JournalEntry.count", -@user.journal_entries.count) { @user.destroy }
+    end
+
+    it "destroys dependent tags when the user is destroyed" do
+      assert_difference("Tag.count", -@user.tags.count) { @user.destroy }
+    end
+
+    it "destroys dependent day_tags through tags when the user is destroyed" do
+      assert_difference("DayTag.count", -@user.day_tags.count) { @user.destroy }
     end
   end
 
@@ -260,6 +298,32 @@ class UserTest < ActiveSupport::TestCase
       it "returns nil when no weight entries are recorded" do
         @user.weight_entries.destroy_all
         assert_nil @user.current_weight
+      end
+    end
+
+    describe "#all_features_disabled?" do
+      it "is false when at least one feature is enabled" do
+        @user.assign_attributes(
+          calorie_tracking_enabled: false,
+          weight_tracking_enabled: false,
+          blood_pressure_tracking_enabled: false,
+          journaling_enabled: true,
+          tagging_enabled: false
+        )
+
+        assert_not_predicate @user, :all_features_disabled?
+      end
+
+      it "is true when every feature is disabled"  do
+        @user.assign_attributes(
+          calorie_tracking_enabled: false,
+          weight_tracking_enabled: false,
+          blood_pressure_tracking_enabled: false,
+          journaling_enabled: false,
+          tagging_enabled: false
+        )
+
+        assert_predicate @user, :all_features_disabled?
       end
     end
   end

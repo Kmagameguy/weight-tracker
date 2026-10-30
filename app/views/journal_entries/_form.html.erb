@@ -1,0 +1,21 @@
+<%= form_with model: journal_entry do |f| %>
+  <%= f.hidden_field :date %>
+
+  <div class="flex flex-col gap-2">
+    <%= f.text_area :note,
+          rows: 6,
+          maxlength: ::JournalEntry::MAX_NOTE_LENGTH,
+          required: true,
+          placeholder: "How was your day?",
+          class: "w-full text-sm rounded-lg border border-slate-200
+                  px-3 py-2 text-slate-700 placeholder-slate-300 resize-y
+                  focus:outline-none focus:ring-2 focus:ring-emerald-400
+                  focus:border-transparent transition" %>
+
+    <div class="flex justify-end">
+      <%= f.submit journal_entry.new_record? ? "Save note" : "Update note",
+            class: "text-sm font-medium bg-emerald-500 hover:bg-emerald-600
+                    text-white px-4 py-2 rounded-lg transition-colors cursor-pointer" %>
+    </div>
+  </div>
+<% end %>

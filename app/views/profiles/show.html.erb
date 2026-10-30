@@ -14,4 +14,8 @@
   <% if @user&.blood_pressure_tracking_enabled? %>
     <%= render "profiles/blood_pressure_over_time", blood_pressure_readings: @user&.blood_pressure_readings %>
   <% end %>
+
+  <% if @user&.tagging_enabled? %>
+    <%= render "profiles/tags", user: @user %>
+  <% end %>
 <% end %>

@@ -1,0 +1,17 @@
+<div class="flex flex-col gap-4">
+  <div class="text-sm leading-relaxed text-slate-700 whitespace-pre-wrap break-words">
+    <%= journal_entry.note %>
+  </div>
+
+  <div class="flex items-center justify-end gap-3">
+    <%= link_to "Edit", edit_journal_entry_path(journal_entry),
+          class: "text-sm text-slate-400 hover:text-slate-600 transition-colors" %>
+
+    <%= button_to "Remove", journal_entry_path(journal_entry),
+          method: :delete,
+          data: { turbo_confirm: "Remove journal entry" },
+          form_class: "flex items-center",
+          class: "text-sm text-slate-300 hover:text-red-400 transition-colors
+                  bg-transparent border-0 cursor-pointer" %>
+  </div>
+</div>

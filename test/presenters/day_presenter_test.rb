@@ -242,4 +242,60 @@ class DayPresenterTest < ActiveSupport::TestCase
       assert @presenter.weight_entries.all? { |we| we.user == @user }
     end
   end
+
+  describe "#new_journal_entry" do
+    it "prepares a new journal entry for the presenter's user and date" do
+      new_journal_entry = @presenter.new_journal_entry
+
+      assert_not_predicate new_journal_entry, :persisted?
+      assert_equal @user, new_journal_entry.user
+      assert_equal @date, new_journal_entry.date
+    end
+  end
+
+  describe "#journal_entry" do
+    it "finds the journal entry for the presenter's user and date" do
+      @user.journal_entries.first.update!(date: @date)
+      @user.journal_entries.create!(date: @date - 1.day, note: "Yesterday's note")
+
+      assert_equal @user.journal_entries.find_by(date: @date), @presenter.journal_entry
+    end
+
+    it "returns nil if there's no journal entry for the given user and date" do
+      @user.journal_entries.destroy_all
+
+      assert_nil @presenter.journal_entry
+    end
+  end
+
+  describe "#journal_entries" do
+    it "returns only the given user's journal entries" do
+      assert_not_empty @presenter.journal_entries
+      assert_operator JournalEntry.count, :>, @presenter.journal_entries.count
+      assert(@presenter.journal_entries.all? { |je| je.user == @user })
+    end
+  end
+
+  describe "#tags" do
+    it "returns the user's tags ordered by name" do
+      @user.tags.create!(name: "Allergies")
+
+      assert_equal %w[ Allergies Headache ], @presenter.tags.map(&:name)
+    end
+
+    it "excludes other users' tags" do
+      assert_not_includes @presenter.tags, users(:two).tags.first
+    end
+  end
+
+  describe "#day_tag_for" do
+    it "returns the day tag when the tag is ON for the presenter's date" do
+      assert_equal day_tags(:headache_on_june_fifth), @presenter.day_tag_for(tags(:headache))
+    end
+
+    it "returns nil when the tag is off for the presenter's date" do
+      presenter = DayPresenter.new(user: @user, date: @date + 1.day)
+      assert_nil presenter.day_tag_for(tags(:headache))
+    end
+  end
 end
