@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
       start_date = earliest
       flash.now[:alert] =
         "Reports are limited to #{DoctorVisitReportPresenter::MAX_RANGE_DAYS} days." \
-        "Showing the omst recent #{DoctorVisitReportPresenter::MAX_RANGE_DAYS} days of your selection."
+        "Showing the most recent #{DoctorVisitReportPresenter::MAX_RANGE_DAYS} days of your selection."
     end
 
     [ start_date, end_date ]
