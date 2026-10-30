@@ -382,13 +382,13 @@ class DoctorVisitReportPresenterTest < ActiveSupport::TestCase
     end
 
     it "returns tag names for the given date" do
-      assert_equal ["Headache"], build_presenter.tags_on(@end)
+      assert_equal [ "Headache" ], build_presenter.tags_on(@end)
     end
 
     it "returns tag names in alphabetical order" do
       @user.tags.create!(name: "Allergies").day_tags.create!(date: @end)
 
-      assert_equal(["Allergies", "Headache"], build_presenter.tags_on(@end))
+      assert_equal([ "Allergies", "Headache" ], build_presenter.tags_on(@end))
     end
   end
 
@@ -411,13 +411,13 @@ class DoctorVisitReportPresenterTest < ActiveSupport::TestCase
     it "excludes other users' tags" do
       users(:two).tags.first.day_tags.create!(date: @start)
 
-      assert_equal ["Headache"], build_presenter.tag_summaries.map { it[:name] }
+      assert_equal [ "Headache" ], build_presenter.tag_summaries.map { it[:name] }
     end
   end
 
   describe "#journal_entries" do
     it "returns notes in the range" do
-      assert_equal ["Had a pretty great day."], build_presenter.journal_entries.map(&:note)
+      assert_equal [ "Had a pretty great day." ], build_presenter.journal_entries.map(&:note)
     end
 
     it "skips blank notes" do
