@@ -285,5 +285,31 @@ class UserTest < ActiveSupport::TestCase
         assert_nil @user.current_weight
       end
     end
+
+    describe "#all_features_disabled?" do
+      it "is false when at least one feature is enabled" do
+        @user.assign_attributes(
+          calorie_tracking_enabled: false,
+          weight_tracking_enabled: false,
+          blood_pressure_tracking_enabled: false,
+          journaling_enabled: true,
+          tagging_enabled: false
+        )
+
+        assert_not_predicate @user, :all_features_disabled?
+      end
+
+      it "is true when every feature is disabled"  do
+        @user.assign_attributes(
+          calorie_tracking_enabled: false,
+          weight_tracking_enabled: false,
+          blood_pressure_tracking_enabled: false,
+          journaling_enabled: false,
+          tagging_enabled: false
+        )
+
+        assert_predicate @user, :all_features_disabled?
+      end
+    end
   end
 end
