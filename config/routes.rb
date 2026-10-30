@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resource :profile,          only: %i[ show update ]
   resource :calendar,         only: %i[ show ]
+  resource :report,           only: %i[ show ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -2,6 +2,11 @@
 
 ## Unreleased Changes
 
+## 2026-10-30
+- Enhancement: All-new reports page. Use this to generate and export a long-term report of your tracked data
+- Fix: Remove leading/trailing whitespace from journal entries
+- Maintenance: Update gems
+
 ## 2026-10-29
 - Enhancement: Create tags and assign them by day. For example, if you'd like to track Migraine occurences just create a "migraine" tag. Then you can toggle it on/off to indicate on which days you experienced a migraine.
 - Enhancement: Journaling. Keep whatever notes you'd like along with your entries for the day.

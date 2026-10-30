@@ -19,8 +19,7 @@ Each feature below is available by default, but can be selectively disabled from
 - **Blood Pressure Tracking:** Record your blood pressure on whatever schedule you like, and track changes over time
 - **Journaling:** Record notes alongside your daily check-ins.
 - **Tagging:** Create custom tags and assign them by-day. For example, if you want to track days when you experienced a migraine.
-- **Data Visualizations\*:** View personalized data based on your daily inputs
-  - *Note: This feature is currently quite simple. I plan to expand upon it in future updates
+- **Reports:** Create long-term views of your daily check-ins, and export them to PDF format for easy storage/shareability.
 
 ## Tech Stack
 - [Ruby][ruby] & [Ruby on Rails][rails]. See `.ruby-version` and `Gemfile.lock` for current versions. This project aims to stay on the bleeding-edge
@@ -31,6 +30,7 @@ Each feature below is available by default, but can be selectively disabled from
 ## App Screenshots
 <img src="docs/assets/app_example.png" alt="main app view" width="600">
 <img src="docs/assets/app_example2.png" alt="profile app view" width="600">
+<img src="docs/assets/app_example3.png" alt="reports app view" width="600">
 
 ## Setup & Installation
 ### Prerequisites for a Docker-Based Deployment (Recommended)
@@ -80,7 +80,10 @@ The app is organized around a few simple resources:
 - **FoodEntriesController:** CRUD for food entries, responds with Turbo Streams to manage inline updates
 - **WeightEntriesController:** CRUD for weight entries on the Day page
 - **BloodPressureReadingsController:** CRUD for blood pressure readings on the Day page
-- **PofilesController:** Personal dashboard/stats page for the signed-in user
+- **TagsController and DayTagsController:** CRUD for curating and applying custom tags on the Day page
+- **JournalEntriesController:** CRUD for adding free-form notes on the Day page
+- **ProfilesController:** Personal dashboard/stats page for the signed-in user
+- **ReportsController:** Personal, long-term, exportable stats page for the signed-in user
 
 ## Roadmap
 Items below represent desired features. They are listed in no specific order, and without specific promises towards their development.

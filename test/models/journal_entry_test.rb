@@ -1,6 +1,17 @@
 require "test_helper"
 
 class JournalEntryTest < ActiveSupport::TestCase
+  describe "#normalizers" do
+    it "removes leading and trailing whitespace from journal notes" do
+      journal_entry = journal_entries(:one)
+      journal_entry.note = "         hello       "
+
+      journal_entry.save
+
+      assert_equal "hello", journal_entry.note
+    end
+  end
+
   describe "#validations" do
     it "is valid with valid attributes" do
       journal_entry = journal_entries(:one)
