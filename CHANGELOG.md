@@ -6,6 +6,7 @@
 - Enhancement: Create tags and assign them by day. For example, if you'd like to track Migraine occurences just create a "migraine" tag. Then you can toggle it on/off to indicate on which days you experienced a migraine.
 - Enhancement: Journaling. Keep whatever notes you'd like along with your entries for the day.
 - Fix: Address some minor gaps in test coverage
+- Maintenance: Update gems
 
 ## 2026-10-28
 - Enhancement: Group entries with the same name. Two entries that share a name are now "grouped" inside an expand. The expand itself displays the count of shared entries and the sum of their calories. Expanding the dropdown will let you edit or remove the individual entries.
