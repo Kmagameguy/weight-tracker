@@ -12,10 +12,13 @@ without the complexity of a separate frontend framework.
 This software is a personal data collection tool ONLY. It is not a medical or health advice tool, is not intended to diagnose, treat, or prevent any condition, and should not be used as a substitute for professional medical advice. Always consult a qualified healthcare provider before making changes to your diet or health routine.
 
 ## Features
+Each feature below is available by default, but can be selectively disabled from your profile page. Customize the app to the features you want:
 - **Daily Food Entry:** Log meals by name and calorie count, and easily browse by day
 - **Calorie Tracking:** See calories consumed vs. your configurable daily goal 
 - **Weight Tracking:** Record your weigh-ins on whatever schedule you like, and track progress over time
 - **Blood Pressure Tracking:** Record your blood pressure on whatever schedule you like, and track changes over time
+- **Journaling:** Record notes alongside your daily check-ins.
+- **Tagging:** Create custom tags and assign them by-day. For example, if you want to track days when you experienced a migraine.
 - **Data Visualizations\*:** View personalized data based on your daily inputs
   - *Note: This feature is currently quite simple. I plan to expand upon it in future updates
 
