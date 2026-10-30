@@ -1,0 +1,247 @@
+<% report = @report %>
+<% user   = report.user %>
+
+<div class="max-w-3xl mx-auto px-4 py-6 flex flex-col gap-4">
+  <div class="print:hidden flex flex-col gap-2">
+    <%= render "shared/flash_messages" %>
+    <%= render "reports/controls", report: report %>
+  </div>
+
+  <article class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8
+                  print:shadow-none print:border-0 print:rounded-none print:p-0">
+    <header class="border-b border-slate-400 pb-4 mb-6">
+      <h1 class="text-xl font-semibold text-slate-800">Health summary</h1>
+      <p class="text-sm text-slate-600 mt-1">
+        <%= report_date(report.start_date) %> &ndash; <%= report_date(report.end_date) %>
+        (<%= pluralize(report.day_count, "day") %>)
+      </p>
+
+      <p class="text-xs text-slate-400 mt-1">
+        Days with entries: <%= report.days_logged %> of <%= report.day_count %>.
+        Generated <%= report_date(Date.current) %>.
+      </p>
+    </header>
+
+    <% if report.blank? %>
+      <p class="text-sm text-slate-500">
+        All tracking features are disabled. Enable at least one on your profile to include it in a report.
+      </p>
+    <% end %>
+
+    <% if report.include_calories? %>
+      <section id="report_calories" class="mb-8 print:break-inside-avoid">
+        <h2 class="text-sm font-semibold text-slate-800 mb-3">Calories</h2>
+        <% if report.daily_calories.any? %>
+          <% highest_date, highest_total = report.highest_calorie_day %>
+          <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+            <%= render "reports/stat",
+                  label: "Average daily intake",
+                  value: "#{number_with_delimiter(report.avg_daily_calories)} cal",
+                  detail: "Across #{pluralize(report.daily_calories.size, 'logged day')}" %>
+            <%= render "reports/stat",
+                  label: "Daily goal",
+                  value: "#{number_with_delimiter(user.daily_calorie_goal)} cal" %>
+            <%= render "reports/stat",
+                  label: "Days over goal",
+                  value: "#{report.days_over_goal} of #{report.daily_calories.size}" %>
+            <%= render "reports/stat",
+                  label: "Days at/under goal",
+                  value: "#{report.days_at_or_under_goal} of #{report.daily_calories.size}" %>
+          </dl>
+
+          <% if (highest = report.highest_calorie_day) %>
+            <p class="text-xs text-slate-500 mb-4">
+              Highest intake:
+              <%= number_with_delimiter(highest.last) %> cal
+              on <%= report_short_date(highest.first) %>.
+            </p>
+          <% end %>
+        <% else %>
+          <p class="text-sm text-slate-400">No food entries in this period.</p>
+        <% end %>
+        <hr class="border-slate-200" />
+      </section>
+    <% end %>
+
+    <% if report.include_weights? %>
+      <section id="report_weight" class="mb-8">
+        <h2 class="text-sm font-semibold text-slate-800 mb-3">Weight</h2>
+        <% if report.weight_entries.any? %>
+          <% first_entry = report.weight_entries.first %>
+          <% last_entry  = report.weight_entries.last %>
+          <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+            <%= render "reports/stat",
+                  label: "Starting weight",
+                  value: "#{number_with_precision(first_entry.weight, precision: 1)} lbs",
+                  detail: report_short_date(first_entry.date) %>
+            <%= render "reports/stat", label:
+                  "Ending weight",
+                  value: "#{number_with_precision(last_entry.weight, precision: 1)} lbs",
+                  detail: report_short_date(last_entry.date) %>
+            <%= render "reports/stat",
+                  label: "Change",
+                  value: (report.weight_change ? "#{signed_weight(report.weight_change)} lbs" : "--") %>
+            <%= render "reports/stat",
+                  label: "Range",
+                  value: "#{number_with_precision(report.min_weight, precision: 1)} - " \
+                         "#{number_with_precision(report.max_weight, precision: 1)} lbs" %>
+          </dl>
+
+          <table class="w-full text-xs text-slate-600 mb-4 border-collapse">
+            <thead class="print:table-header-group">
+              <tr class="text-left text-slate-400 border-b border-slate-100">
+                <th class="py-1 font-medium">Date</th>
+                <th class="py-1 font-medium text-right">Weight (lbs)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <% report.weight_entries.each do |entry| %>
+                <tr class="print:break-inside-avoid">
+                  <td class="py-1"><%= report_date(entry.date) %></td>
+                  <td class="py-1 text-right"><%= number_with_precision(entry.weight, precision: 1) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="text-sm text-slate-400">No weigh-ins in this period.</p>
+        <% end %>
+        <hr class="border-slate-200" />
+      </section>
+    <% end %>
+
+    <% if report.include_blood_pressure_readings? %>
+      <section id="report_blood_pressure" class="mb-8">
+        <h2 class="text-sm font-semibold text-slate-800 mb-3">Blood pressure</h2>
+        <% if report.blood_pressure_readings.any? %>
+          <% average = report.avg_blood_pressure %>
+          <% highest = report.most_severe_blood_pressure_reading %>
+          <% lowest  = report.least_severe_blood_pressure_reading %>
+
+          <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-3">
+            <%= render "reports/stat",
+                  label: "Average",
+                  value: "#{average.combined_value} mm Hg" %>
+            <%= render "reports/stat",
+                  label: "Highest category",
+                  value: highest.category,
+                  detail: "#{highest.combined_value} mm Hg &bull; #{report_short_date(highest.date)}".html_safe %>
+            <%= render "reports/stat",
+                  label: "Lowest category",
+                  value: lowest.category,
+                  detail: "#{lowest.combined_value} mm Hg &bull; #{report_short_date(lowest.date)}".html_safe %>
+            <%= render "reports/stat",
+                  label: "Readings",
+                  value: report.blood_pressure_readings.size %>
+          </dl>
+
+          <div class="mb-4">
+            <h3 class="text-xs font-semibold text-slate-700 mb-2">
+              Reading distribution
+            </h3>
+
+            <div class="flex flex-col gap-2">
+              <% report.blood_pressure_category_summaries.each do |summary| %>
+                <div>
+                  <div class="flex justify-between text-xs text-slate-600 mb-1">
+                    <span><%= summary[:category] %></span>
+                    <span<%= summary[:count] %> (<%= summary[:percentage] %>%)</span>
+                  </div>
+
+                  <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                    <div class="h-full rounded-full bg-slate-500"
+                         style="width: <%= summary[:percentage] %>%">
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <p class="text-sm text-slate-400">No blood pressure readings in this period.</p>
+        <% end %>
+        <hr class="border-slate-200" />
+      </section>
+    <% end %>
+
+    <% if report.include_tags? %>
+      <section id="report_tags" class="mb-8">
+        <h2 class="text-sm font-semibold text-slate-800 mb-3">Tagged days</h2>
+        <% if report.tag_summaries.any? %>
+          <table class="w-full text-xs text-slate-600 mb-4">
+            <thead class="print:table-header-group">
+              <tr class="text-left text-slate-400 border-b border-slate-100">
+                <th class="py-1 font-medium">Tag</th>
+                <th class="py-1 font-medium">Days</th>
+                <th class="py-1 font-medium">Dates</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <% report.tag_summaries.each do |summary| %>
+                <tr class="print:break-inside-avoid align-top">
+                  <td class="py-1 pr-3 font-medium text-slate-700"><%= summary[:name] %></td>
+                  <td class="py-1 pr-3"><%= summary[:days] %></td>
+                  <td class="py-1"><%= summary[:dates].map { report_short_date(it) }.join(", ") %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="text-sm text-slate-400">No tagged days in this period.</p>
+        <% end %>
+        <hr class="border-slate-200" />
+      </section>
+    <% end %>
+
+    <% if report.include_journal? %>
+      <section id="report_journal" class="mb-8">
+        <h2 class="text-sm font-semibold text-slate-800 mb-3">Journal notes</h2>
+        <% if report.journal_entries.any? %>
+          <div class="flex flex-col gap-4">
+            <% report.journal_entries.each do |entry| %>
+              <div class="print:break-inside-avoid">
+                <p class="text-xs font-medium text-slate-500">
+                  <%= report_date(entry.date) %>
+                  <% tags = report.tags_on(entry.date) %>
+                  <% if tags.any? %>
+                    <span class="font-normal text-slate-400">(<%= tags.to_sentence %>)</span>
+                  <% end %>
+                </p>
+                <p class="text-sm text-slate-700 whitespace-pre-wrap break-words"><%= entry.note %></p>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-sm text-slate-400">No journal entries in this period.</p>
+        <% end %>
+      </section>
+      <hr class="border-slate-200" />
+    <% end %>
+
+    <footer class="pt-4 text-xs text-slate-400">
+      <p class="font-medium text-slate-500">
+        About this report
+      </p>
+
+      <p class="mt-2">
+        This report summarizes self-reported health information recorded in the Weight Tracker app, during the selected
+        date range. Measurements and averages are based on available entries and may not represent
+        continous monitoring or clinical measurements.
+      </p>
+
+      <p class="mt-2">
+        Blood pressure categories are based on the recorded systolic and diastolic values. Averages are
+        calculated from available readings and should not be interpreted as individual measurements.
+      </p>
+
+      <p class="mt-1">
+        This report is intended to support conversations with healthcare professionals and is not a substitute for
+        medical advice or diagnosis.
+      </p>
+
+      <p class="mt-3 text-slate-400">
+        Generated <%= report_date(Date.current) %> by Weight Tracker app.
+      </p>
+    </footer>
+  </article>
+</div>

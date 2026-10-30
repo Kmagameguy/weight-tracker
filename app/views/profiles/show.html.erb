@@ -18,4 +18,6 @@
   <% if @user&.tagging_enabled? %>
     <%= render "profiles/tags", user: @user %>
   <% end %>
+
+  <%= render "profiles/doctor_report" %>
 <% end %>
