@@ -144,6 +144,36 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
         assert_select "turbo-frame#blood_pressure_reading", text: /#{blood_pressure_reading.label}/
       end
 
+      it "renders the journal entry turbo frame" do
+        get day_path_for(@date)
+
+        assert_select "turbo-frame#journal_entry"
+      end
+
+      it "renders the journal entry form when no entry exists for the day" do
+        JournalEntry.all.destroy_all
+        get day_path_for(Date.current)
+
+        assert_select "turbo-frame#journal_entry form textarea"
+      end
+
+      it "renders the existing journal entry when one exists" do
+        JournalEntry.all.destroy_all
+        today = Date.current
+        @user.journal_entries.create!(date: today, note: "Solid day overall.")
+        get day_path_for(today)
+
+        assert_select "turbo-frame#journal_entry textarea", count: 0
+        assert_select "turbo-frame#journal_entry", text: /Solid day overall\./
+      end
+
+      it "does not render the journal section when the user has disabled journaling" do
+        @user.update!(journaling_enabled: false)
+        get day_path_for(@date)
+
+        assert_select "turbo-frame#journal_entry", count: 0
+      end
+
       it "renders tag chips and marks applied ones as pressed" do
         get day_path_for(Date.parse("2026-06-05"))
         assert_select "#day_tags button[aria-pressed=true]", text: "Headache"

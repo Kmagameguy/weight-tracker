@@ -4,14 +4,15 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   get "/days/:year/:month/:day", to: "days#show", as: :day
-  resources :food_entries,   only:   %i[ index show create edit update destroy ]
-  resources :weight_entries, only: %i[ create edit update destroy ]
+  resources :food_entries,    only:   %i[ index show create edit update destroy ]
+  resources :weight_entries,  only: %i[ create edit update destroy ]
   resources :blood_pressure_readings, only: %i[ create edit update destroy ]
-  resources :tags,           only: %i[ create edit update destroy ]
-  resources :day_tags,       only: %i[ create destroy ]
+  resources :tags,            only: %i[ create edit update destroy ]
+  resources :day_tags,        only: %i[ create destroy ]
+  resources :journal_entries, only: %i[ create edit update destroy ]
 
-  resource :profile,         only: %i[ show update ]
-  resource :calendar,        only: %i[ show ]
+  resource :profile,          only: %i[ show update ]
+  resource :calendar,         only: %i[ show ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

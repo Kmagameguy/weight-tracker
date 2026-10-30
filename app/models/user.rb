@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :blood_pressure_readings, dependent: :destroy
   has_many :tags,                    dependent: :destroy
   has_many :day_tags, through: :tags
+  has_many :journal_entries,         dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
@@ -25,6 +26,7 @@ class User < ApplicationRecord
   validates :weight_tracking_enabled,            inclusion: { in: [ true, false ], message: "value must be true or false" }
   validates :blood_pressure_tracking_enabled,    inclusion: { in: [ true, false ], message: "value must be true or false" }
   validates :tagging_enabled,                    inclusion: { in: [ true, false ], message: "value must be true or false" }
+  validates :journaling_enabled,                 inclusion: { in: [ true, false ], message: "value must be true or false" }
 
   alias_attribute :email, :email_address
 
@@ -72,10 +74,15 @@ class User < ApplicationRecord
     !tagging_enabled?
   end
 
+  def journaling_disabled?
+    !journaling_enabled?
+  end
+
   def all_features_disabled?
     calorie_tracking_disabled? &&
       weight_tracking_disabled? &&
         blood_pressure_tracking_disabled? &&
-          tagging_disabled?
+          tagging_disabled? &&
+            journaling_disabled?
   end
 end

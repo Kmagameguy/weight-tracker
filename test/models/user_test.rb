@@ -101,6 +101,17 @@ class UserTest < ActiveSupport::TestCase
       assert User.new.blood_pressure_tracking_enabled
     end
 
+    it "is invalid if journaling_enabled is not a boolean value" do
+      @user.journaling_enabled = nil
+
+      assert_not_predicate @user, :valid?
+      assert_includes @user.errors[:journaling_enabled], "value must be true or false"
+    end
+
+    it "defaults journaling_enabled to true" do
+      assert User.new.journaling_enabled
+    end
+
     it "is invalid if tagging_enabled is not a boolean value" do
       @user.tagging_enabled = nil
 
@@ -129,6 +140,10 @@ class UserTest < ActiveSupport::TestCase
 
     it "destroys dependent blood_pressure_readings when the user is destroyed" do
       assert_difference("BloodPressureReading.count", -@user.blood_pressure_readings.count) { @user.destroy }
+    end
+
+    it "destroys dependent journal_entries when the user is destroyed" do
+      assert_difference("JournalEntry.count", -@user.journal_entries.count) { @user.destroy }
     end
 
     it "destroys dependent tags when the user is destroyed" do
