@@ -9,6 +9,47 @@ class DaysControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
   end
 
+  describe "#today" do
+    it "routes the root path to days#today" do
+      assert_routing "/", controller: "days", action: "today"
+    end
+
+    it "redirects unauthenticated users" do
+      sign_out
+
+      get root_path
+
+      assert_redirected_to new_session_path
+    end
+
+    it "redirects to the signed-in user's current day, based on their timezone" do
+      # User 2's fixture uses the Pacific/Auckland timezone. So travel to 02:00 UTC on June 10,
+      # which should resolve to June 9 in New York (the default/server zone)
+      travel_to Time.utc(2026, 6, 10, 2, 0) do
+        sign_out
+        sign_in_as(users(:two))
+
+        get root_path
+
+        assert_redirected_to day_path_for(Date.new(2026, 6, 10))
+      end
+    end
+
+    it "does not show the invalid date error when redirect crosses timezone boundaries" do
+      travel_to Time.utc(2026, 6, 10, 2, 0) do
+        sign_out
+        sign_in_as(users(:two))
+
+        get root_path
+        follow_redirect!
+
+        assert_response :success
+        assert_select ".bg-red-50", count: 0
+        assert_select "h1", text: "June 10"
+      end
+    end
+  end
+
   describe "#show" do
     context "page routing" do
       it "redirects unauthenticated users" do
