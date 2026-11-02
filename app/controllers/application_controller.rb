@@ -1,9 +1,10 @@
 class ApplicationController < ActionController::Base
+  include Authentication
+  include RoutingHelper
+
   around_action :use_user_timezone
   helper_method :day_path_for
 
-  include Authentication
-  include RoutingHelper
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
