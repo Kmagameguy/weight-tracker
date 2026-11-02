@@ -29,7 +29,7 @@ class ReportsController < ApplicationController
     if start_date < earliest
       start_date = earliest
       flash.now[:alert] =
-        "Reports are limited to #{DoctorVisitReportPresenter::MAX_RANGE_DAYS} days." \
+        "Reports are limited to #{DoctorVisitReportPresenter::MAX_RANGE_DAYS} days. " \
         "Showing the most recent #{DoctorVisitReportPresenter::MAX_RANGE_DAYS} days of your selection."
     end
 

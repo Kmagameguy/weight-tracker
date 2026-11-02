@@ -68,7 +68,7 @@
         <%= link_to label,
               report_path(start_date: Date.current - (days - 1),
                           end_date: Date.current,
-                          inclde_journal: (report.include_journal? ? "1" : nil)),
+                          include_journal: (report.include_journal? ? "1" : nil)),
                 class: "text-slate-400 hover:text-slate-700 transition-colors" %>
       <% end %>
     </div>
