@@ -2,6 +2,13 @@
 
 ## Unreleased Changes
 
+## 2026-11-1
+- Fix: Fix issue with blood pressure counts displayed on reports page
+- Fix: Fix typo that broke journal entry inclusion on reports page shortcuts
+- Fix: Fix typo in text color class applied to journal entry edit form
+- Fix: Fix missing space character in error message displayed on reports page when date range is too large
+- Fix: Fix some long-standing timezone related issues due to improper root_path definition & poor user-handling in ApplicationController
+
 ## 2026-10-30
 - Enhancement: All-new reports page. Use this to generate and export a long-term report of your tracked data
 - Fix: Remove leading/trailing whitespace from journal entries
