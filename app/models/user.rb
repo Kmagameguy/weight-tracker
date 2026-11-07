@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :tags,                    dependent: :destroy
   has_many :day_tags, through: :tags
   has_many :journal_entries,         dependent: :destroy
+  has_many :api_tokens,              dependent: :destroy
+  has_many :deletions,               dependent: :delete_all
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
