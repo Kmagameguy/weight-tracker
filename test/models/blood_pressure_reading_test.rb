@@ -182,6 +182,13 @@ class BloodPressureReadingTest < ActiveSupport::TestCase
 
       assert new_bp_reading > old_bp_reading
     end
+
+    it "returns nil when trying to compare with a non-blood-pressure-reading object" do
+      bp_reading = BloodPressureReading.new(date: Date.current, systolic: 120, diastolic: 80)
+
+      assert_nil bp_reading <=> false
+      assert_not_equal false, bp_reading
+    end
   end
 
   describe "#normal?" do

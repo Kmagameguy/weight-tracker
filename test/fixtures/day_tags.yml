@@ -3,3 +3,5 @@
 headache_on_june_fifth:
   tag: headache
   date: 2026-06-05
+  uuid: <%= SecureRandom.uuid %>
+

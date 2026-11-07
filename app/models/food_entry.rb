@@ -1,4 +1,8 @@
 class FoodEntry < ApplicationRecord
+  include Syncable
+
+  syncs :name, :calories, :date
+
   belongs_to :user, optional: false
 
   validates :name,     presence: true

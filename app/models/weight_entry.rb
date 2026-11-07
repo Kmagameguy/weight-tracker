@@ -1,4 +1,8 @@
 class WeightEntry < ApplicationRecord
+  include Syncable
+
+  syncs :weight, :date, unique_by: :date
+
   belongs_to :user, optional: false
 
   validates :weight, presence: true, numericality: { greater_than_or_equal_to: 0 }

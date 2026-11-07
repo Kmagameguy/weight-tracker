@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class BloodPressureReading < ApplicationRecord
+  include Syncable
   include Comparable
 
   SYSTOLIC_NORMAL_RANGE     = (..119)
@@ -16,6 +17,8 @@ class BloodPressureReading < ApplicationRecord
   ELEVATED_BLOOD_PRESSURE = "Elevated Blood Pressure"
   STAGE_ONE_HYPERTENSION  = "Stage 1 Hypertension"
   STAGE_TWO_HYPERTENSION  = "Stage 2 Hypertension"
+
+  syncs :systolic, :diastolic, :date, unique_by: :date
 
   belongs_to :user, optional: false
 
@@ -49,7 +52,13 @@ class BloodPressureReading < ApplicationRecord
   end
 
   def <=>(other)
+    return unless other.is_a?(BloodPressureReading)
+
     map_score <=> other.map_score
+  end
+
+  def ==(other)
+    super
   end
 
   def normal?
