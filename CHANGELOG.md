@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-11-8
+- Maintenance: Update to latest bundler
+- Maintenance: Update to Rails 8.1.4.1 to resolve security advisories
+
 ## 2026-11-1
 - Fix: Fix issue with blood pressure counts displayed on reports page
 - Fix: Fix typo that broke journal entry inclusion on reports page shortcuts
