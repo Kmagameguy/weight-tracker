@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resource :session, only: :create
+      resource :sync,    only: :create, controller: "sync"
+    end
+  end
+
   resources :registrations, only: %i[new create]
   resource :session
   resources :passwords, param: :token

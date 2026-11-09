@@ -5,9 +5,12 @@ burrito:
   calories: 1000
   date: 2026-05-25 09:01:51
   user: one
+  uuid: <%= SecureRandom.uuid %>
 
 salad:
   name: Salad
   calories: 320
   date: 2026-05-25 09:01:51
   user: two
+  uuid: <%= SecureRandom.uuid %>
+

@@ -1,4 +1,6 @@
 class Tag < ApplicationRecord
+  include Syncable
+
   MAX_NAME_LENGTH = 30
 
   belongs_to :user, optional: false

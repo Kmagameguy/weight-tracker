@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class JournalEntry < ApplicationRecord
+  include Syncable
+
   MAX_NOTE_LENGTH = 10_000
 
   belongs_to :user, optional: false
