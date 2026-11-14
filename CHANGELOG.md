@@ -2,7 +2,11 @@
 
 ## Unreleased Changes
 
-## 2026-11-8.1_sync-api-beta-1
+## 2026-11-14-beta2
+- Fix: Fix application version label
+- Maintenance: Update bundled gems to their latest versions
+
+## 2026-11-14-beta1
 **This is an unstable beta release and should NOT be used in a production environment.**
 - Enhancement: Adds an initial synchronization API with per-device tokens.
 - Enhancement: Syncable records (food entries, weight entries, etc) are now automatically assigned a UUID. A backfill script will automatically assign UUIDs to your existing entries during this update.
