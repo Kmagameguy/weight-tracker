@@ -1,0 +1,43 @@
+<% tokens = user.api_tokens.active.recently_used %>
+
+<% if tokens.any? %>
+  <div class="max-w-xl mx-auto px-2 py-4 flex flex-col gap-5">
+    <div class="bg-white shadow-sm border border-slate-200 rounded-lg p-4">
+      <h2 class="font-semibold text-slate-800 mb-1">Connected devices</h2>
+      <p class="text-xs text-slate-400 mb-4">
+        Mobile apps signed in to your account. Signing a device out stops it from syncing;
+        data already on the device stays there until you sign out in the app.
+      </p>
+
+      <ul class="divide-y divide-slate-100">
+        <% tokens.each do |token| %>
+          <li class="flex items-center justify-between gap-3 py-3">
+            <div class="min-w-0">
+              <p class="text-sm text-slate-700 truncate"><%= token.name.presence || "Unnamed device" %></p>
+              <p class="text-xs text-slate-400">
+                Last active <%= time_ago_in_words(token.last_used_at || token.created_at) %> ago
+              </p>
+            </div>
+
+            <%= button_to "Sign out", api_token_path(token),
+                  method: :delete,
+                  data: { turbo_confirm: "Sign out #{token.name.presence || 'this device'}?" },
+                  form_class: "flex items-center",
+                  class: "text-sm text-slate-400 hover:text-red-400 transition-colors
+                          bg-transparent border-0 cursor-pointer" %>
+          </li>
+        <% end %>
+      </ul>
+
+      <% if tokens.size > 1 %>
+        <div class="pt-3 mt-1 border-t border-slate-100">
+          <%= button_to "Sign out all devices", destroy_all_api_tokens_path,
+                method: :delete,
+                data: { turbo_confirm: "Sign out every connected device?" },
+                class: "text-sm font-medium text-red-600 hover:text-red-700 bg-transparent
+                        border-0 cursor-pointer p-0" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

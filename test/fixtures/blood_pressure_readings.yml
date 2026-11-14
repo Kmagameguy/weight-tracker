@@ -5,51 +5,61 @@ normal:
   diastolic: 79
   user: one
   date: 2025-06-15
+  uuid: <%= SecureRandom.uuid %>
 
 elevated:
   systolic: 129
   diastolic: 79
   user: one
   date: 2025-06-16
+  uuid: <%= SecureRandom.uuid %>
 
 stage_1_systolic:
   systolic: 130
   diastolic: 79
   user: one
   date: 2025-06-17
+  uuid: <%= SecureRandom.uuid %>
 
 stage_1_diastolic:
   systolic: 129
   diastolic: 80
   user: one
   date: 2025-06-18
+  uuid: <%= SecureRandom.uuid %>
 
 stage_1_both:
   systolic: 130
   diastolic: 80
   user: one
   date: 2025-06-19
+  uuid: <%= SecureRandom.uuid %>
 
 stage_2_systolic:
   systolic: 140
   diastolic: 79
   user: one
   date: 2025-06-20
+  uuid: <%= SecureRandom.uuid %>
 
 stage_2_diastolic:
   systolic: 119
   diastolic: 90
   user: one
   date: 2025-06-21
+  uuid: <%= SecureRandom.uuid %>
 
 stage_2_both:
   systolic: 140
   diastolic: 90
   user: one
   date: 2025-06-22
+  uuid: <%= SecureRandom.uuid %>
 
 pressure_for_user_two:
   systolic: 121
   diastolic: 78
   user: two
   date: 2025-06-21
+  uuid: <%= SecureRandom.uuid %>
+

@@ -56,6 +56,14 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
       assert_notice "Password has been reset"
     end
 
+    it "revokes API tokens when the password is reset" do
+      raw = ApiToken.issue_for(@user)
+
+      put password_path(@user.password_reset_token), params: { password: "newpassword", password_confirmation: "newpassword" }
+
+      assert_nil ApiToken.authenticate(raw)
+    end
+
     it "shows an error if password fields don't match" do
       token = @user.password_reset_token
       assert_no_changes -> { @user.reload.password_digest } do

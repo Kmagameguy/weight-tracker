@@ -4,8 +4,11 @@ one:
   weight: 245.5
   date: 2026-05-25
   user: one
+  uuid: <%= SecureRandom.uuid %>
 
 two:
   weight: 122.3
   date: 2026-05-24
   user: two
+  uuid: <%= SecureRandom.uuid %>
+

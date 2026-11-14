@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resource :session, only: %i[create destroy]
+      resource :sync,    only: :create, controller: "sync"
+    end
+  end
+
+  resources :api_tokens, only: :destroy do
+    collection { delete :destroy_all }
+  end
+
   resources :registrations, only: %i[new create]
   resource :session
   resources :passwords, param: :token

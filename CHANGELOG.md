@@ -2,6 +2,21 @@
 
 ## Unreleased Changes
 
+## 2026-11-8.1_sync-api-beta-1
+**This is an unstable beta release and should NOT be used in a production environment.**
+- Enhancement: Adds an initial synchronization API with per-device tokens.
+- Enhancement: Syncable records (food entries, weight entries, etc) are now automatically assigned a UUID. A backfill script will automatically assign UUIDs to your existing entries during this update.
+
+The new API is being developed alongside an experimental / not-yet-released Android native application.  The new API
+exposes an interface for generating API tokens from a user's login information.  For example:
+
+```bash
+curl -s -X POST http://localhost:3000/api/v1/session \
+-H 'Content-Type: application/json' \
+-d '{"email_address":"user1@example.com", "password":"user-password", "device_name":"curl"}'
+=> {"token":"some-token-value"}
+```
+
 ## 2026-11-8
 - Maintenance: Update to latest bundler
 - Maintenance: Update to Rails 8.1.4.1 to resolve security advisories

@@ -1,5 +1,6 @@
 <%= render "shared/flash_messages" %>
 <%= render "profiles/account_management", user: @user %>
+<%= render "profiles/devices", user: @user %>
 <% unless @user&.all_features_disabled? %>
   <%= render "profiles/weekly_summary", user: @user %>
 

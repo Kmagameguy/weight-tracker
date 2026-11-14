@@ -20,6 +20,7 @@ Each feature below is available by default, but can be selectively disabled from
 - **Journaling:** Record notes alongside your daily check-ins.
 - **Tagging:** Create custom tags and assign them by-day. For example, if you want to track days when you experienced a migraine.
 - **Reports:** Create long-term views of your daily check-ins, and export them to PDF format for easy storage/shareability.
+- **Sync model:** Devices can sync via the API. Conflicts are resolved per-record, last-write by timestamp wins. It is currently designed for one device per user at a time (e.g. web + phone). Multiple devices are technically supported but conflict resolution may not be ideal.
 
 ## Tech Stack
 - [Ruby][ruby] & [Ruby on Rails][rails]. See `.ruby-version` and `Gemfile.lock` for current versions. This project aims to stay on the bleeding-edge

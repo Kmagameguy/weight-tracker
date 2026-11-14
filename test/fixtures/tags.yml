@@ -3,7 +3,10 @@
 headache:
   name: Headache
   user: one
+  uuid: <%= SecureRandom.uuid %>
 
 insomnia:
   name: Insomnia
   user: two
+  uuid: <%= SecureRandom.uuid %>
+
