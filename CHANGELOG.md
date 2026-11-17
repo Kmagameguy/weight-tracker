@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-11-16
+- Enhancement: Mark Sync API as Stable
+- Maintenance: Update bundled gems to their latest versions
+
 ## 2026-11-14-beta2
 - Fix: Fix application version label
 - Maintenance: Update bundled gems to their latest versions
