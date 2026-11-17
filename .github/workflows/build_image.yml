@@ -31,9 +31,11 @@ jobs:
         uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          flavor: |
+            latest=false
           tags: |
             type=ref,event=tag
-            type=raw,value=latest,enable=${{ github.event.release.prerelease == false }}
+            type=raw,value=latest,enable=${{ !github.event.release.prerelease }}
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v7
