@@ -2,6 +2,10 @@
 
 ## Unreleased Changes
 
+## 2026-11-19
+- Maintenance: Update to ruby 4.0.10 to resolve some new security advisories
+- Maintenance: Update bundled gems to their latest versions
+
 ## 2026-11-16
 - Enhancement: Mark Sync API as Stable
 - Maintenance: Update bundled gems to their latest versions
